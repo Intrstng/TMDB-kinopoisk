@@ -1,0 +1,23 @@
+.headerLogo {
+    width: 10rem;
+    height: auto;
+}
+
+.navBlock {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.navLink {
+    text-decoration: none;
+    color: #fff;
+    padding: 0.6rem 1rem;
+}
+
+.active {
+    text-decoration: none;
+    color: red;
+    padding: 0.6rem 1rem;
+    background-color: green;
+}
