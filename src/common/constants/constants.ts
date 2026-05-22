@@ -1,5 +1,5 @@
-import { PATH } from '@/common/enums';
-import type { HeaderNavLink } from '@/common/types/types.ts';
+import { NESTED_PATH, PATH } from '@/common/enums';
+import type { CategoryLink, HeaderNavLink } from '@/common/types/types.ts';
 
 export const Http_Methods = {
     GET: 'GET',
@@ -47,5 +47,28 @@ export const HEADER_NAV_LINKS: HeaderNavLink[] = [
         id: '5',
         title: 'Favourites',
         path: PATH.FAVOURITES,
+    },
+];
+
+export const CATEGORY_LINKS: CategoryLink[] = [
+    {
+        id: '1',
+        title: 'Popular Movies',
+        path: NESTED_PATH.POPULAR,
+    },
+    {
+        id: '2',
+        title: 'Top Rated Movies',
+        path: NESTED_PATH.TOP_RATED,
+    },
+    {
+        id: '3',
+        title: 'Upcoming Movies',
+        path: NESTED_PATH.UPCOMING,
+    },
+    {
+        id: '4',
+        title: 'Now Playing Movies',
+        path: NESTED_PATH.NOW_PLAYING,
     },
 ];

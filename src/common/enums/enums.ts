@@ -1,17 +1,22 @@
 export enum PATH {
-    MAIN = '/',
+    ROOT = '/',
+    MAIN = '/main',
     CATEGORY = '/movies',
     FILTERED = '/filtered-movies',
     SEARCH = '/search',
     FAVOURITES = '/favorites',
-    DETAILS = '/movie/:id',
-
-    POPULAR_NESTED = 'popular',
-    TOP_RATED_NESTED = 'top-rated',
-    UPCOMING_NESTED = 'upcoming',
-    NOW_PLAYING_NESTED = 'now-playing',
-
+    // DETAILS = '/movie/:id',
+    ERROR = '/error',
+    CATCH_ALL = '*',
     GITHUB = 'https://github.com/Intrstng',
+}
+
+export enum NESTED_PATH {
+    POPULAR = 'popular',
+    TOP_RATED = 'top-rated',
+    UPCOMING = 'upcoming',
+    NOW_PLAYING = 'now-playing',
+    DETAILS = ':id',
 }
 
 export enum IconVariant {
