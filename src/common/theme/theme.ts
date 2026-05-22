@@ -1,12 +1,18 @@
 import { createTheme } from '@mui/material/styles';
-import type { ThemeMode } from '@/common/types/types.ts';
+import { THEME_MODE } from '@/common/enums';
 
-export const getTheme = (themeMode: ThemeMode) => {
+export const getTheme = (themeMode: THEME_MODE) => {
     return createTheme({
         palette: {
             mode: themeMode,
             primary: {
-                main: '#087EA4',
+                dark: '#0d253f',
+                main: '#E7E1B1',
+                light: '#90cea1',
+            },
+            text: {
+                primary: themeMode === THEME_MODE.LIGHT ? '#0d253f' : '#E8EDF2',
+                secondary: themeMode === THEME_MODE.LIGHT ? '#5C766D' : '#FFF1D3',
             },
         },
     });

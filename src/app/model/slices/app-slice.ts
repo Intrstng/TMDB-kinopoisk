@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { THEME_MODE } from '@/common/enum';
+import { THEME_MODE } from '@/common/enums';
 
 export const appSlice = createSlice({
     name: 'app',

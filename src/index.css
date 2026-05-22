@@ -15,7 +15,7 @@
     src: url('./assets/fonts/Cinematografica-Regular.otf') format('opentype');
     font-weight: normal;
     font-style: normal;
-    font-display: swap; /* Рекомендуется для улучшения производительности */
+    font-display: swap;
 }
 
 @font-face {
@@ -23,5 +23,5 @@
     src: url('./assets/fonts/ProtestGuerrilla-Regular.ttf') format('opentype');
     font-weight: normal;
     font-style: normal;
-    font-display: swap; /* Рекомендуется для улучшения производительности */
+    font-display: swap;
 }

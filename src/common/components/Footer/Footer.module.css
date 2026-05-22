@@ -1,27 +1,9 @@
-.footer {
-    width: 100%;
-}
-
-.footerContent {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    min-width: 24rem;
-    font-family: ProtestFont, sans-serif;
-    font-size: 1rem;
-}
-
 .footerGitLogo {
     width: 2.25rem;
     height: 2.25rem;
 }
 
 .footerAppLogo {
-    width: 3.5rem;
+    width: 4rem;
     height: auto;
-}
-
-.footerLicence::before {
-    content: '•';
-    margin-right: 0.5rem;
 }

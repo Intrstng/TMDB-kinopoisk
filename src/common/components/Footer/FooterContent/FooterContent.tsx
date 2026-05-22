@@ -1,11 +1,16 @@
-import s from '@/common/components/Footer/Footer.module.css';
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import s from '@/common/components/Footer/FooterContent/FooterContent.module.css';
 
 export const FooterContent = () => {
     return (
-        <div className={s.footerContent}>
-            <p className={s.copyright}>© 2026</p>
-            <p className={s.footerTitle}>Kinopoisk Demo</p>
-            <p className={s.footerLicence}>Data courtesy of TMDB</p>
-        </div>
+        <Box className={s.footerContent}
+             sx={{
+                 color: 'text.secondary'
+             }}>
+            <Typography sx={{ all: 'unset' }}>© 2026</Typography>
+            <Typography sx={{ all: 'unset' }}>Kinopoisk Demo</Typography>
+            <Typography sx={{ all: 'unset' }} className={s.footerLicence}>Data courtesy of TMDB</Typography>
+        </Box>
     );
 };

@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { icons } from '@/assets/icons/icons.tsx';
-import { IconVariant, PATH } from '@/common/enum';
+import { IconVariant, PATH } from '@/common/enums';
 import s from './Logo.module.css';
 import cn from 'classnames';
 

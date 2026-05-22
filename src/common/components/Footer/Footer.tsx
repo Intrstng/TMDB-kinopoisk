@@ -1,21 +1,23 @@
-import s from './Footer.module.css';
-import { IconVariant, PATH } from '@/common/enum';
-import { icons } from '@/assets/icons/icons.tsx';
-import { FooterContent } from '@/common/components/Footer/FooterContent/FooterContent.tsx';
-import { Logo } from '@/common/components/Logo/Logo.tsx';
+import Container from "@mui/material/Container";
+import {containerSx, footerSx} from "@/common/styles";
+import {icons} from "@/assets/icons/icons.tsx";
+import s from "@/common/components/Footer/Footer.module.css";
+import {FooterContent} from "@/common/components/Footer/FooterContent/FooterContent.tsx";
+import {Logo} from "@/common/components/Logo/Logo.tsx";
+import {IconVariant, PATH} from "@/common/enums";
+import AppBar from "@mui/material/AppBar"
+import Toolbar from "@mui/material/Toolbar"
 
-type FooterProps = {
-    className?: string;
-};
-
-export const Footer = ({ className }: FooterProps) => {
+export const Footer = () => {
     return (
-        <footer>
-            <div className={className}>
-                <icons.logoBig className={s.footerAppLogo} />
-                <FooterContent />
-                <Logo path={PATH.GITHUB} variant={IconVariant.GIT} className={s.footerGitLogo} />
-            </div>
-        </footer>
+        <AppBar component="footer" sx={footerSx} color="primary">
+            <Toolbar disableGutters>
+                <Container maxWidth={false} sx={containerSx}>
+                    <icons.logoBig className={s.footerAppLogo} />
+                    <FooterContent />
+                    <Logo path={PATH.GITHUB} variant={IconVariant.GIT} className={s.footerGitLogo} />
+                </Container>
+            </Toolbar>
+        </AppBar>
     );
 };

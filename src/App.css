@@ -6,29 +6,6 @@ header {
     align-items: center;
 }
 
-.container {
-    margin: 0 auto;
-    width: 100%;
-    max-width: 1220px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-main {
-    flex: 1;
-    background-color: #fffaf0;
-}
-
 main .container {
     padding: 1.25rem;
-}
-
-footer {
-    height: 5.6rem;
-    background-image: radial-gradient(at 30% bottom, rgb(3 29 51 / 100%) 0%, rgb(32 41 64 / 100%) 70%);
-    color: white;
-    display: flex;
-    align-items: center;
-    margin-top: auto;
 }

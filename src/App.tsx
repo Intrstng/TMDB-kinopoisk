@@ -8,11 +8,6 @@ import {getTheme} from "@/common/theme";
 import {ThemeProvider} from "@mui/material/styles";
 
 function App() {
-    // const { mode, setMode } = useColorScheme();
-    // if (!mode) {
-    //     return null;
-    // }
-
     const themeMode = useAppSelector(selectThemeMode)
     // const dispatch = useAppDispatch()
 
@@ -20,9 +15,9 @@ function App() {
 
     return (
         <ThemeProvider theme={theme}>
-            <Header className="container" />
-            <Main className="container" />
-            <Footer className="container" />
+            <Header />
+            <Main />
+            <Footer />
         </ThemeProvider>
     );
 }

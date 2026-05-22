@@ -1,4 +1,4 @@
-import { PATH } from '@/common/enum';
+import { PATH } from '@/common/enums';
 import type { HeaderNavLink } from '@/common/types/types.ts';
 
 export const Http_Methods = {

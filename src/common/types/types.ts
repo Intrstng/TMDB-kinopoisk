@@ -1,4 +1,4 @@
-import { PATH } from '@/common/enum';
+import { PATH } from '@/common/enums';
 
 export type HeaderNavLink = {
     id: string;

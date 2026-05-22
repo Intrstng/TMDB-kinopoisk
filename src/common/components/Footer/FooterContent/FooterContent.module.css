@@ -1,0 +1,16 @@
+.footerContent {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-width: 24rem;
+    font-family: ProtestFont, sans-serif;
+    font-size: 1rem;
+    letter-spacing: 0.015rem;
+
+    /* color: #808080; */
+}
+
+.footerLicence::before {
+    content: '•';
+    margin-right: 0.5rem;
+}
