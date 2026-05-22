@@ -1,10 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { THEME_MODE } from '@/common/enums';
+import { getInitialThemeMode } from '@/common/utils/getInitialThemeMode.ts';
 
 export const appSlice = createSlice({
     name: 'app',
     initialState: {
-        themeMode: THEME_MODE.LIGHT,
+        themeMode: getInitialThemeMode(),
     },
     selectors: {
         selectThemeMode: state => state.themeMode,
@@ -13,6 +14,7 @@ export const appSlice = createSlice({
     reducers: create => ({
         changeThemeModeAC: create.reducer<{ themeMode: THEME_MODE }>((state, action) => {
             state.themeMode = action.payload.themeMode;
+            localStorage.setItem('themeMode', action.payload.themeMode);
         }),
     }),
 });
