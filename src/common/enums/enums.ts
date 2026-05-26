@@ -19,7 +19,7 @@ export enum NESTED_PATH {
     DETAILS = ':id',
 }
 
-export enum IconVariant {
+export enum ICON_VARIANT {
     LOGO = 'logo',
     LOGO_BIG = 'logoBig',
     GIT = 'git',

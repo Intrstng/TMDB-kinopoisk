@@ -1,6 +1,8 @@
 import { NESTED_PATH, PATH } from '@/common/enums';
 import type { CategoryLink, HeaderNavLink } from '@/common/types/types.ts';
 
+export const API_KEY = import.meta.env.VITE_API_KEY;
+
 export const Http_Methods = {
     GET: 'GET',
     POST: 'POST',

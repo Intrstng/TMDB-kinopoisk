@@ -6,6 +6,7 @@ import {useAppSelector} from "@/common/hooks";
 import {getTheme} from "@/common/theme";
 import {ThemeProvider} from "@mui/material/styles";
 import {Outlet} from "react-router";
+import {ToastContainer} from "react-toastify";
 
 function App() {
     const themeMode = useAppSelector(selectThemeMode)
@@ -17,6 +18,7 @@ function App() {
         <ThemeProvider theme={theme}>
             <Header />
             <Outlet />
+            <ToastContainer />
             <Footer />
         </ThemeProvider>
     );

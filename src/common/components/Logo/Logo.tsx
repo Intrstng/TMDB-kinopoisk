@@ -1,16 +1,11 @@
 import { Link } from 'react-router-dom';
 import { icons } from '@/assets/icons/icons.tsx';
-import { IconVariant, PATH } from '@/common/enums';
+import { ICON_VARIANT, PATH } from '@/common/enums';
 import s from './Logo.module.css';
 import cn from 'classnames';
+import type {LogoProps} from "@/common/components/Logo/types.ts";
 
-type LogoProps = {
-    path: PATH;
-    variant: IconVariant;
-    className?: string;
-};
-
-export const Logo = ({ path = PATH.MAIN, variant = IconVariant.LOGO, className }: LogoProps) => {
+export const Logo = ({ path = PATH.MAIN, variant = ICON_VARIANT.LOGO, className }: LogoProps) => {
     const IconComponent = icons[variant];
 
     return (

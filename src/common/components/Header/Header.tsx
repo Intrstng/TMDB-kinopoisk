@@ -1,5 +1,5 @@
 import {Logo} from '@/common/components/Logo/Logo.tsx';
-import {IconVariant, PATH} from '@/common/enums';
+import {ICON_VARIANT, PATH} from '@/common/enums';
 import s from './Header.module.css';
 import {NavigationBlock} from "@/common/components/NavigationBlock/NavigationBlock.tsx";
 import {ThemeSwitch} from "@/common/components/ThemeSwitch/ThemeSwitch.tsx";
@@ -13,7 +13,7 @@ export const Header = () => {
             <AppBar position="static" sx={headerSx} color="primary">
                 <Toolbar>
                     <Container sx={containerSx}>
-                        <Logo path={PATH.MAIN} variant={IconVariant.LOGO} className={s.headerLogo} />
+                        <Logo path={PATH.MAIN} variant={ICON_VARIANT.LOGO} className={s.headerLogo} />
                         <NavigationBlock />
                         <ThemeSwitch/>
                     </Container>
