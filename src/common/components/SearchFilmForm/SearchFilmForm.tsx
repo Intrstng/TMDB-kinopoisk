@@ -6,16 +6,21 @@ import FormGroup from "@mui/material/FormGroup"
 import TextField from "@mui/material/TextField"
 import Button from "@mui/material/Button"
 import s from './SearchFilmForm.module.css'
+import { useWatch } from 'react-hook-form'
 
 export const SearchFilmForm = ({isSearchFetching, onSearch, className}: SearchFilmFormProps) => {
     const {
         register,
         handleSubmit,
+        control,
         formState: {errors},
     } = useForm<SearchFilmArgs>({
         resolver: zodResolver(searchFilmFormSchema),
         // defaultValues: { search: "Search for a movie"},
     })
+
+    const searchValue = useWatch({ control, name: "search" })
+    const isSearchEmpty = !searchValue?.trim()
 
     const onSubmit: SubmitHandler<SearchFilmArgs> = ({search}) => {
         if (search.trim()) {
@@ -32,7 +37,7 @@ export const SearchFilmForm = ({isSearchFetching, onSearch, className}: SearchFi
                     type="submit"
                     variant="contained"
                     color="secondary"
-                    disabled={isSearchFetching}
+                    disabled={isSearchFetching || isSearchEmpty}
                     sx={{
                         '&.Mui-disabled': {
                             opacity: 0.6,

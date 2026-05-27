@@ -2,6 +2,7 @@ import { NESTED_PATH, PATH } from '@/common/enums';
 import type { CategoryLink, HeaderNavLink } from '@/common/types/types.ts';
 
 export const API_KEY = import.meta.env.VITE_API_KEY;
+export const GALLERY_LENGTH = 6;
 
 export const Http_Methods = {
     GET: 'GET',

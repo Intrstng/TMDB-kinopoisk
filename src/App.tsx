@@ -7,6 +7,7 @@ import {getTheme} from "@/common/theme";
 import {ThemeProvider} from "@mui/material/styles";
 import {Outlet} from "react-router";
 import {ToastContainer} from "react-toastify";
+import { ScrollRestoration } from "react-router-dom";
 
 function App() {
     const themeMode = useAppSelector(selectThemeMode)
@@ -19,6 +20,7 @@ function App() {
             <Header />
             <Outlet />
             <ToastContainer />
+            <ScrollRestoration />
             <Footer />
         </ThemeProvider>
     );

@@ -24,6 +24,7 @@ export const SearchPage = () => {
 
     return (
         <Box>
+            <Typography variant="h2" component="h2">Search Results</Typography>
             <SearchFilmForm onSearch={handleSearch} isSearchFetching={isSearchFetching}/>
 
             {!searchValue && (
