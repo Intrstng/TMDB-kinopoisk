@@ -5,7 +5,6 @@ export const containerSx: SxProps = {
     justifyContent: 'space-between',
     alignItems: 'center',
     width: '100%',
-    // Responsive width
     minWidth: {
         xs: '100%', // mobile
         sm: '90%', // tablet
