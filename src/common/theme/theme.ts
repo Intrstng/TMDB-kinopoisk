@@ -15,5 +15,16 @@ export const getTheme = (themeMode: THEME_MODE) => {
                 secondary: themeMode === THEME_MODE.LIGHT ? '#5C766D' : '#FFF1D3',
             },
         },
+        components: {
+            MuiInputBase: {
+                styleOverrides: {
+                    // root: { backgroundColor: '#000' },
+                    input: {
+                        backgroundColor: '#978F66',
+                        borderRadius: '0.25rem',
+                    },
+                },
+            },
+        },
     });
 };

@@ -4,6 +4,7 @@ import {useMoviesWithConfig} from "@/common/hooks";
 import {POSTER_SIZE} from "@/common/enums";
 import s from './CategoryPage.module.css'
 import FilmCard from "@/common/components/FilmCard/FilmCard.tsx";
+import Box from "@mui/material/Box";
 
 export const CategoryPage = () => {
     const location = useLocation();
@@ -39,14 +40,14 @@ export const CategoryPage = () => {
     const films = filmsData?.results || [];
 
     return (
-        <div className={s.container}>
+        <Box className={s.container}>
             <h1 className={s.title}>Category: {currentCategory}</h1>
 
-            <div className={s.moviesGrid}>
+            <Box className={s.moviesGrid}>
                 {films.map((movie) => (
                     <FilmCard key={movie.id} film={movie} source={getPosterUrl(movie.poster_path, POSTER_SIZE.W342)}/>
                 ))}
-            </div>
-        </div>
+            </Box>
+        </Box>
     );
 };

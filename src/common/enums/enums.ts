@@ -81,3 +81,8 @@ export enum SORT_BY {
     ORIGINAL_TITLE_ASC = 'original_title.asc',
     ORIGINAL_TITLE_DESC = 'original_title.desc',
 }
+
+export enum SEARCH_SIZES {
+    MEDIUM = 'medium',
+    SMALL = 'small',
+}

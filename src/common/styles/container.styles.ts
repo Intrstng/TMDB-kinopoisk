@@ -12,3 +12,17 @@ export const containerSx: SxProps = {
         lg: '1220px', // large desktop
     },
 };
+
+export const backdropContainerSx: SxProps = {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+    width: '100%',
+    minWidth: {
+        xs: '100%', // mobile
+        sm: '90%', // tablet
+        md: '85%', // small desktop   (or md: "1000px")
+        lg: '1220px', // large desktop
+    },
+};

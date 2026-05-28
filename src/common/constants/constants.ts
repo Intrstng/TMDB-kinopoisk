@@ -4,15 +4,7 @@ import type { CategoryLink, HeaderNavLink } from '@/common/types/types.ts';
 export const API_KEY = import.meta.env.VITE_API_KEY;
 export const GALLERY_LENGTH = 6;
 
-export const Http_Methods = {
-    GET: 'GET',
-    POST: 'POST',
-    PUT: 'PUT',
-    PATCH: 'PATCH',
-    DELETE: 'DELETE',
-} as const;
-
-export const StatusCode = {
+export const STATUS_CODES = {
     OK: 200,
     CREATED: 201,
     ACCEPTED: 202,
@@ -23,6 +15,7 @@ export const StatusCode = {
     NOT_FOUND: 404,
     INTERNAL_SERVER_ERROR: 500,
     SERVICE_UNAVAILABLE: 503,
+    CONNECT_TIMEOUT: 599,
 } as const;
 
 export const HEADER_NAV_LINKS: HeaderNavLink[] = [
