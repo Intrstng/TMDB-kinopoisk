@@ -155,9 +155,57 @@ export const SortBySchema = z.enum([
 ]);
 
 export const sortFilmsArgsSchema = z.object({
-    with_genres: z.string(),
+    with_genres: z.string().optional(),
     sort_by: SortBySchema,
     vote_average_gte: z.number().nonnegative(),
     vote_average_lte: z.number().nonnegative(),
     page: z.number().int().positive(),
+});
+
+/**
+ * Get the list of official genres for movies.
+ */
+export const genresResponseSchema = z.object({
+    genres: z.array(filmGenreSchema),
+});
+
+export const getGenresArgsSchema = z.object({
+    language: z.string().default('en'),
+});
+
+/**
+ * Get the similar movies based on genres and keywords.
+ */
+export const getSimilarFilmsArgsSchema = z.object({
+    movie_id: z.number().int().nonnegative(),
+    language: z.string().default('en-US'),
+    page: z.number().int().positive().default(1),
+});
+
+/**
+ * Get the credits.
+ */
+export const castItemSchema = z.object({
+    adult: z.boolean(),
+    gender: z.number().int().nonnegative(),
+    id: z.number().int().nonnegative(),
+    known_for_department: z.string(),
+    name: z.string(),
+    original_name: z.string(),
+    popularity: z.number().nonnegative(),
+    profile_path: z.string().nullable(),
+    cast_id: z.number().int().nonnegative(),
+    character: z.string(),
+    credit_id: z.string(),
+    order: z.number().int().nonnegative(),
+});
+
+export const creditsResponseSchema = z.object({
+    id: z.number().int().nonnegative(),
+    cast: z.array(castItemSchema),
+});
+
+export const getCreditsArgsSchema = z.object({
+    movie_id: z.number().int().nonnegative(),
+    language: z.string().default('en-US'),
 });

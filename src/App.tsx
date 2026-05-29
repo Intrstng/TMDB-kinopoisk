@@ -5,9 +5,9 @@ import {selectThemeMode} from "@/app/model/slices/app-slice.ts";
 import {useAppSelector} from "@/common/hooks";
 import {getTheme} from "@/common/theme";
 import {ThemeProvider} from "@mui/material/styles";
-import {Outlet} from "react-router";
 import {ToastContainer} from "react-toastify";
-import { ScrollRestoration } from "react-router-dom";
+import {ScrollRestoration} from "react-router-dom";
+import {MainWrapper} from "@/common/components/MainWrapper/MainWrapper.tsx";
 
 function App() {
     const themeMode = useAppSelector(selectThemeMode)
@@ -18,7 +18,7 @@ function App() {
     return (
         <ThemeProvider theme={theme}>
             <Header />
-            <Outlet />
+            <MainWrapper />
             <ToastContainer />
             <ScrollRestoration />
             <Footer />

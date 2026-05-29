@@ -1,7 +1,7 @@
 import type { SxProps } from '@mui/material';
 
-export const galleryTitleSx: SxProps = {
-    margin: '1rem 0 2rem',
+export const categoryTitleSx: SxProps = {
+    margin: '0.5rem 0',
     fontSize: '2.25rem',
     fontFamily: 'ProtestFont, sans-serif',
     color: 'text.secondary',

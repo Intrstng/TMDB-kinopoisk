@@ -1,17 +1,24 @@
 import { baseApi } from '@/app/api/baseApi.ts';
 import type {
+    CreditsResponse,
     DetailsResponse,
     FetchFilmsArgs,
     FilmResponse,
     FilmsResponse,
+    GenresResponse,
+    GetCreditsArgs,
     GetFilmArgs,
+    GetGenresArgs,
+    GetSimilarFilmsArgs,
     SearchFilmArgs,
     SortFilmsArgs,
 } from '@/features/films/api/filmsApi.types.ts';
 import {
+    creditsResponseSchema,
     detailsResponseSchema,
     filmResponseSchema,
     filmsResponseSchema,
+    genresResponseSchema,
 } from '@/features/films/model/films.schemas.ts';
 import { withZodCatch } from '@/common/utils/withZodCatch.ts';
 import { API_KEY } from '@/common/constants';
@@ -33,6 +40,18 @@ export const filmsApi = baseApi.injectEndpoints({
             }),
             ...withZodCatch(detailsResponseSchema),
             providesTags: ['Details'],
+        }),
+
+        getGenres: builder.query<GenresResponse, GetGenresArgs>({
+            query: ({ language = 'en' }) => ({
+                url: 'genre/movie/list',
+                params: {
+                    language,
+                    api_key: API_KEY,
+                },
+            }),
+            ...withZodCatch(genresResponseSchema),
+            providesTags: ['Genres'],
         }),
 
         fetchFilms: builder.query<FilmsResponse, FetchFilmsArgs>({
@@ -69,7 +88,6 @@ export const filmsApi = baseApi.injectEndpoints({
 
         getFilm: builder.query<FilmResponse, GetFilmArgs>({
             query: id => ({
-                // direct parameter
                 url: `movie/${id}`,
                 params: { api_key: API_KEY },
             }),
@@ -77,9 +95,35 @@ export const filmsApi = baseApi.injectEndpoints({
             providesTags: (result, _error, id) => (result ? [{ type: 'Film', id }] : ['Film']),
         }),
 
+        getSimilarFilms: builder.query<FilmsResponse, GetSimilarFilmsArgs>({
+            query: ({ movie_id, page = 1, language = 'en-US' }) => ({
+                url: `movie/${movie_id}/similar`,
+                params: {
+                    page,
+                    language,
+                    api_key: API_KEY,
+                },
+            }),
+            ...withZodCatch(filmsResponseSchema),
+            providesTags: (result, _error, { movie_id }) =>
+                result ? [{ type: 'Similar', id: movie_id }] : ['Similar'],
+        }),
+
+        getCredits: builder.query<CreditsResponse, GetCreditsArgs>({
+            query: ({ movie_id, language = 'en-US' }) => ({
+                url: `movie/${movie_id}/credits`,
+                params: {
+                    language,
+                    api_key: API_KEY,
+                },
+            }),
+            ...withZodCatch(creditsResponseSchema),
+            providesTags: (result, _error, { movie_id }) =>
+                result ? [{ type: 'Credits', id: movie_id }] : ['Credits'],
+        }),
+
         sortFilms: builder.query<FilmResponse, SortFilmsArgs>({
             query: params => ({
-                // direct parameter
                 url: 'discover/movie',
                 params: { ...params, api_key: API_KEY },
             }),
@@ -89,5 +133,13 @@ export const filmsApi = baseApi.injectEndpoints({
     }),
 });
 
-export const { useGetConfigDetailsQuery, useFetchFilmsQuery, useSearchFilmQuery, useGetFilmQuery, useSortFilmsQuery } =
-    filmsApi;
+export const {
+    useGetConfigDetailsQuery,
+    useGetGenresQuery,
+    useFetchFilmsQuery,
+    useSearchFilmQuery,
+    useGetFilmQuery,
+    useSortFilmsQuery,
+    useGetSimilarFilmsQuery,
+    useGetCreditsQuery,
+} = filmsApi;

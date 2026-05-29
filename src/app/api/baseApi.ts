@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const baseApi = createApi({
     reducerPath: 'baseApi',
-    tagTypes: ['Films', 'Film', 'Details', 'Search', 'Sort'],
+    tagTypes: ['Films', 'Film', 'Genres', 'Details', 'Search', 'Sort', 'Similar', 'Credits'],
 
     baseQuery: async (args, api, extraOptions) => {
         const result = await fetchBaseQuery({

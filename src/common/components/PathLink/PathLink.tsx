@@ -40,10 +40,13 @@ import {useLocation} from "react-router";
 import type {CategoryButtonProps} from "@/common/components/PathLink/types.ts";
 
 const StyledNavLink = styled(NavLink)(({ theme }) => ({
-    padding: '8px 16px',
-    borderRadius: '4px',
+    padding: '0.5rem 1rem',
+    borderRadius: '0.25rem',
+    border: '1px solid',
+    borderColor: theme.palette.text.secondary,
     textDecoration: 'none',
-    color: theme.palette.text.primary,
+    color: theme.palette.text.secondary,
+    fontFamily: 'ProtestFont, sans-serif',
     transition: 'all 0.3s ease',
 
     '&:hover': {
@@ -51,8 +54,8 @@ const StyledNavLink = styled(NavLink)(({ theme }) => ({
     },
 
     '&.active': {
-        color: theme.palette.primary.dark,
-        fontWeight: 'bold',
+        color: theme.palette.secondary.dark,
+        borderColor: theme.palette.secondary.dark,
         backgroundColor: theme.palette.action.selected,
     },
 }));

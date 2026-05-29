@@ -1,5 +1,5 @@
 import Container from "@mui/material/Container"
-import {containerSx, mainSx} from "@/common/styles";
+import {containerSx} from "@/common/styles";
 import Box from "@mui/material/Box";
 import {FilmsGallery} from "@/common/components/FilmsGallery/FilmsGallery.tsx";
 import {CATEGORY_LINKS} from "@/common/constants";
@@ -13,34 +13,27 @@ import {Stack} from "@mui/material";
 
 export const Main = () => {
     return (
-        <Box component={'main'} sx={{
-            ...mainSx,
-            bgcolor: 'background.default',
-            color: 'text.primary',
-        }}>
+        <>
             <Backdrop category={NESTED_PATH.POPULAR}>
                 <Stack spacing={2}>
                     <Typography sx={backdropTitleSx} variant="h1" component="h1">Welcome</Typography>
-                    <Typography sx={backdropSubTitleSx} variant="h2" component="h2">Browse highlighted titles from TMDB</Typography>
-                        <SearchFilmForm
-                            redirectPath={PATH.SEARCH}
-                            size={SEARCH_SIZES.MEDIUM}
-                            className={s.searchMainPageForm}
-                        />
+                    <Typography sx={backdropSubTitleSx} variant="h2" component="h2">Browse highlighted titles from
+                        TMDB</Typography>
+                    <SearchFilmForm
+                        redirectPath={PATH.SEARCH}
+                        size={SEARCH_SIZES.MEDIUM}
+                        className={s.searchMainPageForm}
+                    />
                 </Stack>
             </Backdrop>
 
             <Container sx={containerSx}>
-                {/*<div className={s.container}>*/}
-                <div>
-                    {/*<div className={s.moviesGrid}>*/}
-                    <div>
-                        {CATEGORY_LINKS.map((category) => (
-                            <FilmsGallery key={category.id} path={category.path} title={category.title}/>
-                        ))}
-                    </div>
-                </div>
+                <Box>
+                    {CATEGORY_LINKS.map((category) => (
+                        <FilmsGallery key={category.id} path={category.path} title={category.title}/>
+                    ))}
+                </Box>
             </Container>
-        </Box>
+        </>
     );
 };

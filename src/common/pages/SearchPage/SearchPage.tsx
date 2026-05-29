@@ -10,9 +10,9 @@ import FilmCard from "@/common/components/FilmCard/FilmCard.tsx";
 import {useMoviesWithConfig} from "@/common/hooks";
 import {useSearchParams} from "react-router-dom";
 import {SearchStatus} from "@/common/components/SearchStatus/SearchStatus.tsx";
+import {searchClueSx, searchTitleSx} from "@/common/pages/SearchPage/SearchPage.styles.ts";
 
 export const SearchPage = () => {
-    // const [searchValue, setSearchValue] = useState<string>('');
     const [searchParams] = useSearchParams();
     const query = searchParams.get('query') || '';
     const page = Number(searchParams.get('page')) || 1;
@@ -48,19 +48,15 @@ export const SearchPage = () => {
     }
 
     return (
-        <Box component={'main'} sx={{
-            ...mainSx,
-            bgcolor: 'background.default',
-            color: 'text.secondary',
-        }}>
+        <>
             <Container sx={containerSx}>
                 <Box>
-                    <Typography variant="h2" component="h2">Search Results</Typography>
+                    <Typography variant="h2" component="h2" sx={searchTitleSx}>Search Results</Typography>
                     <SearchFilmForm isSearchFetching={isSearchFetching} className={s.searchForm} size={SEARCH_SIZES.SMALL}/>
 
                     {!query && (
-                        <Typography>
-                            Enter a movie title to start searching.
+                        <Typography variant="h3" component="h3" sx={searchClueSx}>
+                            Enter a movie title to start searching
                         </Typography>
                     )}
 
@@ -83,17 +79,12 @@ export const SearchPage = () => {
                                         ))}
                                     </Box>
                                 </Box>
-
                             )}
-
-                            {/*{!isSearchFetching && !searchFilmsData?.results?.length && (*/}
-                            {/*    <Typography>No movies found for "{query}"</Typography>*/}
-                            {/*)}*/}
                         </>
                     )}
                 </Box>
             </Container>
-        </Box>
+        </>
     );
 };
 //

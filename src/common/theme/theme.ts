@@ -20,7 +20,8 @@ export const getTheme = (themeMode: THEME_MODE) => {
                 styleOverrides: {
                     // root: { backgroundColor: '#000' },
                     input: {
-                        backgroundColor: '#978F66',
+                        // backgroundColor: '#978F66',
+                        backgroundColor: themeMode === THEME_MODE.LIGHT ? '#F1F7D4' : '#294669',
                         borderRadius: '0.25rem',
                     },
                 },
