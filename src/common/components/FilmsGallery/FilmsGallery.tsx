@@ -50,8 +50,8 @@ export const FilmsGallery = ({path, title}: FilmGalleryProps) => {
 
 
             <Box className={s.moviesGrid}>
-                {films.map((movie) => (
-                    <FilmCard key={movie.id} film={movie} source={getPosterUrl(movie.poster_path, POSTER_SIZE.W342)}/>
+                {films.map((film) => (
+                    <FilmCard key={film.id} film={film} source={getPosterUrl(film.poster_path, POSTER_SIZE.W342)}/>
                 ))}
             </Box>
         </Box>

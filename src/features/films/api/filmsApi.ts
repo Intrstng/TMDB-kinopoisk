@@ -106,7 +106,7 @@ export const filmsApi = baseApi.injectEndpoints({
             }),
             ...withZodCatch(filmsResponseSchema),
             providesTags: (result, _error, { movie_id }) =>
-                result ? [{ type: 'Similar', id: movie_id }] : ['Similar'],
+                result ? [{ type: 'SimilarFilms', id: movie_id }] : ['SimilarFilms'],
         }),
 
         getCredits: builder.query<CreditsResponse, GetCreditsArgs>({

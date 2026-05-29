@@ -8,7 +8,7 @@ import {FavouritesPage} from "@/common/pages/FavouritesPage/FavouritesPage.tsx";
 import {SearchPage} from "@/common/pages/SearchPage/SearchPage.tsx";
 import {FilteredPage} from "@/common/pages/FilteredPage/FilteredPage.tsx";
 import {CategoryPage} from "@/common/pages/CategoryLayout/CategoryPage/CategoryPage.tsx";
-import {MovieDetails} from "@/common/pages/MovieDetails/MovieDetails.tsx";
+import {MoviePage} from "@/common/pages/MoviePage/MoviePage.tsx";
 
 const categoryRoutes: NESTED_PATH[] = [NESTED_PATH.POPULAR, NESTED_PATH.TOP_RATED, NESTED_PATH.UPCOMING, NESTED_PATH.NOW_PLAYING];
 
@@ -31,7 +31,7 @@ const publicRoutes: RouteObject[] = [
             })),
             {
                 path: NESTED_PATH.DETAILS,
-                element: <MovieDetails />
+                element: <MoviePage />
             },
         ],
     },

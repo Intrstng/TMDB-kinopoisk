@@ -115,7 +115,7 @@ export const filmResponseSchema = z.object({
     belongs_to_collection: belongsToCollectionSchema.nullable(),
     budget: z.number().int().nonnegative(),
     genres: z.array(filmGenreSchema),
-    homepage: z.url(),
+    homepage: z.string(),
     id: z.number().int().nonnegative(),
     imdb_id: z.string(),
     origin_country: z.array(z.string()),

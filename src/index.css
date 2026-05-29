@@ -25,3 +25,19 @@
     font-style: normal;
     font-display: swap;
 }
+
+@font-face {
+    font-family: AntonFont;
+    src: url('./assets/fonts/Anton-Regular.ttf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: ShareTechFont;
+    src: url('./assets/fonts/ShareTech-Regular.ttf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}

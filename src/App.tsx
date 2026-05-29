@@ -11,8 +11,6 @@ import {MainWrapper} from "@/common/components/MainWrapper/MainWrapper.tsx";
 
 function App() {
     const themeMode = useAppSelector(selectThemeMode)
-    // const dispatch = useAppDispatch()
-
     const theme = getTheme(themeMode)
 
     return (
