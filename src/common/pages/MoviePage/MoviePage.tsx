@@ -1,6 +1,8 @@
 import {MovieDetails} from "@/common/components/MovieDetails/MovieDetails.tsx";
 import {useParams} from "react-router";
 import {useMoviesWithConfig} from "@/common/hooks";
+import {Cast} from "@/common/components/Cast";
+
 
 export const MoviePage = () => {
     const params = useParams();

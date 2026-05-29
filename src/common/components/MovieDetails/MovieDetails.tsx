@@ -7,6 +7,7 @@ import {getYearFromDate} from "@/common/utils/getYearFromDate.ts";
 import {getFilmRuntime} from "@/common/utils/getFilmRuntime.ts";
 import Typography from "@mui/material/Typography";
 import {movieDetailsSx} from "@/common/components/MovieDetails/MovieDetails.styles.ts";
+import {BackButton} from "@/common/components/BackButton/BackButton.tsx";
 
 export const MovieDetails = ({filmId, getPosterUrlCb}: DetailsProps) => {
     const {
@@ -28,10 +29,13 @@ export const MovieDetails = ({filmId, getPosterUrlCb}: DetailsProps) => {
             {isFilmLoading // or isFilmFetching
                 ? <div>Load skeleton for image</div>
                 :  <Paper elevation={3} sx={movieDetailsSx.poster}>
-                    <img src={posterUrl} alt={filmData.title}/>
-                </Paper>}
+                        <img src={posterUrl} alt={filmData.title}/>
+                    </Paper>}
             <Box>
-                <Typography variant="h1" component="h1" sx={movieDetailsSx.filmTitle}>{filmData.title}</Typography>
+                <Box sx={movieDetailsSx.filmHeader}>
+                    <Typography variant="h1" component="h1" sx={movieDetailsSx.filmTitle}>{filmData.title}</Typography>
+                    <BackButton/>
+                </Box>
                 <Typography variant="body1" component="p" sx={movieDetailsSx.filmDescription}>{filmData.overview}</Typography>
 
                 <Box sx={movieDetailsSx.filmInfo}>

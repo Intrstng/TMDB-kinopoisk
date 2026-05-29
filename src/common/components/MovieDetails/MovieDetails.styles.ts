@@ -8,6 +8,12 @@ const detailsSx: SxProps = {
     gap: '3rem',
 };
 
+const filmHeaderSx: SxProps = {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+};
+
 const posterSx: SxProps = {
     maxWidth: '18rem',
     width: '100%',
@@ -23,9 +29,10 @@ const posterSx: SxProps = {
 };
 
 const filmTitleSx: SxProps = {
+    width: '70%',
     marginBottom: '1rem',
     fontFamily: '"AntonFont", sans-serif',
-    fontSize: '3.5rem',
+    fontSize: '3rem',
     letterSpacing: '0.03rem',
 };
 
@@ -101,6 +108,7 @@ const filmYearSpanSx: SxProps = {
 
 export const movieDetailsSx = {
     details: detailsSx,
+    filmHeader: filmHeaderSx,
     poster: posterSx,
     filmTitle: filmTitleSx,
     filmDescription: filmDescriptionSx,
