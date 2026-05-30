@@ -1,7 +1,6 @@
 import type { SxProps } from '@mui/material';
 
 export const castTitleSx: SxProps = {
-    width: '70%',
     marginBottom: '1.75rem',
     fontFamily: '"AntonFont", sans-serif',
     fontSize: '2rem',
