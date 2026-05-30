@@ -1,8 +1,7 @@
-import {useGetGenresQuery} from "@/features/films/api/filmsApi.ts";
-import {useMoviesWithConfig} from "@/common/hooks";
 import Box from "@mui/material/Box";
 import {GenresControls} from "@/common/components/GenresControls/GenresControls.tsx";
 import {ResetFiltersButton} from "@/common/components/ResetFiltersButton/ResetFiltersButton.tsx";
+import {RatingRange} from "@/common/components/RatingRange/RatingRange.tsx";
 
 export const FilteredPage = () => {
 
@@ -36,8 +35,9 @@ export const FilteredPage = () => {
 
     return (
         <Box>
+            <RatingRange/>
             <GenresControls/>
-
+            <ResetFiltersButton />
         </Box>
     );
 };

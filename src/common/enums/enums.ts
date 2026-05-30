@@ -82,6 +82,11 @@ export enum SORT_BY {
     ORIGINAL_TITLE_DESC = 'original_title.desc',
 }
 
+export enum RATING_RANGE {
+    VOTE_AVERAGE_GTE = 'vote_average.gte',
+    VOTE_AVERAGE_LTE = 'vote_average.lte',
+}
+
 export enum SEARCH_SIZES {
     MEDIUM = 'medium',
     SMALL = 'small',
