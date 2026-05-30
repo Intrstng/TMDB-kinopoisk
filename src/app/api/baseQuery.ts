@@ -7,7 +7,3 @@ export const baseQuery = fetchBaseQuery({
         'API-KEY': import.meta.env.VITE_API_KEY,
     },
 });
-
-//          curl --request GET \
-//               --url 'https://api.themoviedb.org/3/movie/11' \
-//               --header 'Authorization: Bearer <<access_token>>'

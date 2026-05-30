@@ -1,19 +1,18 @@
 import {useGetGenresQuery} from "@/features/films/api/filmsApi.ts";
 import {useMoviesWithConfig} from "@/common/hooks";
+import Box from "@mui/material/Box";
+import {GenresControls} from "@/common/components/GenresControls/GenresControls.tsx";
+import {ResetFiltersButton} from "@/common/components/ResetFiltersButton/ResetFiltersButton.tsx";
 
 export const FilteredPage = () => {
-    const {
-        data: genresData,
-        // isLoading: isGenresLoading,
-        // // isError: isGenresError
-    } = useGetGenresQuery({ language: 'en' });
 
-    const {
-        // config: configData,
-        // isLoading: isConfigLoading,
-        // isError: isConfigError,
-        // getPosterUrl
-    } = useMoviesWithConfig();
+
+    // const {
+    //     // config: configData,
+    //     // isLoading: isConfigLoading,
+    //     // isError: isConfigError,
+    //     // getPosterUrl
+    // } = useMoviesWithConfig();
 
     // const {
     //     data: searchFilmsData,
@@ -36,10 +35,10 @@ export const FilteredPage = () => {
 
 
     return (
-        <div>
-            FilteredPage {JSON.stringify(genresData)}
+        <Box>
+            <GenresControls/>
 
-        </div>
+        </Box>
     );
 };
 
@@ -49,3 +48,12 @@ export const FilteredPage = () => {
 //     vote_average_gte: z.number().nonnegative(),
 //     vote_average_lte: z.number().nonnegative(),
 //     page: z.number().int().positive(),
+
+// Пример с несколькими фильтрами
+// const handleFiltersChange = (filters) => {
+//     const params = new URLSearchParams();
+//     if (filters.genre) params.set('genre', filters.genre);
+//     if (filters.year) params.set('year', filters.year);
+//     if (filters.sort) params.set('sort', filters.sort);
+//     setSearchParams(params);
+// };

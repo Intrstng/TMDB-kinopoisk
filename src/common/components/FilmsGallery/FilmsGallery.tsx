@@ -35,8 +35,8 @@ export const FilmsGallery = ({path, title}: FilmGalleryProps) => {
         return <div className={s.loader}>Загрузка skeleton...</div>;
     }
 
-    if (!filmsData?.results) {
-        return <div className={s.error}>No films or invalid response structure...</div>;
+    if (filmsData?.results.length === 0) {
+        return <div className={s.error}>No films or invalid response structure...</div>; // add styles
     }
 
     const films = filmsData?.results.slice(0, GALLERY_LENGTH) || [];

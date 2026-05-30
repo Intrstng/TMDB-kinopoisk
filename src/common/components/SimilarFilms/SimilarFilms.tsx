@@ -21,8 +21,8 @@ export const SimilarFilms = ({filmId, getPosterUrlCb}: DetailsProps) => {
         return <div className={s.loader}>Загрузка Similar skeleton...</div>;
     }
 
-    if (!similarFilmsData?.results) {
-        return <div className={s.error}>No Similar films info or invalid response structure...</div>;
+    if (similarFilmsData?.results.length === 0) {
+        return <div className={s.error}>No Similar films info or invalid response structure...</div>; // add styles
     }
 
     const similarFilms = similarFilmsData?.results.slice(0, GALLERY_LENGTH) || [];

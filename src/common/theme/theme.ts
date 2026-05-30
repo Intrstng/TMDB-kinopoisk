@@ -14,6 +14,9 @@ export const getTheme = (themeMode: THEME_MODE) => {
                 primary: themeMode === THEME_MODE.LIGHT ? '#0d253f' : '#E8EDF2',
                 secondary: themeMode === THEME_MODE.LIGHT ? '#5C766D' : '#FFF1D3',
             },
+            action: {
+                selected: themeMode === THEME_MODE.LIGHT ? '#E7E1B1' : '#5C766D',
+            },
         },
         components: {
             MuiInputBase: {

@@ -21,8 +21,8 @@ export const Cast = ({filmId, getPosterUrlCb}: DetailsProps) => {
         return <div className={s.loader}>Загрузка Cast skeleton...</div>;
     }
 
-    if (!creditsData?.cast) {
-        return <div className={s.error}>No Cast info or invalid response structure...</div>;
+    if (creditsData?.cast.length === 0) {
+        return <div className={s.error}>No Cast info or invalid response structure...</div>; // add styles
     }
 
     const actorsCast = creditsData?.cast.slice(0, GALLERY_LENGTH) || [];

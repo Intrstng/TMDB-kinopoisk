@@ -22,6 +22,7 @@ import {
 } from '@/features/films/model/films.schemas.ts';
 import { withZodCatch } from '@/common/utils/withZodCatch.ts';
 import { API_KEY } from '@/common/constants';
+import { SORT_BY } from '@/common/enums';
 
 /**
  * RTK Query endpoints для получения фильмов по категориям
@@ -125,7 +126,7 @@ export const filmsApi = baseApi.injectEndpoints({
         sortFilms: builder.query<FilmResponse, SortFilmsArgs>({
             query: params => ({
                 url: 'discover/movie',
-                params: { ...params, api_key: API_KEY },
+                params: { ...params, sort_by: SORT_BY.POPULARITY_DESC, api_key: API_KEY },
             }),
             ...withZodCatch(filmResponseSchema),
             providesTags: ['Sort'],
