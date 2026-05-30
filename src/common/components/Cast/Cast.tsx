@@ -2,11 +2,11 @@ import {useGetCreditsQuery} from "@/features/films/api/filmsApi.ts";
 import s from "@/common/components/FilmsGallery/FilmsGallery.module.css";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import {galleryTitleSx} from "@/common/components/FilmsGallery/FilmsGallery.styles.ts";
 import {POSTER_SIZE} from "@/common/enums";
 import {GALLERY_LENGTH} from "@/common/constants";
 import {CastItem} from "@/common/components/Cast/CastItem/CastItem.tsx";
 import type {DetailsProps} from "@/common/components/MovieDetails/types.ts";
+import {castTitleSx, moviesGridSx} from "@/common/components/Cast/Cast.styles.ts";
 
 export const Cast = ({filmId, getPosterUrlCb}: DetailsProps) => {
     const {
@@ -28,9 +28,9 @@ export const Cast = ({filmId, getPosterUrlCb}: DetailsProps) => {
     const actorsCast = creditsData?.cast.slice(0, GALLERY_LENGTH) || [];
 
     return (
-        <Box className={s.container}>
-            <Typography variant={'h1'} component={'h1'} sx={galleryTitleSx}>Cast</Typography>
-            <Box className={s.moviesGrid}>
+        <Box>
+            <Typography variant={'h1'} component={'h1'} sx={castTitleSx}>Cast</Typography>
+            <Box sx={moviesGridSx}>
                 {actorsCast.map((actor) => (
                     <CastItem key={actor.id} name={actor.name} character={actor.character} avatarUrl={getPosterUrlCb(actor.profile_path, POSTER_SIZE.W185)}/>
                 ))}

@@ -27,7 +27,7 @@ export const MoviePage = () => {
     return (
         <>
             <MovieDetails filmId={filmId} getPosterUrlCb={getPosterUrl}/>
-            {/*<Cast filmId={filmId} getPosterUrlCb={getPosterUrl}/>*/}
+            <Cast filmId={filmId} getPosterUrlCb={getPosterUrl}/>
             {/*<SimilarFilms filmId={filmId} getPosterUrlCb={getPosterUrl}/>*/}
         </>
     );

@@ -1,7 +1,7 @@
 import type { SxProps } from '@mui/material';
 
 const detailsSx: SxProps = {
-    padding: '2.25rem 0',
+    padding: '3rem 0 2rem',
     display: 'flex',
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
