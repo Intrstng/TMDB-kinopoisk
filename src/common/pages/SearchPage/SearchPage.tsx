@@ -1,16 +1,17 @@
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import { SearchFilmForm } from '@/common/components/SearchFilmForm/SearchFilmForm.tsx';
-import { useSearchFilmQuery } from '@/features/films/api/filmsApi.ts';
+import {SearchFilmForm} from '@/common/components/SearchFilmForm/SearchFilmForm.tsx';
+import {useSearchFilmQuery} from '@/features/films/api/filmsApi.ts';
 import s from './SearchPage.module.css';
 import Container from '@mui/material/Container';
-import { containerSx, mainSx } from '@/common/styles';
-import { POSTER_SIZE, SEARCH_SIZES } from '@/common/enums';
+import {containerSx} from '@/common/styles';
+import {POSTER_SIZE, SEARCH_SIZES} from '@/common/enums';
 import {FilmCard} from '@/common/components/FilmCard/FilmCard.tsx';
-import { useMoviesWithConfig } from '@/common/hooks';
-import { useSearchParams } from 'react-router-dom';
-import { SearchStatus } from '@/common/components/SearchStatus/SearchStatus.tsx';
-import { searchClueSx, searchTitleSx } from '@/common/pages/SearchPage/SearchPage.styles.ts';
+import {useMoviesWithConfig} from '@/common/hooks';
+import {useSearchParams} from 'react-router-dom';
+import {SearchStatus} from '@/common/components/SearchStatus/SearchStatus.tsx';
+import {searchClueSx, searchTitleSx} from '@/common/pages/SearchPage/SearchPage.styles.ts';
+import {AlertText} from "@/common/components/AlertText/AlertText.tsx";
 
 export const SearchPage = () => {
     const [searchParams] = useSearchParams();
@@ -30,26 +31,10 @@ export const SearchPage = () => {
         isFetching: isSearchFetching,
     } = useSearchFilmQuery({ query, page }, { skip: !query || !configData });
 
-    if (isConfigLoading) {
-        // change to skeleton
-        return (
-            <Box
-                component={'main'}
-                sx={{
-                    ...mainSx,
-                    bgcolor: 'background.default',
-                    color: 'text.secondary',
-                }}
-            >
-                <Container sx={containerSx}>
-                    <Typography>Loading configuration...</Typography>
-                </Container>
-            </Box>
-        );
-    }
+    if (isConfigLoading) return <AlertText text={'Loading configuration...'}/>
+        // change to skeleton or loader
 
     return (
-        <>
             <Container sx={containerSx}>
                 <Box>
                     <Typography variant="h2" component="h2" sx={searchTitleSx}>
@@ -94,7 +79,6 @@ export const SearchPage = () => {
                     )}
                 </Box>
             </Container>
-        </>
     );
 };
 //
