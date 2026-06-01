@@ -14,7 +14,6 @@
 //     )
 // };
 
-
 // import {NavLink} from "react-router-dom";
 // import {useLocation} from "react-router";
 // import type {CategoryButtonProps} from "@/common/components/PathLink/types.ts";
@@ -33,11 +32,10 @@
 //     )
 // };
 
-
 import { NavLink } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
-import {useLocation} from "react-router";
-import type {CategoryButtonProps} from "@/common/components/PathLink/types.ts";
+import { useLocation } from 'react-router';
+import type { CategoryButtonProps } from '@/common/components/PathLink/types.ts';
 
 const StyledNavLink = styled(NavLink)(({ theme }) => ({
     padding: '0.5rem 1rem',
@@ -50,12 +48,13 @@ const StyledNavLink = styled(NavLink)(({ theme }) => ({
     transition: 'all 0.3s ease',
 
     '&:hover': {
-        backgroundColor: theme.palette.action.hover,
+        color: theme.palette.action.selected,
+        backgroundColor: theme.palette.text.secondary,
     },
 
     '&.active': {
-        color: theme.palette.secondary.dark,
-        borderColor: theme.palette.secondary.dark,
+        color: theme.palette.text.secondary,
+        borderColor: theme.palette.text.secondary,
         backgroundColor: theme.palette.action.selected,
     },
 }));
@@ -65,9 +64,5 @@ export const PathLink = ({ path, title }: CategoryButtonProps) => {
     const basePath = location.pathname.split('/')[1];
     const fullPath = `/${basePath}/${path}`;
 
-    return (
-        <StyledNavLink to={fullPath}>
-            {title}
-        </StyledNavLink>
-    );
+    return <StyledNavLink to={fullPath}>{title}</StyledNavLink>;
 };

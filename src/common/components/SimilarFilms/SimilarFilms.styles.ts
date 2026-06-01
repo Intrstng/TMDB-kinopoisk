@@ -12,7 +12,6 @@ export const moviesGridSx = {
     gridTemplateColumns: 'repeat(6, 1fr)',
     gap: '1.5rem',
     paddingBottom: '2.25rem',
-    borderBottom: '0.06rem solid #90cea1',
 
     '@media (max-width: 768px)': {
         gridTemplateColumns: 'repeat(3, minmax(140px, 1fr))',

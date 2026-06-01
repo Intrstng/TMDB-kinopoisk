@@ -4,7 +4,10 @@ import { BACKDROP_SIZE, POSTER_SIZE } from '@/common/enums';
 export const useMoviesWithConfig = () => {
     const { data: configData, isLoading: isConfigLoading, isError: isConfigError } = useGetConfigDetailsQuery();
 
-    const getPosterUrl = (posterPath: string | null, size: POSTER_SIZE = POSTER_SIZE.W500): string | undefined => {
+    const getPosterUrl = (
+        posterPath: string | null | undefined,
+        size: POSTER_SIZE = POSTER_SIZE.W500
+    ): string | undefined => {
         if (!configData || !posterPath) return;
 
         const baseUrl = configData.images.secure_base_url;

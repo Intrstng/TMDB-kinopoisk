@@ -21,7 +21,8 @@ export default defineConfig([
       globals: globals.browser,
     },
     rules: {
-      'no-useless-assignment': 'off'
+      'no-useless-assignment': 'off',
+      "react-hooks/set-state-in-effect": "off"
     }
   },
 ])

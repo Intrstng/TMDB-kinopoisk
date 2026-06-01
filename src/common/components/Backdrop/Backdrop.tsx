@@ -1,31 +1,28 @@
-import {useMoviesWithConfig} from "@/common/hooks";
-import {useFetchFilmsQuery} from "@/features/films/api/filmsApi.ts";
-import type {BackdropComponentProps} from "@/common/components/Backdrop/types.ts";
-import Container from "@mui/material/Container";
-import {getRandomElementFromArray} from "@/common/utils/getRandomElementFromArray.ts";
-import {BACKDROP_SIZE} from "@/common/enums";
-import {useEffect, useState} from "react";
-import Box from "@mui/material/Box";
-import {ImagePreloader} from "@/common/components/ImagePreloader/ImagePreloader.tsx";
-import {backdropContainerSx} from "@/common/styles/container.styles.ts";
+import { useMoviesWithConfig } from '@/common/hooks';
+import { useFetchFilmsQuery } from '@/features/films/api/filmsApi.ts';
+import type { BackdropComponentProps } from '@/common/components/Backdrop/types.ts';
+import Container from '@mui/material/Container';
+import { getRandomElementFromArray } from '@/common/utils/getRandomElementFromArray.ts';
+import { BACKDROP_SIZE } from '@/common/enums';
+import { useEffect, useState } from 'react';
+import Box from '@mui/material/Box';
+import { ImagePreloader } from '@/common/components/ImagePreloader/ImagePreloader.tsx';
+import { backdropContainerSx } from '@/common/styles/container.styles.ts';
 
-export const Backdrop = ({category, children}: BackdropComponentProps) => {
+export const Backdrop = ({ category, children }: BackdropComponentProps) => {
     const [imageLoaded, setImageLoaded] = useState<boolean>(false);
     const [backdropUrl, setBackdropUrl] = useState<string | undefined>(undefined);
 
     const {
         config: configData,
         // isLoading: isConfigLoading,
-        getBackdropUrl
+        getBackdropUrl,
     } = useMoviesWithConfig();
 
     const {
         data: filmsData,
         // isLoading: isMoviesLoading
-    } = useFetchFilmsQuery(
-        {category, language: 'en-US', page: 1},
-        {skip: !configData}
-    );
+    } = useFetchFilmsQuery({ category, language: 'en-US', page: 1 }, { skip: !configData });
 
     useEffect(() => {
         if (filmsData?.results && configData) {
@@ -33,24 +30,27 @@ export const Backdrop = ({category, children}: BackdropComponentProps) => {
             const url = backdropRandomFilm?.backdrop_path
                 ? getBackdropUrl(backdropRandomFilm.backdrop_path, BACKDROP_SIZE.ORIGINAL)
                 : undefined;
-
+             
             setBackdropUrl(url);
             setImageLoaded(false); // Reset loaded state when new image is set
         }
     }, [filmsData, configData, getBackdropUrl]);
 
-    const gradientBackground = 'linear-gradient(180deg,rgba(2, 0, 36, 1) 0%, rgba(103, 103, 122, 1) 0%, rgba(235, 243, 245, 1) 100%)';
+    const gradientBackground =
+        'linear-gradient(180deg,rgba(2, 0, 36, 1) 0%, rgba(103, 103, 122, 1) 0%, rgba(235, 243, 245, 1) 100%)';
 
     return (
-        <Box sx={{
-            position: 'relative',
-            minHeight: 'calc(100vh - 4.3rem)',
-            width: '100%',
-            // Check
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-        }}>
+        <Box
+            sx={{
+                position: 'relative',
+                minHeight: 'calc(100vh - 4.3rem)',
+                width: '100%',
+                // Check
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+            }}
+        >
             <Box
                 sx={{
                     position: 'absolute',
@@ -64,13 +64,10 @@ export const Backdrop = ({category, children}: BackdropComponentProps) => {
                     transition: 'background-image 0.3s ease',
                 }}
             />
-            <ImagePreloader imageUrl={backdropUrl} isImageLoaded={imageLoaded} onLoadCb={setImageLoaded}/>
+            <ImagePreloader imageUrl={backdropUrl} isImageLoaded={imageLoaded} onLoadCb={setImageLoaded} />
 
-            <Box sx={{position: 'relative',
-                zIndex: 1}}>
-                <Container sx={backdropContainerSx} >
-                    {children}
-                </Container>
+            <Box sx={{ position: 'relative', zIndex: 1 }}>
+                <Container sx={backdropContainerSx}>{children}</Container>
             </Box>
         </Box>
     );

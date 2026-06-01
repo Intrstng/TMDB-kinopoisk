@@ -1,96 +1,96 @@
-// import Slider from "@mui/material/Slider";
-// import {useEffect, useState} from "react";
-// import {RATING_DEFAULT} from "@/common/constants";
-// import {ratingRangeSx} from "@/common/components/RatingRange/RatingRange.styles.ts";
-// import {useDebounceValue} from "@/common/hooks";
-// import { useSearchParams } from "react-router-dom";
-//
-// export const RatingRange = () => {
-//     const [value, setValue] = useState(RATING_DEFAULT);
-//     const [searchParams, setSearchParams] = useSearchParams();
-//     const debouncedRangeValue = useDebounceValue(value)
-//
-//     useEffect(() => {
-//             console.log("Отправляем запрос с рейтингом:", debouncedRangeValue);
-//             // Здесь ваш API запрос
-//             // dispatch(setRatingFilter(debouncedRangeValue));
-//
-//         const newParams = new URLSearchParams(searchParams);
-//         newParams.set('rating', debouncedRangeValue.toString());
-//         setSearchParams(newParams);
-//
-//
-//     }, [debouncedRangeValue, searchParams, setSearchParams]);
-//
-//     const handleChange = (_event: Event, newValue: number) => {
-//         setValue(newValue);
-//     };
-//
-//     return (
-//         <Slider
-//             value={value}
-//             onChange={handleChange}
-//             min={0}
-//             max={RATING_DEFAULT}
-//             sx={ratingRangeSx}
-//             step={0.1}
-//             size="medium"
-//             aria-label="Volume"
-//         />
-//     );
-// };
-
-import Slider from "@mui/material/Slider";
-import {useEffect, useState} from "react";
-import {RATING_MAX, RATING_MIN} from "@/common/constants";
-import {ratingRangeSx} from "@/common/components/RatingRange/RatingRange.styles.ts";
-import {useDebounceValue} from "@/common/hooks";
-import {useSearchParams} from "react-router-dom";
-import {RATING_RANGE} from "@/common/enums";
+import Slider from '@mui/material/Slider';
+import { useEffect, useState } from 'react';
+import { RATING_MAX, RATING_MIN } from '@/common/constants';
+import { ratingRangeSx } from '@/common/components/RatingRange/RatingRange.styles.ts';
+import { useDebounceValue } from '@/common/hooks';
+import { useSearchParams } from 'react-router-dom';
+import { Box, Typography } from '@mui/material';
+import { SEARCH_PARAMS } from '@/common/enums';
 
 export const RatingRange = () => {
     const [searchParams, setSearchParams] = useSearchParams();
 
-    const ratingMinValue = searchParams.get(RATING_RANGE.VOTE_AVERAGE_GTE)
-    const ratingMaxValue = searchParams.get(RATING_RANGE.VOTE_AVERAGE_LTE)
+    const ratingMinValue = searchParams.get(SEARCH_PARAMS.VOTE_AVERAGE_GTE);
+    const ratingMaxValue = searchParams.get(SEARCH_PARAMS.VOTE_AVERAGE_LTE);
 
     const [values, setValues] = useState([Number(ratingMinValue) || RATING_MIN, Number(ratingMaxValue) || RATING_MAX]);
 
-    const debouncedValues = useDebounceValue(values, 700);
+    const debouncedValues = useDebounceValue(values);
 
+    // Синхронизация с URL при внешних изменениях (например, кнопка Reset)
+    useEffect(() => {
+        const urlMin = searchParams.get(SEARCH_PARAMS.VOTE_AVERAGE_GTE);
+        const urlMax = searchParams.get(SEARCH_PARAMS.VOTE_AVERAGE_LTE);
+
+        const newMin = urlMin ? Number(urlMin) : RATING_MIN;
+        const newMax = urlMax ? Number(urlMax) : RATING_MAX;
+
+        setValues([newMin, newMax]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [searchParams.get(SEARCH_PARAMS.VOTE_AVERAGE_GTE), searchParams.get(SEARCH_PARAMS.VOTE_AVERAGE_LTE)]);
+
+    // Обновление URL при изменении значений (с debounce)
     useEffect(() => {
         const [debouncedMin, debouncedMax] = debouncedValues;
         const newParams = new URLSearchParams(searchParams);
-        const isDefaultRange = debouncedMin === RATING_MIN && debouncedMax === RATING_MAX;
 
-        if (isDefaultRange) {
-            // Удаляем параметры если значения по умолчанию
-            newParams.delete(RATING_RANGE.VOTE_AVERAGE_GTE);
-            newParams.delete(RATING_RANGE.VOTE_AVERAGE_LTE);
-        } else {
-            // Устанавливаем оба параметра
-            newParams.set(RATING_RANGE.VOTE_AVERAGE_GTE, debouncedMin.toString());
-            newParams.set(RATING_RANGE.VOTE_AVERAGE_LTE, debouncedMax.toString());
-        }
+        newParams.set(SEARCH_PARAMS.VOTE_AVERAGE_GTE, debouncedMin.toString());
+        newParams.set(SEARCH_PARAMS.VOTE_AVERAGE_LTE, debouncedMax.toString());
+
         setSearchParams(newParams);
-    }, [debouncedValues, searchParams, setSearchParams]);
+    }, [debouncedValues]);
 
     const handleChange = (_event: Event, newValues: number[]) => {
-        setValues(newValues)
+        setValues(newValues);
     };
 
     return (
-        <Slider
-            value={values}
-            onChange={handleChange}
-            min={RATING_MIN}
-            max={RATING_MAX}
-            sx={ratingRangeSx}
-            step={0.1}
-            size="medium"
-            disableSwap
-            valueLabelDisplay="auto"
-            aria-label="Volume"
-        />
+        <Box sx={ratingRangeSx.container}>
+            <Box sx={ratingRangeSx.ratingBlock}>
+                <Typography variant="subtitle2" sx={ratingRangeSx.subtitle}>
+                    Rating Filter
+                </Typography>
+                <Box sx={ratingRangeSx.ratingValuesBlock}>
+                    <Box sx={ratingRangeSx.currentValues}>
+                        <Typography variant="body2" color="text.secondary" sx={ratingRangeSx.subtitle}>
+                            From:
+                        </Typography>
+                        <Typography variant="body1" sx={ratingRangeSx.ratingValue}>
+                            {values[0].toFixed(1)}
+                        </Typography>
+                    </Box>
+                    <Box sx={ratingRangeSx.currentValues}>
+                        <Typography variant="body2" color="text.secondary" sx={ratingRangeSx.subtitle}>
+                            To:
+                        </Typography>
+                        <Typography variant="body1" sx={ratingRangeSx.ratingValue}>
+                            {values[1] === 10 ? values[1].toFixed(0) : values[1].toFixed(1)}
+                        </Typography>
+                    </Box>
+                </Box>
+            </Box>
+
+            <Slider
+                value={values}
+                onChange={handleChange}
+                min={RATING_MIN}
+                max={RATING_MAX}
+                sx={ratingRangeSx.slider}
+                step={0.1}
+                size="small"
+                disableSwap
+                valueLabelDisplay="auto"
+                aria-label="Rating range"
+            />
+
+            <Box sx={ratingRangeSx.limits}>
+                <Typography variant="caption" sx={ratingRangeSx.ratingValue}>
+                    {RATING_MIN}
+                </Typography>
+                <Typography variant="caption" sx={ratingRangeSx.ratingValue}>
+                    {RATING_MAX}
+                </Typography>
+            </Box>
+        </Box>
     );
 };

@@ -22,7 +22,7 @@ import {
 } from '@/features/films/model/films.schemas.ts';
 import { withZodCatch } from '@/common/utils/withZodCatch.ts';
 import { API_KEY } from '@/common/constants';
-import { SORT_BY } from '@/common/enums';
+import { SEARCH_PARAMS } from '@/common/enums';
 
 /**
  * RTK Query endpoints для получения фильмов по категориям
@@ -123,12 +123,19 @@ export const filmsApi = baseApi.injectEndpoints({
                 result ? [{ type: 'Credits', id: movie_id }] : ['Credits'],
         }),
 
-        sortFilms: builder.query<FilmResponse, SortFilmsArgs>({
+        sortFilms: builder.query<FilmsResponse, SortFilmsArgs>({
             query: params => ({
                 url: 'discover/movie',
-                params: { ...params, sort_by: SORT_BY.POPULARITY_DESC, api_key: API_KEY },
+                params: {
+                    [SEARCH_PARAMS.GENRES]: params[SEARCH_PARAMS.GENRES],
+                    [SEARCH_PARAMS.SORT]: params[SEARCH_PARAMS.SORT],
+                    [SEARCH_PARAMS.PAGE]: params[SEARCH_PARAMS.PAGE],
+                    [SEARCH_PARAMS.VOTE_AVERAGE_GTE]: params.vote_average_gte,
+                    [SEARCH_PARAMS.VOTE_AVERAGE_LTE]: params.vote_average_lte,
+                    api_key: API_KEY,
+                },
             }),
-            ...withZodCatch(filmResponseSchema),
+            ...withZodCatch(filmsResponseSchema),
             providesTags: ['Sort'],
         }),
     }),

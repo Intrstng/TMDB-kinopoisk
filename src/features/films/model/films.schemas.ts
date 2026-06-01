@@ -28,14 +28,14 @@ export const detailsResponseSchema = z.object({
  */
 export const filmResultSchema = z.object({
     adult: z.boolean(),
-    backdrop_path: z.string().nullable(),
+    backdrop_path: z.string().nullish(),
     genre_ids: z.array(z.number()),
     id: z.number().positive(),
     original_language: z.string(),
     original_title: z.string(),
-    overview: z.string(),
+    overview: z.string().optional(),
     popularity: z.number(),
-    poster_path: z.string().nullable(),
+    poster_path: z.string().nullish(),
     release_date: z.string(),
     title: z.string(),
     video: z.boolean(),
@@ -82,8 +82,8 @@ export const searchFilmArgsSchema = z.object({
 export const belongsToCollectionSchema = z.object({
     id: z.number().int().nonnegative(),
     name: z.string(),
-    poster_path: z.string().nullable(),
-    backdrop_path: z.string().nullable(),
+    poster_path: z.string().nullish(),
+    backdrop_path: z.string().nullish(),
 });
 
 export const filmGenreSchema = z.object({
@@ -110,32 +110,32 @@ export const spokenLanguageSchema = z.object({
 });
 
 export const filmResponseSchema = z.object({
-    adult: z.boolean(),
-    backdrop_path: z.string().nullable(),
-    belongs_to_collection: belongsToCollectionSchema.nullable(),
-    budget: z.number().int().nonnegative(),
-    genres: z.array(filmGenreSchema),
-    homepage: z.string(),
-    id: z.number().int().nonnegative(),
-    imdb_id: z.string(),
-    origin_country: z.array(z.string()),
-    original_language: z.string(),
-    original_title: z.string(),
-    overview: z.string(),
-    popularity: z.number().nonnegative(),
-    poster_path: z.string().nullable(),
-    production_companies: z.array(productionCompanySchema),
-    production_countries: z.array(productionCountrySchema),
-    release_date: z.string(),
-    revenue: z.number().int().nonnegative(),
-    runtime: z.number().int().nonnegative(),
-    spoken_languages: z.array(spokenLanguageSchema),
-    status: z.string(),
-    tagline: z.string(),
-    title: z.string(),
-    video: z.boolean(),
-    vote_average: z.number().nonnegative(),
-    vote_count: z.number().int().nonnegative(),
+    adult: z.boolean().optional(),
+    backdrop_path: z.string().nullish(),
+    belongs_to_collection: belongsToCollectionSchema.nullish(),
+    budget: z.number().int().nonnegative().optional(),
+    genres: z.array(filmGenreSchema).optional(),
+    homepage: z.string().optional(),
+    id: z.number().int().nonnegative().optional(),
+    imdb_id: z.string().nullable().optional(),
+    origin_country: z.array(z.string()).optional(),
+    original_language: z.string().optional(),
+    original_title: z.string().optional(),
+    overview: z.string().optional(),
+    popularity: z.number().nonnegative().optional(),
+    poster_path: z.string().nullish(),
+    production_companies: z.array(productionCompanySchema).optional(),
+    production_countries: z.array(productionCountrySchema).optional(),
+    release_date: z.string().optional(),
+    revenue: z.number().int().nonnegative().optional(),
+    runtime: z.number().int().nonnegative().optional(),
+    spoken_languages: z.array(spokenLanguageSchema).optional(),
+    status: z.string().optional(),
+    tagline: z.string().optional(),
+    title: z.string().optional(),
+    video: z.boolean().optional(),
+    vote_average: z.number().nonnegative().optional(),
+    vote_count: z.number().int().nonnegative().optional(),
 });
 
 export const getFilmArgsSchema = z.string();
@@ -166,7 +166,7 @@ export const sortFilmsArgsSchema = z.object({
  * Get the list of official genres for movies.
  */
 export const genresResponseSchema = z.object({
-    genres: z.array(filmGenreSchema),
+    genres: z.array(filmGenreSchema).optional(),
 });
 
 export const getGenresArgsSchema = z.object({
@@ -186,7 +186,7 @@ export const getSimilarFilmsArgsSchema = z.object({
  * Get the credits.
  */
 export const castItemSchema = z.object({
-    adult: z.boolean(),
+    adult: z.boolean().nullable(),
     gender: z.number().int().nonnegative(),
     id: z.number().int().nonnegative(),
     known_for_department: z.string(),

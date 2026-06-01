@@ -2,7 +2,7 @@ import Logo from '@/assets/icons/TMDB_logo.svg?react';
 import LogoBig from '@/assets/icons/TMDB_logo-big.svg?react';
 import Git from '@/assets/icons/github-icon.svg?react';
 import type { FC, SVGProps } from 'react';
-import {ICON_VARIANT} from "@/common/enums/enums.ts";
+import { ICON_VARIANT } from '@/common/enums/enums.ts';
 
 export type SvgComponent = FC<SVGProps<SVGSVGElement>>;
 
