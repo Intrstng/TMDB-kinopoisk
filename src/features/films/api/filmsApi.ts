@@ -57,7 +57,8 @@ export const filmsApi = baseApi.injectEndpoints({
 
         /** Напоминание по InfiniteQuery для fetchFilms:
          * 1. fetchFilms: builder.infiniteQuery<FetchFilmsResponse, void, string | undefined>  <-- void это query параметры
-         * которые передаем, string | undefined это значение initialPageParam (в нашем случае FetchFilmsArgs)
+         * которые передаем (в нашем случае FetchFilmsArgs)
+         * string | undefined это значение initialPageParam в объекте infiniteQueryOptions
          * 2. number (третий аргумент в builder.infiniteQuery) - TMDB API при пагинации при первой загрузке вернет 1
          * (если бы использовали курсорную пагинацию было бы undefined)
          * 3. В pageParam будет попадать значение nextCursor
