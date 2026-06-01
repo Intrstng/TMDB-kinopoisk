@@ -1,5 +1,5 @@
 import {useLocation} from 'react-router';
-import {useFetchFilmsQuery} from '@/features/films/api/filmsApi.ts';
+import {useFetchFilmsInfiniteQuery} from '@/features/films/api/filmsApi.ts';
 import {useMoviesWithConfig} from '@/common/hooks';
 import {POSTER_SIZE} from '@/common/enums';
 import {FilmCard} from '@/common/components/FilmCard/FilmCard.tsx';
@@ -8,6 +8,8 @@ import Typography from '@mui/material/Typography';
 import {CATEGORY_LINKS} from '@/common/constants';
 import {PathLink} from '@/common/components/PathLink/PathLink.tsx';
 import {categorySx} from "@/common/pages/CategoryLayout/CategoryPage/CategoryPage.styles.ts";
+import {useInfiniteScroll} from "@/common/hooks/useInfiniteScroll.ts";
+import {LoadingTrigger} from "@/common/components/LoadingTrigger/LoadingTrigger.tsx";
 
 export const CategoryPage = () => {
     const location = useLocation();
@@ -22,26 +24,29 @@ export const CategoryPage = () => {
         getPosterUrl,
     } = useMoviesWithConfig();
 
-    const {
-        data: filmsData,
-        isLoading: isMoviesLoading,
-        // isError: isMoviesError
-    } = useFetchFilmsQuery(
+    const { data, isLoading: isMoviesLoading, isFetching, isFetchingNextPage, fetchNextPage, hasNextPage }
+    = useFetchFilmsInfiniteQuery(
         { category: currentCategoryFormatted, language: 'en-US', page: 1 },
         {
             skip: !configData,
         }
     );
 
+    const {observerRef} = useInfiniteScroll({
+        hasNextPage,
+        isFetching,
+        fetchNextPage,
+    })
+
+    const filmsData = data?.pages.flatMap((page) => page.results) || []
+
     if (isConfigLoading || isMoviesLoading) {
         return <Box sx={categorySx.loader}>Загрузка skeleton...</Box>;
     }
 
-    if (!filmsData?.results) {
+    if (filmsData?.length === 0) {
         return <Box sx={categorySx.error}>No films or invalid response structure...</Box>;
     }
-
-    const films = filmsData?.results || [];
 
     const categoryLinks = CATEGORY_LINKS.map(link => <PathLink key={link.id} path={link.path} title={link.title} />);
 
@@ -54,9 +59,14 @@ export const CategoryPage = () => {
                 <Box sx={categorySx.nav}>{categoryLinks}</Box>
             </Box>
             <Box sx={categorySx.moviesGrid}>
-                {films.map(movie => (
+                {filmsData.map(movie => (
                     <FilmCard key={movie.id} film={movie} source={getPosterUrl(movie.poster_path, POSTER_SIZE.W342)} />
                 ))}
+
+                {hasNextPage && (
+                    <LoadingTrigger observerRef={observerRef} isFetchingNextPage={isFetchingNextPage}/>
+                )}
+                {!hasNextPage && filmsData.length > 0 && <p>Nothing more to load</p>}
             </Box>
         </Box>
     );

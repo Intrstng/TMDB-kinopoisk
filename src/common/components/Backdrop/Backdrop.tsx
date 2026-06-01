@@ -1,13 +1,13 @@
-import { useMoviesWithConfig } from '@/common/hooks';
-import { useFetchFilmsQuery } from '@/features/films/api/filmsApi.ts';
-import type { BackdropComponentProps } from '@/common/components/Backdrop/types.ts';
+import {useMoviesWithConfig} from '@/common/hooks';
+import {useFetchFilmsInfiniteQuery} from '@/features/films/api/filmsApi.ts';
+import type {BackdropComponentProps} from '@/common/components/Backdrop/types.ts';
 import Container from '@mui/material/Container';
-import { getRandomElementFromArray } from '@/common/utils/getRandomElementFromArray.ts';
-import { BACKDROP_SIZE } from '@/common/enums';
-import { useEffect, useState } from 'react';
+import {getRandomElementFromArray} from '@/common/utils/getRandomElementFromArray.ts';
+import {BACKDROP_SIZE} from '@/common/enums';
+import {useEffect, useState} from 'react';
 import Box from '@mui/material/Box';
-import { ImagePreloader } from '@/common/components/ImagePreloader/ImagePreloader.tsx';
-import { backdropContainerSx } from '@/common/styles/container.styles.ts';
+import {ImagePreloader} from '@/common/components/ImagePreloader/ImagePreloader.tsx';
+import {backdropContainerSx} from '@/common/styles/container.styles.ts';
 
 export const Backdrop = ({ category, children }: BackdropComponentProps) => {
     const [imageLoaded, setImageLoaded] = useState<boolean>(false);
@@ -20,13 +20,24 @@ export const Backdrop = ({ category, children }: BackdropComponentProps) => {
     } = useMoviesWithConfig();
 
     const {
-        data: filmsData,
-        // isLoading: isMoviesLoading
-    } = useFetchFilmsQuery({ category, language: 'en-US', page: 1 }, { skip: !configData });
+        data,
+        // isLoading: isMoviesLoading,
+        // isFetching
+    } = useFetchFilmsInfiniteQuery(
+        { category, language: 'en-US', page: 1 },
+        {
+            skip: !configData,
+        }
+    );
+
+    const filmsData = data?.pages.flatMap((page) => page.results) || []
+
+    console.log("filmsData")
+    console.log(filmsData)
 
     useEffect(() => {
-        if (filmsData?.results && configData) {
-            const backdropRandomFilm = getRandomElementFromArray(filmsData.results);
+        if (filmsData.length > 0 && configData) {
+            const backdropRandomFilm = getRandomElementFromArray(filmsData);
             const url = backdropRandomFilm?.backdrop_path
                 ? getBackdropUrl(backdropRandomFilm.backdrop_path, BACKDROP_SIZE.ORIGINAL)
                 : undefined;

@@ -55,13 +55,33 @@ export const filmsApi = baseApi.injectEndpoints({
             providesTags: ['Genres'],
         }),
 
-        fetchFilms: builder.query<FilmsResponse, FetchFilmsArgs>({
-            query: ({ category, page = 1, ...params }) => {
+        /** Напоминание по InfiniteQuery для fetchFilms:
+         * 1. fetchFilms: builder.infiniteQuery<FetchFilmsResponse, void, string | undefined>  <-- void это query параметры
+         * которые передаем, string | undefined это значение initialPageParam (в нашем случае FetchFilmsArgs)
+         * 2. number (третий аргумент в builder.infiniteQuery) - TMDB API при пагинации при первой загрузке вернет 1
+         * (если бы использовали курсорную пагинацию было бы undefined)
+         * 3. В pageParam будет попадать значение nextCursor
+         * 4. в queryArg будут попадать то что будем передавать вместо void в   fetchTracks: builder.infiniteQuery<FetchTracksResponse, void, string | undefined>
+         */
+        fetchFilms: builder.infiniteQuery<FilmsResponse, FetchFilmsArgs, number>({
+            // see 1
+            infiniteQueryOptions: {
+                initialPageParam: 1, // see 2
+                getNextPageParam: (lastPage, _allPages, lastPageParam) => {
+                    if (lastPage.page < lastPage.total_pages) {
+                        return lastPageParam + 1;
+                    }
+                    return undefined;
+                },
+            },
+
+            query: ({ pageParam, queryArg }) => {
+                // see 3 & 4
                 return {
-                    url: `movie/${category}`,
+                    url: `movie/${queryArg.category}`,
                     params: {
-                        ...params,
-                        page,
+                        ...queryArg,
+                        page: pageParam,
                         api_key: API_KEY,
                     },
                 };
@@ -144,7 +164,7 @@ export const filmsApi = baseApi.injectEndpoints({
 export const {
     useGetConfigDetailsQuery,
     useGetGenresQuery,
-    useFetchFilmsQuery,
+    useFetchFilmsInfiniteQuery,
     useSearchFilmQuery,
     useGetFilmQuery,
     useSortFilmsQuery,

@@ -1,6 +1,5 @@
 import type {FilmGalleryProps} from '@/common/components/FilmsGallery/types.ts';
 import {useMoviesWithConfig} from '@/common/hooks';
-import {useFetchFilmsQuery} from '@/features/films/api/filmsApi.ts';
 import s from './FilmsGallery.module.css';
 import {FilmCard} from '@/common/components/FilmCard/FilmCard.tsx';
 import {POSTER_SIZE} from '@/common/enums';
@@ -9,6 +8,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import {galleryTitleSx} from '@/common/components/FilmsGallery/FilmsGallery.styles.ts';
 import {LoadMoreButton} from "@/common/components/LoadMoreButton/LoadMoreButton.tsx";
+import {useFetchFilmsInfiniteQuery} from "@/features/films/api/filmsApi.ts";
 
 export const FilmsGallery = ({ path, title }: FilmGalleryProps) => {
     const pathFormatted = path.replace(/-/g, '_');
@@ -21,25 +21,27 @@ export const FilmsGallery = ({ path, title }: FilmGalleryProps) => {
     } = useMoviesWithConfig();
 
     const {
-        data: filmsData,
+        data,
         isLoading: isMoviesLoading,
-        // isError: isMoviesError
-    } = useFetchFilmsQuery(
+        // isFetching
+    } = useFetchFilmsInfiniteQuery(
         { category: pathFormatted, language: 'en-US', page: 1 },
         {
             skip: !configData,
         }
     );
 
+    const filmsData = data?.pages.flatMap((page) => page.results) || []
+
     if (isConfigLoading || isMoviesLoading) {
         return <div className={s.loader}>Загрузка skeleton...</div>;
     }
 
-    if (filmsData?.results.length === 0) {
+    if (filmsData?.length === 0) {
         return <div className={s.error}>No films or invalid response structure...</div>; // add styles
     }
 
-    const films = filmsData?.results.slice(0, GALLERY_LENGTH) || [];
+    const films = filmsData?.slice(0, GALLERY_LENGTH) || [];
 
     return (
         <Box className={s.container}>
