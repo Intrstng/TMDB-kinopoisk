@@ -1,4 +1,3 @@
-import s from './FilmCard.module.css';
 import {PATH} from '@/common/enums';
 import {NavLink} from 'react-router-dom';
 import {type FilmCardProps} from '@/common/components/FilmCard/types.ts';
@@ -6,13 +5,15 @@ import type {FavoriteFilm} from "@/common/pages/FavouritesPage/types.ts";
 import noPoster from '@/assets/images/no_poster.jpg';
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
+import type {MouseEvent} from 'react'
 import {useEffect, useState} from "react";
 import IconButton from "@mui/material/IconButton";
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import {cardSx} from "@/common/components/FilmCard/FilmCard.styles.ts";
 import {FAVORITES_STORAGE_KEY} from "@/common/constants";
-import type { MouseEvent } from 'react'
+import {CardMedia} from "@mui/material";
+import {styled} from "@mui/material/styles";
 
 export const FilmCard = ({film, source}: FilmCardProps) => {
     const [isFavorite, setIsFavorite] = useState(false);
@@ -20,10 +21,7 @@ export const FilmCard = ({film, source}: FilmCardProps) => {
     // Check if film is in favorites on mount
     useEffect(() => {
         const favorites: FavoriteFilm[] = JSON.parse(localStorage.getItem(FAVORITES_STORAGE_KEY) || '[]');
-
         const isCurrentFavorite = favorites.some(favFilm => favFilm.id === film.id)
-
-
         setIsFavorite(isCurrentFavorite);
     }, [film.id]);
 
@@ -50,15 +48,22 @@ export const FilmCard = ({film, source}: FilmCardProps) => {
         setIsFavorite(!isFavorite);
     };
 
+    const StyledNavLink = styled(NavLink)(() => ({
+        textDecoration: 'none',
+    }));
+
     return (
-        <NavLink className={s.cardLink} to={`${PATH.CATEGORY}/${film.id}`}>
-            <Box sx={cardSx.image}>
-                <img className={s.image}
-                     src={source || noPoster}
-                     alt={film.title}
-                     onError={e => {
-                         e.currentTarget.src = noPoster;
-                     }}
+        <StyledNavLink to={`${PATH.CATEGORY}/${film.id}`}>
+            <Box sx={cardSx.imageCard}>
+                <CardMedia
+                    component="img"
+                    className="image"
+                    sx={cardSx.image}
+                    image={source || noPoster}
+                    alt={film.title}
+                    onError={e => {
+                        e.currentTarget.src = noPoster;
+                    }}
                 />
                 <Typography variant={'h4'} component={'h4'} sx={cardSx.rating}>{film.vote_average.toFixed(1)}</Typography>
                 <IconButton
@@ -73,6 +78,6 @@ export const FilmCard = ({film, source}: FilmCardProps) => {
                 <Typography variant={'h3'} component={'h3'} sx={cardSx.title}>{film.title}</Typography>
                 <Typography variant={'h5'} component={'h5'} sx={cardSx.releaseDate}>{film.release_date}</Typography>
             </Box>
-        </NavLink>
+        </StyledNavLink>
     );
 };

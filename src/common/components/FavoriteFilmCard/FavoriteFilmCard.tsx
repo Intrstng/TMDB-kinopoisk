@@ -4,14 +4,15 @@ import type {FavoriteFilm, FavoriteFilmCardProps} from "@/common/pages/Favourite
 import noPoster from '@/assets/images/no_poster.jpg';
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
+import type {MouseEvent} from 'react'
 import {useEffect, useState} from "react";
 import IconButton from "@mui/material/IconButton";
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import {cardSx} from "@/common/components/FilmCard/FilmCard.styles.ts";
 import {FAVORITES_STORAGE_KEY} from "@/common/constants";
-import s from '@/common/components/FilmCard/FilmCard.module.css';
-import type { MouseEvent } from 'react'
+import {styled} from "@mui/material/styles";
+import {favoriteCardSx} from "@/common/components/FavoriteFilmCard/FavoriteFilmCard.styles.ts";
+import {CardMedia} from "@mui/material";
 
 export const FavoriteFilmCard = ({filmId, title, source, rating, onRemove}: FavoriteFilmCardProps) => {
     const [isFavorite, setIsFavorite] = useState(false);
@@ -45,28 +46,35 @@ export const FavoriteFilmCard = ({filmId, title, source, rating, onRemove}: Favo
         setIsFavorite(!isFavorite);
     };
 
+    const StyledNavLink = styled(NavLink)(() => ({
+        textDecoration: 'none',
+    }));
+
     return (
-        <NavLink className={s.cardLink} to={`${PATH.CATEGORY}/${filmId}`}>
-            <Box sx={cardSx.image}>
-                <img className={s.image}
-                     src={source || noPoster}
-                     alt={title}
-                     onError={e => {
-                         e.currentTarget.src = noPoster;
-                     }}
+        <StyledNavLink to={`${PATH.CATEGORY}/${filmId}`}>
+            <Box sx={favoriteCardSx.imageCard}>
+                <CardMedia
+                    component="img"
+                    className="favoriteImage"
+                    sx={favoriteCardSx.image}
+                    image={source || noPoster}
+                    alt={title}
+                    onError={e => {
+                        e.currentTarget.src = noPoster;
+                    }}
                 />
-                <Typography variant={'h4'} component={'h4'} sx={cardSx.rating}>{rating.toFixed(1)}</Typography>
+                <Typography variant={'h4'} component={'h4'} sx={favoriteCardSx.rating}>{rating.toFixed(1)}</Typography>
                 <IconButton
                     onClick={handleFavoriteClick}
-                    sx={cardSx.favoriteIcon}
+                    sx={favoriteCardSx.favoriteIcon}
                     aria-label="add to favorites"
                 >
-                    {isFavorite ? <FavoriteIcon sx={cardSx.iconSelected}/> : <FavoriteBorderIcon />}
+                    {isFavorite ? <FavoriteIcon sx={favoriteCardSx.iconSelected}/> : <FavoriteBorderIcon />}
                 </IconButton>
             </Box>
-            <Box sx={cardSx.movieInfo}>
-                <Typography variant={'h3'} component={'h3'} sx={cardSx.title}>{title}</Typography>
+            <Box sx={favoriteCardSx.movieInfo}>
+                <Typography variant={'h3'} component={'h3'} sx={favoriteCardSx.title}>{title}</Typography>
             </Box>
-        </NavLink>
+        </StyledNavLink>
     );
 };

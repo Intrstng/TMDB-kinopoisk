@@ -7,7 +7,7 @@ const imageCardSx: SxProps = {
     overflow: 'hidden',
     position: 'relative',
     paddingBottom: '58%',
-    '&:hover .image': {
+    '&:hover .favoriteImage': {
         transform: 'scale(1.05) translateY(-7px)',
     },
 };
@@ -101,7 +101,7 @@ const imageSx: SxProps = {
     transition: 'transform 0.8s ease',
 };
 
-export const cardSx = {
+export const favoriteCardSx = {
     imageCard: imageCardSx,
     movieInfo: movieInfoSx,
     title: movieTitleSx,

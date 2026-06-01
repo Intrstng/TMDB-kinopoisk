@@ -2,7 +2,7 @@ import {FAVORITES_STORAGE_KEY} from "@/common/constants";
 import {Box, Container, Typography} from "@mui/material";
 import {useEffect, useState} from "react";
 import type {FavoriteFilm} from "@/common/pages/FavouritesPage/types.ts";
-import {FavoriteFilmCard} from "@/common/pages/FavouritesPage/FavoriteFilmCard/FavoriteFilmCard.tsx";
+import {FavoriteFilmCard} from "@/common/components/FavoriteFilmCard/FavoriteFilmCard.tsx";
 import {favouritesPageSx} from './FavouritesPage.styles.ts';
 import {AlertText} from "@/common/components/AlertText/AlertText.tsx";
 
