@@ -57,8 +57,7 @@ export const filmsResponseSchema = z.object({
 });
 
 export const fetchFilmsArgsSchema = z.object({
-    category: z.string(),
-    page: z.number().positive().optional(),
+    path: z.url(),
     language: z.string().default('en-US').optional(),
     region: z.string().optional(),
 });

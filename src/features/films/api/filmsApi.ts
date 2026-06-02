@@ -78,11 +78,12 @@ export const filmsApi = baseApi.injectEndpoints({
 
             query: ({ pageParam, queryArg }) => {
                 // see 3 & 4
+                const { path, ...restArgs } = queryArg;
                 return {
-                    url: `movie/${queryArg.category}`,
+                    url: `movie/${path}`,
                     params: {
-                        ...queryArg,
                         page: pageParam,
+                        ...restArgs,
                         api_key: API_KEY,
                     },
                 };
@@ -90,7 +91,7 @@ export const filmsApi = baseApi.injectEndpoints({
 
             ...withZodCatch(filmsResponseSchema),
 
-            providesTags: (result, _error, { category }) => (result ? [{ type: 'Films', id: category }] : ['Films']),
+            providesTags: (result, _error, { path }) => (result ? [{ type: 'Films', id: path }] : ['Films']),
         }),
 
         searchFilm: builder.query<FilmsResponse, SearchFilmArgs>({

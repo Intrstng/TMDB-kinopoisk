@@ -24,7 +24,7 @@ export const Backdrop = ({ category, children }: BackdropComponentProps) => {
         // isLoading: isMoviesLoading,
         // isFetching
     } = useFetchFilmsInfiniteQuery(
-        { category, language: 'en-US', page: 1 },
+        { path: category, language: 'en-US' },
         {
             skip: !configData,
         }

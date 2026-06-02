@@ -26,10 +26,7 @@ export const CategoryPage = () => {
 
     const { data, isLoading: isMoviesLoading, isFetching, isFetchingNextPage, fetchNextPage, hasNextPage }
     = useFetchFilmsInfiniteQuery(
-        { category: currentCategoryFormatted, language: 'en-US', page: 1 },
-        {
-            skip: !configData,
-        }
+        { path: currentCategoryFormatted, language: 'en-US' },{ skip: !configData }
     );
 
     const {observerRef} = useInfiniteScroll({

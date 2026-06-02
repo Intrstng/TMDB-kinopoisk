@@ -37,9 +37,9 @@ export const SearchFilmForm = ({ isSearchFetching, redirectPath, size, className
     const onSubmit: SubmitHandler<SearchFilmArgs> = ({ search }) => {
         if (search.trim()) {
             if (redirectPath) {
-                navigate(`${redirectPath}?query=${encodeURIComponent(search)}&page=1`);
+                navigate(`${redirectPath}?query=${encodeURIComponent(search)}`);
             } else {
-                setSearchParams({ query: search, page: '1' });
+                setSearchParams({ query: search });
             }
         }
     };

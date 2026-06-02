@@ -25,7 +25,7 @@ export const FilmsGallery = ({ path, title }: FilmGalleryProps) => {
         isLoading: isMoviesLoading,
         // isFetching
     } = useFetchFilmsInfiniteQuery(
-        { category: pathFormatted, language: 'en-US', page: 1 },
+        { path: pathFormatted, language: 'en-US' },
         {
             skip: !configData,
         }
