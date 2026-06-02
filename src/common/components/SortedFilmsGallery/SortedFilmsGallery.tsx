@@ -1,5 +1,5 @@
 import {useMoviesWithConfig} from '@/common/hooks';
-import {useSortFilmsQuery} from '@/features/films/api/filmsApi.ts';
+import {useSortFilmsInfiniteQuery} from '@/features/films/api/filmsApi.ts';
 import {RATING_MAX, RATING_MIN} from '@/common/constants';
 import Box from '@mui/material/Box';
 import {useSearchParams} from 'react-router-dom';
@@ -10,6 +10,8 @@ import {
     moviesContainerSx,
     sortedMoviesGridSx,
 } from '@/common/components/SortedFilmsGallery/SortedFilmsGallery.styles.ts';
+import {useInfiniteScroll} from "@/common/hooks/useInfiniteScroll.ts";
+import {LoadingTrigger} from "@/common/components/LoadingTrigger/LoadingTrigger.tsx";
 
 export const SortedFilmsGallery = () => {
     const [searchParams] = useSearchParams();
@@ -23,7 +25,6 @@ export const SortedFilmsGallery = () => {
 
     const buildQueryParams = (): SortFilmsArgs => {
         const params: SortFilmsArgs = {
-            [SEARCH_PARAMS.PAGE]: Number(searchParams.get(SEARCH_PARAMS.PAGE)) || 1,
             [SEARCH_PARAMS.SORT]: SORT_BY.POPULARITY_DESC,
             vote_average_gte: RATING_MIN,
             vote_average_lte: RATING_MAX,
@@ -54,26 +55,38 @@ export const SortedFilmsGallery = () => {
 
     const queryParams = buildQueryParams();
 
-    const {
-        data: sortFilmsData,
-        isLoading: isSortFilmsLoading,
-        // isFetching: isSortFilmsFetching,
-    } = useSortFilmsQuery(queryParams, { skip: !configData });
+    const { data, isLoading: isSortFilmsLoading, isFetching, isFetchingNextPage, fetchNextPage, hasNextPage }
+        = useSortFilmsInfiniteQuery(
+        queryParams,{ skip: !configData }
+    );
+
+    const {observerRef} = useInfiniteScroll({
+        hasNextPage,
+        isFetching,
+        fetchNextPage,
+    })
+
+    const sortFilmsData = data?.pages.flatMap((page) => page.results) || []
 
     if (isConfigLoading || isSortFilmsLoading) {
         return <Box sx={moviesContainerSx}>Загрузка skeleton...</Box>;
     }
 
-    if (sortFilmsData?.results.length === 0) {
+    if (sortFilmsData.length === 0) {
         return <Box sx={moviesContainerSx}>No sorted films or invalid response structure...</Box>; // add styles
     }
 
     return (
         <Box sx={moviesContainerSx}>
             <Box sx={sortedMoviesGridSx}>
-                {sortFilmsData?.results.map(film => (
+                {sortFilmsData.map(film => (
                     <FilmCard key={film.id} film={film} source={getPosterUrl(film.poster_path, POSTER_SIZE.W342)} />
                 ))}
+
+                {hasNextPage && (
+                    <LoadingTrigger observerRef={observerRef} isFetchingNextPage={isFetchingNextPage}/>
+                )}
+                {!hasNextPage && sortFilmsData.length > 0 && <p>Nothing more to load</p>}
             </Box>
         </Box>
     );

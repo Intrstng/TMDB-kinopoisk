@@ -158,7 +158,6 @@ export const sortFilmsArgsSchema = z.object({
     sort_by: SortBySchema,
     vote_average_gte: z.number().nonnegative(),
     vote_average_lte: z.number().nonnegative(),
-    page: z.number().int().positive(),
 });
 
 /**

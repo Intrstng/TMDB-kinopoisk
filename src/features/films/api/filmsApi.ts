@@ -155,15 +155,25 @@ export const filmsApi = baseApi.injectEndpoints({
                 result ? [{ type: 'Credits', id: movie_id }] : ['Credits'],
         }),
 
-        sortFilms: builder.query<FilmsResponse, SortFilmsArgs>({
-            query: params => ({
+        sortFilms: builder.infiniteQuery<FilmsResponse, SortFilmsArgs, number>({
+            infiniteQueryOptions: {
+                initialPageParam: 1,
+                getNextPageParam: (lastPage, _allPages, lastPageParam) => {
+                    if (lastPage.page < lastPage.total_pages) {
+                        return lastPageParam + 1;
+                    }
+                    return undefined;
+                },
+            },
+
+            query: ({ pageParam, queryArg }) => ({
                 url: 'discover/movie',
                 params: {
-                    [SEARCH_PARAMS.GENRES]: params[SEARCH_PARAMS.GENRES],
-                    [SEARCH_PARAMS.SORT]: params[SEARCH_PARAMS.SORT],
-                    [SEARCH_PARAMS.PAGE]: params[SEARCH_PARAMS.PAGE],
-                    [SEARCH_PARAMS.VOTE_AVERAGE_GTE]: params.vote_average_gte,
-                    [SEARCH_PARAMS.VOTE_AVERAGE_LTE]: params.vote_average_lte,
+                    [SEARCH_PARAMS.GENRES]: queryArg[SEARCH_PARAMS.GENRES],
+                    [SEARCH_PARAMS.SORT]: queryArg[SEARCH_PARAMS.SORT],
+                    [SEARCH_PARAMS.VOTE_AVERAGE_GTE]: queryArg.vote_average_gte,
+                    [SEARCH_PARAMS.VOTE_AVERAGE_LTE]: queryArg.vote_average_lte,
+                    [SEARCH_PARAMS.PAGE]: pageParam,
                     api_key: API_KEY,
                 },
             }),
@@ -179,7 +189,7 @@ export const {
     useFetchFilmsInfiniteQuery,
     useSearchFilmInfiniteQuery,
     useGetFilmQuery,
-    useSortFilmsQuery,
+    useSortFilmsInfiniteQuery,
     useGetSimilarFilmsQuery,
     useGetCreditsQuery,
 } = filmsApi;
