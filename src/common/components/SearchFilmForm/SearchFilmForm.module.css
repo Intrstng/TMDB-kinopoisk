@@ -1,5 +1,9 @@
+.inputContainer {
+    width: 100%;
+}
+
 .errorContainer {
-    min-height: 2rem;
+    min-height: 1rem;
     margin-top: 0.25rem;
 }
 

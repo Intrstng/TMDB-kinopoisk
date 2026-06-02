@@ -30,6 +30,7 @@ const posterSx: SxProps = {
 
 const filmTitleSx: SxProps = {
     width: '70%',
+    paddingRight: '2rem',
     marginBottom: '1rem',
     fontFamily: '"AntonFont", sans-serif',
     fontSize: '3rem',

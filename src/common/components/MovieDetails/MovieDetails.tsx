@@ -47,7 +47,7 @@ export const MovieDetails = ({ filmId, getPosterUrlCb }: DetailsProps) => {
                         </Box>
                     </Typography>
                     <Typography variant="h4" component="h4" sx={movieDetailsSx.vote}>
-                        {filmData.vote_average.toFixed(1)}
+                        {filmData.vote_average ? filmData.vote_average.toFixed(1) : 0}
                     </Typography>
                     <Typography variant="h4" component="h4" sx={movieDetailsSx.filmRuntime}>
                         Runtime:{' '}
@@ -61,11 +61,13 @@ export const MovieDetails = ({ filmId, getPosterUrlCb }: DetailsProps) => {
                     Genres
                 </Typography>
                 <Box sx={movieDetailsSx.genresList}>
-                    {filmData.genres.map(genre => (
+                    {filmData.genres ? filmData.genres.map(genre => (
                         <Typography key={genre.id} variant="h5" component="h5" sx={movieDetailsSx.genreItem}>
                             {genre.name}
                         </Typography>
-                    ))}
+                    )) : <Typography variant="h5" component="h5" sx={movieDetailsSx.genreItem}>
+                        The genre was not specified by the author
+                    </Typography>}
                 </Box>
             </Box>
         </Box>

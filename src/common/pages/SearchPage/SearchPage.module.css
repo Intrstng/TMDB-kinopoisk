@@ -4,12 +4,12 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     gap: 1.25rem;
 }
 
 .searchForm input {
-    width: 100%;
+    width: 16.5rem;
 }
 
 .container {
@@ -32,6 +32,15 @@
 }
 
 @media (width <= 480px) {
+    .searchForm {
+        margin-bottom: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        gap: 0;
+    }
+
     .moviesGrid {
         grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
         gap: 12px;

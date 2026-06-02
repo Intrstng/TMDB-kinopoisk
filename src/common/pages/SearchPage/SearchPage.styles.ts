@@ -10,6 +10,7 @@ export const searchTitleSx: SxProps = {
 };
 
 export const searchClueSx: SxProps = {
+    marginTop: '0.25rem',
     fontSize: '1em',
     fontFamily: 'ProtestFont, sans-serif',
     color: 'text.secondary',

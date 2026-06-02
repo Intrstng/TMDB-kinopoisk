@@ -55,7 +55,6 @@ export const SearchFilmForm = ({
         }
     };
 
-
     const handleClickShowPassword = () => {
         reset({search: ''});
         setSearchParams({});
@@ -64,34 +63,38 @@ export const SearchFilmForm = ({
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
             <Box className={className}>
-                {isClearMode
-                    ? <OutlinedInput
-                        label="Search for a movie"
-                        error={!!errors.search}
-                        size={size}
-                        fullWidth
-                        {...register('search')}
+                <Box className={s.inputContainer}>{isClearMode
+                        ? <OutlinedInput
+                            label="Search for a movie"
+                            error={!!errors.search}
+                            size={size}
+                            fullWidth
+                            {...register('search')}
 
-                        endAdornment={
-                            <InputAdornment position="end">
-                                <IconButton
-                                    aria-label={'clear-search-input'}
-                                    onClick={handleClickShowPassword}
-                                    edge="end"
-                                >
-                                    <ClearIcon/>
-                                </IconButton>
-                            </InputAdornment>
-                        }
-                    />
-                    : <TextField
-                        label="Search for a movie"
-                        error={!!errors.search}
-                        size={size}
-                        fullWidth
-                        {...register('search')}
-                    />
-                }
+                            endAdornment={
+                                <InputAdornment position="end">
+                                    <IconButton
+                                        aria-label={'clear-search-input'}
+                                        onClick={handleClickShowPassword}
+                                        edge="end"
+                                    >
+                                        <ClearIcon/>
+                                    </IconButton>
+                                </InputAdornment>
+                            }
+                        />
+                        : <TextField
+                            label="Search for a movie"
+                            error={!!errors.search}
+                            size={size}
+                            fullWidth
+                            {...register('search')}
+                        />
+                    }
+                    <Box className={s.errorContainer}>
+                        {errors.search && <span className={s.errorMessage}>{errors.search.message}</span>}
+                    </Box>
+                </Box>
                 <Button
                     type="submit"
                     variant="contained"
@@ -109,9 +112,6 @@ export const SearchFilmForm = ({
                 >
                     {isSearchFetching ? 'Searching...' : 'Search'}
                 </Button>
-            </Box>
-            <Box className={s.errorContainer}>
-                {errors.search && <span className={s.errorMessage}>{errors.search.message}</span>}
             </Box>
         </form>
     );
