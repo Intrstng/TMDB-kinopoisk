@@ -94,13 +94,23 @@ export const filmsApi = baseApi.injectEndpoints({
             providesTags: (result, _error, { path }) => (result ? [{ type: 'Films', id: path }] : ['Films']),
         }),
 
-        searchFilm: builder.query<FilmsResponse, SearchFilmArgs>({
-            query: ({ page = 1, ...params }) => {
+        searchFilm: builder.infiniteQuery<FilmsResponse, SearchFilmArgs, number>({
+            infiniteQueryOptions: {
+                initialPageParam: 1,
+                getNextPageParam: (lastPage, _allPages, lastPageParam) => {
+                    if (lastPage.page < lastPage.total_pages) {
+                        return lastPageParam + 1;
+                    }
+                    return undefined;
+                },
+            },
+
+            query: ({ pageParam, queryArg }) => {
                 return {
                     url: `search/movie`,
                     params: {
-                        ...params,
-                        page,
+                        ...queryArg,
+                        page: pageParam,
                         api_key: API_KEY,
                     },
                 };
@@ -167,7 +177,7 @@ export const {
     useGetConfigDetailsQuery,
     useGetGenresQuery,
     useFetchFilmsInfiniteQuery,
-    useSearchFilmQuery,
+    useSearchFilmInfiniteQuery,
     useGetFilmQuery,
     useSortFilmsQuery,
     useGetSimilarFilmsQuery,
