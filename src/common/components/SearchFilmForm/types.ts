@@ -9,4 +9,5 @@ export type SearchFilmFormProps = {
     className?: string;
     size?: SEARCH_SIZES;
     redirectPath?: PATH;
+    isClearMode?: boolean;
 };

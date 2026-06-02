@@ -25,6 +25,7 @@ export const Main = () => {
                     <SearchFilmForm
                         redirectPath={PATH.SEARCH}
                         size={SEARCH_SIZES.MEDIUM}
+                        isClearMode={false}
                         className={s.searchMainPageForm}
                     />
                 </Stack>
