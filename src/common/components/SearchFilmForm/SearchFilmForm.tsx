@@ -64,24 +64,27 @@ export const SearchFilmForm = ({
         <form onSubmit={handleSubmit(onSubmit)}>
             <Box className={className}>
                 <Box className={s.inputContainer}>{isClearMode
-                        ? <OutlinedInput
+                        ? <TextField
                             label="Search for a movie"
                             error={!!errors.search}
                             size={size}
                             fullWidth
                             {...register('search')}
-
-                            endAdornment={
-                                <InputAdornment position="end">
-                                    <IconButton
-                                        aria-label={'clear-search-input'}
-                                        onClick={handleClickShowPassword}
-                                        edge="end"
-                                    >
-                                        <ClearIcon/>
-                                    </IconButton>
-                                </InputAdornment>
-                            }
+                            slotProps={{
+                                input: {
+                                    endAdornment: (
+                                        <InputAdornment position="end">
+                                            <IconButton
+                                                aria-label={'clear-search-input'}
+                                                onClick={handleClickShowPassword}
+                                                edge="end"
+                                            >
+                                                <ClearIcon />
+                                            </IconButton>
+                                        </InputAdornment>
+                                    )
+                                }
+                            }}
                         />
                         : <TextField
                             label="Search for a movie"
