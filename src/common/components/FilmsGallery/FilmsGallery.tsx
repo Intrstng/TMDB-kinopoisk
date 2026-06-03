@@ -1,12 +1,11 @@
 import type {FilmGalleryProps} from '@/common/components/FilmsGallery/types.ts';
 import {useMoviesWithConfig} from '@/common/hooks';
-import s from './FilmsGallery.module.css';
 import {FilmCard} from '@/common/components/FilmCard/FilmCard.tsx';
 import {POSTER_SIZE} from '@/common/enums';
 import {GALLERY_LENGTH} from '@/common/constants';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import {galleryTitleSx} from '@/common/components/FilmsGallery/FilmsGallery.styles.ts';
+import {gallerySx} from '@/common/components/FilmsGallery/FilmsGallery.styles.ts';
 import {LoadMoreButton} from "@/common/components/LoadMoreButton/LoadMoreButton.tsx";
 import {useFetchFilmsInfiniteQuery} from "@/features/films/api/filmsApi.ts";
 
@@ -34,25 +33,27 @@ export const FilmsGallery = ({ path, title }: FilmGalleryProps) => {
     const filmsData = data?.pages.flatMap((page) => page.results) || []
 
     if (isConfigLoading || isMoviesLoading) {
-        return <div className={s.loader}>Загрузка skeleton...</div>;
+        return <Box sx={{}}>Загрузка skeleton...</Box>; //add sx styles
     }
 
     if (filmsData?.length === 0) {
-        return <div className={s.error}>No films or invalid response structure...</div>; // add styles
+        return <Typography variant={'h3'} component={'h3'} sx={gallerySx.error}>
+            No films or invalid response structure...
+        </Typography>
     }
 
     const films = filmsData?.slice(0, GALLERY_LENGTH) || [];
 
     return (
-        <Box className={s.container}>
-            <Box className={s.galleryHeader}>
-                <Typography variant={'h1'} component={'h1'} sx={galleryTitleSx}>
+        <Box sx={gallerySx.container}>
+            <Box sx={gallerySx.galleryHeader}>
+                <Typography variant={'h1'} component={'h1'} sx={gallerySx.title}>
                     {title}
                 </Typography>
                 <LoadMoreButton path={path} title={'View more'}/>
             </Box>
 
-            <Box className={s.moviesGrid}>
+            <Box sx={gallerySx.moviesGrid}>
                 {films.map(film => (
                     <FilmCard key={film.id} film={film} source={getPosterUrl(film.poster_path, POSTER_SIZE.W342)} />
                 ))}
