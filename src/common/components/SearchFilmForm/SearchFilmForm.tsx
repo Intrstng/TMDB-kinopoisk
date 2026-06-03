@@ -11,6 +11,8 @@ import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
 import ClearIcon from '@mui/icons-material/Clear';
 import TextField from '@mui/material/TextField';
+import { SubmitBtnSx } from "./SearchFilmForm.styles";
+
 
 export const SearchFilmForm = ({
                                    isSearchFetching,
@@ -59,6 +61,7 @@ export const SearchFilmForm = ({
         setSearchParams({});
     };
 
+    // @ts-ignore
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
             <Box className={className}>
@@ -97,20 +100,11 @@ export const SearchFilmForm = ({
                         {errors.search && <span className={s.errorMessage}>{errors.search.message}</span>}
                     </Box>
                 </Box>
-                <Button
-                    type="submit"
-                    variant="contained"
-                    color="secondary"
-                    className={s.formButton}
-                    disabled={isSearchFetching || isSearchEmpty}
-                    sx={{
-                        width: '12rem',
-                        '&.Mui-disabled': {
-                            opacity: 0.6,
-                            cursor: 'not-allowed',
-                            backgroundColor: '#1976d2',
-                        },
-                    }}
+                <Button type="submit"
+                        variant="contained"
+                        // color="secondary"
+                        disabled={isSearchFetching || isSearchEmpty}
+                        sx={SubmitBtnSx}
                 >
                     {isSearchFetching ? 'Searching...' : 'Search'}
                 </Button>

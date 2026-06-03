@@ -18,6 +18,7 @@ export const appSlice = createSlice({
     extraReducers: builder => {
         builder
             .addMatcher(isPending, state => {
+                // .addMatcher(isPending, (state, action) => {
                 // if (
                 //     // filmsApi.endpoints.fetchFilms.matchPending(action) ||
                 //     filmsApi.endpoints.getConfigDetails.matchPending(action) ||
