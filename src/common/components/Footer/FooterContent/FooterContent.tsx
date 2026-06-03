@@ -10,11 +10,11 @@ export const FooterContent = () => {
                 color: 'text.secondary',
             }}
         >
-            <Typography sx={{ all: 'unset' }}>© 2026</Typography>
             <Typography sx={{ all: 'unset' }}>Kinopoisk Demo</Typography>
             <Typography sx={{ all: 'unset' }} className={s.footerLicence}>
                 Data courtesy of TMDB
             </Typography>
+            <Typography sx={{ all: 'unset' }}>© 2026</Typography>
         </Box>
     );
 };

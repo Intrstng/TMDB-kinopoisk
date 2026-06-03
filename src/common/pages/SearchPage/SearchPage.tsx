@@ -10,7 +10,7 @@ import {FilmCard} from '@/common/components/FilmCard/FilmCard.tsx';
 import {useMoviesWithConfig} from '@/common/hooks';
 import {useSearchParams} from 'react-router-dom';
 import {SearchStatus} from '@/common/components/SearchStatus/SearchStatus.tsx';
-import {searchClueSx, searchTitleSx} from '@/common/pages/SearchPage/SearchPage.styles.ts';
+import {searchSx} from '@/common/pages/SearchPage/SearchPage.styles.ts';
 import {AlertText} from "@/common/components/AlertText/AlertText.tsx";
 import {useInfiniteScroll} from "@/common/hooks/useInfiniteScroll.ts";
 import {LoadingTrigger} from "@/common/components/LoadingTrigger/LoadingTrigger.tsx";
@@ -52,7 +52,7 @@ export const SearchPage = () => {
     return (
             <Container sx={containerSx}>
                 <Box>
-                    <Typography variant="h2" component="h2" sx={searchTitleSx}>
+                    <Typography variant="h2" component="h2" sx={searchSx.searchTitle}>
                         Search Results
                     </Typography>
                     <SearchFilmForm
@@ -62,7 +62,7 @@ export const SearchPage = () => {
                     />
 
                     {!query && (
-                        <Typography variant="h3" component="h3" sx={searchClueSx}>
+                        <Typography variant="h3" component="h3" sx={searchSx.searchClue}>
                             Enter a movie title to start searching
                         </Typography>
                     )}
@@ -77,8 +77,8 @@ export const SearchPage = () => {
                             />
                             {/*//?*/}
                             {isSearchFetching && <Box>Loading...</Box>}
-                            <Box className={s.container}>
-                                <Box className={s.moviesGrid}>
+                            <Box sx={searchSx.container}>
+                                <Box sx={searchSx.moviesGrid}>
                                     {searchFilmsData.map(film => (
                                         <FilmCard
                                             key={film.id}

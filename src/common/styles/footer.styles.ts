@@ -6,8 +6,8 @@ export const footerSx: SxProps = {
     // backgroundColor: 'primary.main',
     height: '5.6rem',
     display: 'flex',
-    alignItems: 'center',
     justifyContent: 'center',
+    alignItems: 'center',
     marginTop: 'auto',
     position: 'static',
 };

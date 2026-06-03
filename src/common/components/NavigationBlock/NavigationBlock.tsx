@@ -1,24 +1,26 @@
-import { HEADER_NAV_LINKS } from '@/common/constants';
-import { NavLink } from 'react-router-dom';
-import { Link as MuiLink, Stack } from '@mui/material';
-import { navLinkSx } from '@/common/components/NavigationBlock/navLink.styles.ts';
+import {Stack} from '@mui/material';
+import {navLinkSx} from '@/common/components/NavigationBlock/navLink.styles.ts';
+import {BurgerMenu} from "@/common/components/BurgerMenu/BurgerMenu.tsx";
+import {NavigationLinks} from "@/common/components/NavigationBlock/NavigationLinks/NavigationLinks.tsx";
 
 export const NavigationBlock = () => {
     return (
-        <Stack
-            direction="row"
-            spacing={1}
-            sx={{
-                display: 'flex',
-                alignItems: 'center',
-            }}
-            component="nav"
-        >
-            {HEADER_NAV_LINKS.map(navLink => (
-                <MuiLink key={navLink.id} component={NavLink} to={navLink.path} sx={navLinkSx}>
-                    {navLink.title}
-                </MuiLink>
-            ))}
-        </Stack>
+        <>
+            {/* Desktop navigation */}
+            <Stack
+                direction="row"
+                spacing={1}
+                sx={{
+                    display: { xs: 'none', md: 'flex' },
+                    alignItems: 'center',
+                }}
+                component="nav"
+            >
+                <NavigationLinks sxStyles={navLinkSx}/>
+            </Stack>
+
+            {/* Mobile burger menu */}
+            <BurgerMenu />
+        </>
     );
 };

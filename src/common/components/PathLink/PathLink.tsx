@@ -57,6 +57,11 @@ const StyledNavLink = styled(NavLink)(({ theme }) => ({
         borderColor: theme.palette.text.secondary,
         backgroundColor: theme.palette.action.selected,
     },
+
+    '@media (max-width: 480px)': {
+        padding: '0.4rem 0.8rem',
+        fontSize: '0.8rem',
+    },
 }));
 
 export const PathLink = ({ path, title }: CategoryButtonProps) => {

@@ -12,37 +12,9 @@
     width: 16.5rem;
 }
 
-.container {
-    /* width: 100%; */
-    margin: 0 auto;
-}
-
-.moviesGrid {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(200px, 1fr));
-    gap: 24px;
-    padding: 20px 0;
-}
-
-@media (width <= 768px) {
-    .moviesGrid {
-        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-        gap: 16px;
-    }
-}
-
 @media (width <= 480px) {
     .searchForm {
-        margin-bottom: 1.5rem;
-        display: flex;
         flex-direction: column;
-        justify-content: flex-start;
-        align-items: flex-start;
-        gap: 0;
-    }
-
-    .moviesGrid {
-        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-        gap: 12px;
+        gap: 0.25rem;
     }
 }

@@ -7,6 +7,7 @@ import AppBar from '@mui/material/AppBar';
 import Container from '@mui/material/Container';
 import Toolbar from '@mui/material/Toolbar';
 import { containerSx, headerSx } from '@/common/styles';
+import Box from "@mui/material/Box";
 
 export const Header = () => {
     return (
@@ -14,8 +15,11 @@ export const Header = () => {
             <Toolbar>
                 <Container sx={containerSx}>
                     <Logo path={PATH.MAIN} variant={ICON_VARIANT.LOGO} className={s.headerLogo} />
-                    <NavigationBlock />
-                    <ThemeSwitch />
+
+                    <Box className={s.headerNav} >
+                        <NavigationBlock />
+                        <ThemeSwitch />
+                    </Box>
                 </Container>
             </Toolbar>
         </AppBar>

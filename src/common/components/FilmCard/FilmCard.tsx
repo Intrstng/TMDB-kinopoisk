@@ -50,6 +50,7 @@ export const FilmCard = ({film, source}: FilmCardProps) => {
 
     const StyledNavLink = styled(NavLink)(() => ({
         textDecoration: 'none',
+        color: "primary.main",
     }));
 
     return (

@@ -20,4 +20,29 @@ export const navLinkSx: SxProps = {
     '&:hover': {
         color: '#01b4e4',
     },
+
+    '@media (width <= 940px)': {
+        padding: '0.4rem 0.8rem',
+        fontSize: '0.8rem',
+        letterSpacing: '0.02rem',
+    },
+};
+
+export const mobileNavLinkSx: SxProps = {
+    ...navLinkSx,
+    padding: '0.8rem 1rem',
+    fontSize: '1.1rem',
+    textAlign: 'center',
+    width: '100%',
+    display: 'block',
+
+    '&.active': {
+        backgroundColor: '#90cea1',
+        borderRadius: '0.5rem',
+    },
+
+    '@media (width <= 940px)': {
+        padding: '0.8rem 1rem',
+        fontSize: '1rem',
+    },
 };

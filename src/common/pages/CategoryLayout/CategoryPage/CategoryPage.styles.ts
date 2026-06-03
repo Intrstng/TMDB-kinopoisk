@@ -24,6 +24,9 @@ export const titleSx: SxProps = {
     color: 'text.secondary',
     textTransform: 'capitalize',
     letterSpacing: '0.05rem',
+    '@media (max-width: 480px)': {
+        fontSize: '1.8rem',
+    },
 };
 
 const categoryNavSx: SxProps = {
@@ -57,6 +60,10 @@ const moviesGridSx: SxProps = {
     '@media (max-width: 640px)': {
         gridTemplateColumns: 'repeat(2, minmax(140px, 1fr))',
         gap: '0.75rem',
+    },
+
+    '@media (max-width: 480px)': {
+        gridTemplateColumns: 'minmax(140px, 1fr)',
     },
 };
 

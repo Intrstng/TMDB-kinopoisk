@@ -6,11 +6,27 @@
     font-family: ProtestFont, sans-serif;
     font-size: 1rem;
     letter-spacing: 0.015rem;
-
-    /* color: #808080; */
 }
 
 .footerLicence::before {
     content: '•';
     margin-right: 0.5rem;
+}
+
+@media (width <= 768px) {
+    .footerContent {
+        flex-direction: column;
+        justify-content: center;
+        gap: 0.05rem;
+    }
+
+    .footerLicence::before {
+        content: unset;
+    }
+}
+
+@media (width <= 480px) {
+    .footerContent {
+        min-width: 15rem;
+    }
 }

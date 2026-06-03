@@ -9,7 +9,6 @@ import {useNavigate, useSearchParams} from 'react-router-dom';
 import {useEffect} from 'react';
 import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
-import OutlinedInput from '@mui/material/OutlinedInput';
 import ClearIcon from '@mui/icons-material/Clear';
 import TextField from '@mui/material/TextField';
 
@@ -55,7 +54,7 @@ export const SearchFilmForm = ({
         }
     };
 
-    const handleClickShowPassword = () => {
+    const clearSearchQuery = () => {
         reset({search: ''});
         setSearchParams({});
     };
@@ -76,7 +75,7 @@ export const SearchFilmForm = ({
                                         <InputAdornment position="end">
                                             <IconButton
                                                 aria-label={'clear-search-input'}
-                                                onClick={handleClickShowPassword}
+                                                onClick={clearSearchQuery}
                                                 edge="end"
                                             >
                                                 <ClearIcon />
