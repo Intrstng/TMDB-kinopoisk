@@ -1,15 +1,15 @@
 import Container from '@mui/material/Container';
-import { containerSx } from '@/common/styles';
+import {containerSx} from '@/common/styles';
 import Box from '@mui/material/Box';
-import { FilmsGallery } from '@/common/components/FilmsGallery/FilmsGallery.tsx';
-import { CATEGORY_LINKS } from '@/common/constants';
-import { Backdrop } from '@/common/components/Backdrop/Backdrop.tsx';
-import { NESTED_PATH, PATH, SEARCH_SIZES } from '@/common/enums';
-import { SearchFilmForm } from '@/common/components/SearchFilmForm/SearchFilmForm.tsx';
-import { backdropSubTitleSx, backdropTitleSx } from './Main.styles.ts';
+import {FilmsGallery} from '@/common/components/FilmsGallery/FilmsGallery.tsx';
+import {CATEGORY_LINKS} from '@/common/constants';
+import {Backdrop} from '@/common/components/Backdrop/Backdrop.tsx';
+import {NESTED_PATH, PATH, SEARCH_SIZES} from '@/common/enums';
+import {SearchFilmForm} from '@/common/components/SearchFilmForm/SearchFilmForm.tsx';
+import {backdropSubTitleSx, backdropTitleSx} from './Main.styles.ts';
 import s from './Main.module.css';
 import Typography from '@mui/material/Typography';
-import { Stack } from '@mui/material';
+import {Stack} from '@mui/material';
 
 export const Main = () => {
     return (

@@ -1,13 +1,14 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { handleError } from '@/common/utils/handleError.ts';
 
 export const baseApi = createApi({
     reducerPath: 'baseApi',
     tagTypes: ['Films', 'Film', 'Genres', 'Details', 'Search', 'Sort', 'SimilarFilms', 'Credits'],
 
     baseQuery: async (args, api, extraOptions) => {
+        await new Promise(resolve => setTimeout(resolve, 2000));
         const result = await fetchBaseQuery({
             baseUrl: import.meta.env.VITE_BASE_URL,
-
             // Когда я использовал передачу API-KEY в header запросов указанную через общий baseQuery я сталкивался с ошибкой CORS
             // Решением проблемы стало прикрепление API-KEY к каждому запросу в качестве query параметра,
             // поэтому в моем решении и используется передача API-KEY в каждом запросе в виде "?api_key=`${import.meta.env.VITE_API_KEY}`"
@@ -15,14 +16,14 @@ export const baseApi = createApi({
             // headers: {
             //     'API-KEY': `${import.meta.env.VITE_API_KEY}`,
             // },
-            prepareHeaders: headers => {
-                headers.set('Authorization', `Bearer ${import.meta.env.VITE_ACCESS_TOKEN}`);
-                return headers;
-            },
+            // prepareHeaders: headers => {
+            //     headers.set('Authorization', `Bearer ${import.meta.env.VITE_ACCESS_TOKEN}`);
+            //     return headers;
+            // },
         })(args, api, extraOptions);
 
         if (result.error) {
-            // handleError(result.error)
+            handleError(api, result);
         }
 
         return result;

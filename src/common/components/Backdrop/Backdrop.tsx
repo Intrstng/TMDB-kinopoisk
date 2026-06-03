@@ -32,9 +32,6 @@ export const Backdrop = ({ category, children }: BackdropComponentProps) => {
 
     const filmsData = data?.pages.flatMap((page) => page.results) || []
 
-    console.log("filmsData")
-    console.log(filmsData)
-
     useEffect(() => {
         if (filmsData.length > 0 && configData) {
             const backdropRandomFilm = getRandomElementFromArray(filmsData);

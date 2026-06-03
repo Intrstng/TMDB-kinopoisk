@@ -8,12 +8,13 @@ import { getFilmRuntime } from '@/common/utils/getFilmRuntime.ts';
 import Typography from '@mui/material/Typography';
 import { movieDetailsSx } from '@/common/components/MovieDetails/MovieDetails.styles.ts';
 import { BackButton } from '@/common/components/BackButton/BackButton.tsx';
+import noPoster from '@/assets/images/no_poster.jpg'
 
 export const MovieDetails = ({ filmId, getPosterUrlCb }: DetailsProps) => {
     const { data: filmData, isLoading: isFilmLoading, isError: isFilmError } = useGetFilmQuery(filmId);
 
     const posterPath = filmData?.poster_path || null;
-    const posterUrl = getPosterUrlCb(posterPath, POSTER_SIZE.W342);
+    const posterUrl = getPosterUrlCb(posterPath, POSTER_SIZE.W342) || noPoster;
 
     if (isFilmLoading) return <div>"Loading skeleton"</div>;
     if (isFilmError) return <div>"Failed to load configuration"</div>; // Убрать
