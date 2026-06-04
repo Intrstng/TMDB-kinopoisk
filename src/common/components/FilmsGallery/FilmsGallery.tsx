@@ -8,7 +8,7 @@ import Typography from '@mui/material/Typography';
 import {gallerySx} from '@/common/components/FilmsGallery/FilmsGallery.styles.ts';
 import {LoadMoreButton} from "@/common/components/LoadMoreButton/LoadMoreButton.tsx";
 import {useFetchFilmsInfiniteQuery} from "@/features/films/api/filmsApi.ts";
-import {FilmCardSkeletonGrid} from "@/common/components/FilmCard/FilmCardSkeleton/FilmCardSkeleton.tsx";
+import {FilmsGallerySkeletonGrid} from "@/common/components/FilmCard/FilmCardSkeleton/FilmCardSkeleton.tsx";
 
 export const FilmsGallery = ({ path, title }: FilmGalleryProps) => {
     const pathFormatted = path.replace(/-/g, '_');
@@ -22,7 +22,6 @@ export const FilmsGallery = ({ path, title }: FilmGalleryProps) => {
     const {
         data,
         isLoading: isMoviesLoading,
-        // isFetching
     } = useFetchFilmsInfiniteQuery(
         { path: pathFormatted, language: 'en-US' },
         {
@@ -32,12 +31,6 @@ export const FilmsGallery = ({ path, title }: FilmGalleryProps) => {
 
     const filmsData = data?.pages ? data.pages.flatMap((page) => page.results) : []
     const films = filmsData.slice(0, GALLERY_LENGTH);
-
-    if (isConfigLoading || isMoviesLoading) {
-        return (
-          <FilmCardSkeletonGrid count={GALLERY_LENGTH} title={title} />
-        );
-    }
 
     if (!isConfigLoading && !isMoviesLoading && filmsData?.length === 0) {
         return <Typography variant={'h3'} component={'h3'} sx={gallerySx.error}>
@@ -55,9 +48,11 @@ export const FilmsGallery = ({ path, title }: FilmGalleryProps) => {
             </Box>
 
             <Box sx={gallerySx.moviesGrid}>
-                {films.map(film => (
-                    <FilmCard key={film.id} film={film} source={getPosterUrl(film.poster_path, POSTER_SIZE.W342)} />
-                ))}
+                {isConfigLoading || isMoviesLoading
+                    ? <FilmsGallerySkeletonGrid count={GALLERY_LENGTH} />
+                    : films.map(film => (
+                        <FilmCard key={film.id} film={film} source={getPosterUrl(film.poster_path, POSTER_SIZE.W342)} />
+                    ))}
             </Box>
         </Box>
     );

@@ -3,6 +3,7 @@ import type { CategoryLink, HeaderNavLink } from '@/common/types/types.ts';
 
 export const API_KEY = import.meta.env.VITE_API_KEY;
 export const GALLERY_LENGTH = 6;
+export const PAGE_SIZE = 20;
 export const RATING_MIN = 0;
 export const RATING_MAX = 10;
 export const FAVORITES_STORAGE_KEY = 'favorites';

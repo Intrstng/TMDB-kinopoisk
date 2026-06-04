@@ -38,9 +38,9 @@ const categoryNavSx: SxProps = {
 const moviesGridSx: SxProps = {
     padding: '1.25rem 0',
     display: 'grid',
-    gridTemplateColumns: 'repeat(5, minmax(200px, 1fr))',
     width: '100%',
     gap: '1.25rem',
+    gridTemplateColumns: 'repeat(5, minmax(210px, 1fr))',
 
     '@media (max-width: 1200px)': {
         gridTemplateColumns: 'repeat(4, minmax(150px, 1fr))',
@@ -67,20 +67,13 @@ const moviesGridSx: SxProps = {
     },
 };
 
-const loaderSx: SxProps = {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    minHeight: '400px',
-    fontSize: '1.25rem',
-    color: '#666',
-};
-
 const errorSx: SxProps = {
-    textAlign: 'center',
-    padding: '40px',
-    color: '#e74c3c',
-    fontSize: '1.125rem',
+    margin: '2.5rem 0 1.5rem',
+    fontSize: '1rem',
+    minWidth: '20rem',
+    fontFamily: 'ProtestFont, sans-serif',
+    color: 'text.secondary',
+    letterSpacing: '0.06rem',
 };
 
 export const categorySx = {
@@ -89,6 +82,5 @@ export const categorySx = {
     title: titleSx,
     nav: categoryNavSx,
     moviesGrid: moviesGridSx,
-    loader: loaderSx,
     error: errorSx,
 } as const;
