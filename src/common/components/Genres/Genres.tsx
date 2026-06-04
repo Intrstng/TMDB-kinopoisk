@@ -4,6 +4,8 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import { genresBlockSx, genresControlsSx } from '@/common/components/Genres/Genres.styles.ts';
 import { SEARCH_PARAMS } from '@/common/enums';
+import {GenresSkeleton} from "@/common/components/Genres/GenresSkeleton/GenresSkeleton.tsx";
+import {PAGE_SIZE} from "@/common/constants";
 
 export const Genres = () => {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -11,8 +13,7 @@ export const Genres = () => {
 
     const {
         data: genresData,
-        // isLoading: isGenresLoading,
-        // // isError: isGenresError
+        isLoading: isGenresLoading,
     } = useGetGenresQuery({ language: 'en' });
 
     const handleGenreClick = (genreId: number) => {
@@ -37,22 +38,25 @@ export const Genres = () => {
         return selectedGenresParam?.split(',').includes(genreId.toString());
     };
 
-    // if(isGenresLoading) return <div>Loading genres controls skeleton...</div>;
     if (genresData?.genres?.length === 0) return null;
 
     return (
         <Box sx={genresBlockSx}>
-            {genresData?.genres?.map(genre => (
-                <Button
-                    key={genre.id}
-                    onClick={() => handleGenreClick(genre.id)}
-                    sx={genresControlsSx}
-                    className={isGenreSelected(genre.id) ? 'active' : ''}
-                    variant={isGenreSelected(genre.id) ? 'contained' : 'outlined'}
-                >
-                    {genre.name}
-                </Button>
-            ))}
+            {
+                isGenresLoading
+                    ? <GenresSkeleton count={PAGE_SIZE}/>
+                    : genresData?.genres?.map(genre => (
+                        <Button
+                            key={genre.id}
+                            onClick={() => handleGenreClick(genre.id)}
+                            sx={genresControlsSx}
+                            className={isGenreSelected(genre.id) ? 'active' : ''}
+                            variant={isGenreSelected(genre.id) ? 'contained' : 'outlined'}
+                        >
+                            {genre.name}
+                        </Button>
+                    ))
+            }
         </Box>
     );
 };
