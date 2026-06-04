@@ -15,9 +15,14 @@ import {FAVORITES_STORAGE_KEY} from "@/common/constants";
 import {CardMedia, Skeleton} from "@mui/material";
 import {styled} from "@mui/material/styles";
 
+const StyledNavLink = styled(NavLink)(() => ({
+    textDecoration: 'none',
+    color: "primary.main",
+}));
+
 export const FilmCard = ({film, source}: FilmCardProps) => {
     const [isFavorite, setIsFavorite] = useState(false);
-                         const [imageLoaded, setImageLoaded] = useState(false);
+    const [imageLoaded, setImageLoaded] = useState(false);
     // Check if film is in favorites on mount
     useEffect(() => {
         const favorites: FavoriteFilm[] = JSON.parse(localStorage.getItem(FAVORITES_STORAGE_KEY) || '[]');
@@ -48,11 +53,6 @@ export const FilmCard = ({film, source}: FilmCardProps) => {
         setIsFavorite(!isFavorite);
     };
 
-    const StyledNavLink = styled(NavLink)(() => ({
-        textDecoration: 'none',
-        color: "primary.main",
-    }));
-
     return (
         <StyledNavLink to={`${PATH.CATEGORY}/${film.id}`}>
             <Box sx={cardSx.imageCard}>
@@ -75,7 +75,7 @@ export const FilmCard = ({film, source}: FilmCardProps) => {
                     image={source || noPoster}
                     alt={film.title}
                     onLoad={() => setImageLoaded(true)}
-                    onError={e => {
+                    onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
                         e.currentTarget.src = noPoster;
                         setImageLoaded(true);
                     }}

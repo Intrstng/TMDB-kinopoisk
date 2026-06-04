@@ -4,6 +4,7 @@ export const castCardSx: SxProps = {
     p: 1,
     borderRadius: 2,
     backgroundColor: 'background.paper',
+    width: '100%',
 };
 
 export const castAvatarSx: SxProps = {

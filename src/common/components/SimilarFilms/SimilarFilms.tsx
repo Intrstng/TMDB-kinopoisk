@@ -6,12 +6,12 @@ import Typography from '@mui/material/Typography';
 import {FilmCard} from '@/common/components/FilmCard/FilmCard.tsx';
 import {POSTER_SIZE} from '@/common/enums';
 import {moviesGridSx, similarTitleSx} from '@/common/components/SimilarFilms/SimilarFilms.styles.ts';
+import {FilmsGallerySkeletonGrid} from "@/common/components/FilmCard/FilmCardSkeleton/FilmCardSkeleton.tsx";
 
 export const SimilarFilms = ({ filmId, getPosterUrlCb }: DetailsProps) => {
     const {
         data: similarFilmsData,
         isLoading: isSimilarFilmsLoading,
-        // isError: isSimilarFilmsError
     } = useGetSimilarFilmsQuery(
         { movie_id: Number(filmId), language: 'en-US', page: 1 },
         {
@@ -19,13 +19,7 @@ export const SimilarFilms = ({ filmId, getPosterUrlCb }: DetailsProps) => {
         }
     );
 
-    if (isSimilarFilmsLoading) {
-        return <Box sx={{}}>Загрузка Similar skeleton...</Box>; // add styles
-    }
-
-    if (similarFilmsData?.results.length === 0) {
-        return <Box sx={{}}>No Similar films info or invalid response structure...</Box>; // add styles
-    }
+    if (!isSimilarFilmsLoading && (!similarFilmsData || similarFilmsData?.total_results === 0)) return null;
 
     const similarFilms = similarFilmsData?.results.slice(0, GALLERY_LENGTH) || [];
 
@@ -35,9 +29,11 @@ export const SimilarFilms = ({ filmId, getPosterUrlCb }: DetailsProps) => {
                 Similar movies
             </Typography>
             <Box sx={moviesGridSx}>
-                {similarFilms.map(film => (
-                    <FilmCard key={film.id} film={film} source={getPosterUrlCb(film.poster_path, POSTER_SIZE.W342)} />
-                ))}
+                {isSimilarFilmsLoading
+                    ? <FilmsGallerySkeletonGrid count={GALLERY_LENGTH}/>
+                    : similarFilms.map(film => (
+                        <FilmCard key={film.id} film={film} source={getPosterUrlCb(film.poster_path, POSTER_SIZE.W342)} />
+                    ))}
             </Box>
         </Box>
     );

@@ -107,6 +107,15 @@ const filmYearSpanSx: SxProps = {
     letterSpacing: '0.02rem',
 };
 
+const errorSx: SxProps = {
+    margin: '2.5rem 0 1.5rem',
+    fontSize: '1rem',
+    minWidth: '20rem',
+    fontFamily: 'ProtestFont, sans-serif',
+    color: 'text.secondary',
+    letterSpacing: '0.06rem',
+};
+
 export const movieDetailsSx = {
     details: detailsSx,
     filmHeader: filmHeaderSx,
@@ -122,4 +131,5 @@ export const movieDetailsSx = {
     genreItem: genreItemSx,
     filmYearSpan: filmYearSpanSx,
     filmRuntimeSpan: filmYearSpanSx,
+    error: errorSx,
 } as const;

@@ -1,8 +1,10 @@
-import { MovieDetails } from '@/common/components/MovieDetails/MovieDetails.tsx';
-import { useParams } from 'react-router';
-import { useMoviesWithConfig } from '@/common/hooks';
-import { Cast } from '@/common/components/Cast';
-import { SimilarFilms } from '@/common/components/SimilarFilms';
+import {MovieDetails} from '@/common/components/MovieDetails/MovieDetails.tsx';
+import {useParams} from 'react-router';
+import {useMoviesWithConfig} from '@/common/hooks';
+import {Cast} from '@/common/components/Cast';
+import {SimilarFilms} from '@/common/components/SimilarFilms';
+import Typography from "@mui/material/Typography";
+import {moviePageErrorSx} from "@/common/pages/MoviePage/MainPage.styles.ts";
 
 export const MoviePage = () => {
     const params = useParams();
@@ -11,18 +13,13 @@ export const MoviePage = () => {
     const {
         config: configData,
         isLoading: isConfigLoading,
-        // isError: isConfigError,
         getPosterUrl,
     } = useMoviesWithConfig();
 
-    if (isConfigLoading) return <div>"Loading skeleton main"</div>;
-
-    if (!configData) return <div>"Failed to load configuration"</div>;
-    // далее config уже точно есть, поэтому передавать configData для skip в MovieDetails, Cast, SimilarFilms не надо
-
-    if (!filmId) {
-        return <div>No movie ID provided</div>;
-    }
+    if (!isConfigLoading && !configData) return <Typography variant={'h3'} component={'h3'} sx={moviePageErrorSx}>No configuration data or invalid response structure...</Typography>
+    /**
+     * Далее config уже точно есть, поэтому передавать configData для skip в MovieDetails, Cast, SimilarFilms не надо
+     */
 
     return (
         <>

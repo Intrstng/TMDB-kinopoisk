@@ -14,6 +14,10 @@ import {styled} from "@mui/material/styles";
 import {favoriteCardSx} from "@/common/components/FavoriteFilmCard/FavoriteFilmCard.styles.ts";
 import {CardMedia} from "@mui/material";
 
+const StyledNavLink = styled(NavLink)(() => ({
+    textDecoration: 'none',
+}));
+
 export const FavoriteFilmCard = ({filmId, title, source, rating, onRemove}: FavoriteFilmCardProps) => {
     const [isFavorite, setIsFavorite] = useState(false);
     // Check if film is in favorites on mount
@@ -45,10 +49,6 @@ export const FavoriteFilmCard = ({filmId, title, source, rating, onRemove}: Favo
         localStorage.setItem(FAVORITES_STORAGE_KEY, JSON.stringify(newFavorites));
         setIsFavorite(!isFavorite);
     };
-
-    const StyledNavLink = styled(NavLink)(() => ({
-        textDecoration: 'none',
-    }));
 
     return (
         <StyledNavLink to={`${PATH.CATEGORY}/${filmId}`}>

@@ -17,7 +17,7 @@ export const handleError = (
         const status = Number(result.error.status);
         const isServerErrorOrHigher = !isNaN(status) && status >= STATUS_CODES.INTERNAL_SERVER_ERROR;
         const isServerErrorOrLower = !isNaN(status) && status <= STATUS_CODES.CONNECT_TIMEOUT;
-        console.log(result);
+
         switch (result.error.status) {
             case 'FETCH_ERROR':
                 errorMessage = result.error.error;
@@ -38,7 +38,6 @@ export const handleError = (
                 }
                 break;
         }
-
         api.dispatch(setAppErrorAC({ error: errorMessage }));
     }
 };

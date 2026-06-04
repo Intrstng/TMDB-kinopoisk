@@ -6,12 +6,12 @@ import {GALLERY_LENGTH} from '@/common/constants';
 import {CastItem} from '@/common/components/Cast/CastItem/CastItem.tsx';
 import type {DetailsProps} from '@/common/components/MovieDetails/types.ts';
 import {castTitleSx, moviesGridSx} from '@/common/components/Cast/Cast.styles.ts';
+import {CastGallerySkeleton} from "@/common/components/Cast/CastItem/CastItemSkeleton/CastItemSkeleton.tsx";
 
 export const Cast = ({ filmId, getPosterUrlCb }: DetailsProps) => {
     const {
         data: creditsData,
         isLoading: isCreditsLoading,
-        // isError: isCreditsError
     } = useGetCreditsQuery(
         { movie_id: Number(filmId), language: 'en-US' },
         {
@@ -19,13 +19,7 @@ export const Cast = ({ filmId, getPosterUrlCb }: DetailsProps) => {
         }
     );
 
-    if (isCreditsLoading) {
-        return <Box sx={{}}>Загрузка Cast skeleton...</Box>; // add styles
-    }
-
-    if (creditsData?.cast.length === 0) {
-        return <Box sx={{}}>No Cast info or invalid response structure...</Box>; // add styles
-    }
+    if (!isCreditsLoading && (!creditsData || creditsData?.cast.length === 0)) return null;
 
     const actorsCast = creditsData?.cast.slice(0, GALLERY_LENGTH) || [];
 
@@ -35,14 +29,17 @@ export const Cast = ({ filmId, getPosterUrlCb }: DetailsProps) => {
                 Cast
             </Typography>
             <Box sx={moviesGridSx}>
-                {actorsCast.map(actor => (
-                    <CastItem
-                        key={actor.id}
-                        name={actor.name}
-                        character={actor.character}
-                        avatarUrl={getPosterUrlCb(actor.profile_path, POSTER_SIZE.W185)}
-                    />
-                ))}
+                {isCreditsLoading
+                    ? <CastGallerySkeleton count={GALLERY_LENGTH}/>
+                    : actorsCast.map(actor => (
+                            <CastItem
+                                key={actor.id}
+                                name={actor.name}
+                                character={actor.character}
+                                avatarUrl={getPosterUrlCb(actor.profile_path, POSTER_SIZE.W185)}
+                            />
+                    ))
+                }
             </Box>
         </Box>
     );

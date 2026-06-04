@@ -9,19 +9,23 @@ import Typography from '@mui/material/Typography';
 import { movieDetailsSx } from '@/common/components/MovieDetails/MovieDetails.styles.ts';
 import { BackButton } from '@/common/components/BackButton/BackButton.tsx';
 import noPoster from '@/assets/images/no_poster.jpg'
+import {moviePageErrorSx} from "@/common/pages/MoviePage/MainPage.styles.ts";
 
 export const MovieDetails = ({ filmId, getPosterUrlCb }: DetailsProps) => {
-    const { data: filmData, isLoading: isFilmLoading, isError: isFilmError } = useGetFilmQuery(filmId);
+    const { data: filmData, isLoading: isFilmLoading } = useGetFilmQuery(filmId);
 
     const posterPath = filmData?.poster_path || null;
     const posterUrl = getPosterUrlCb(posterPath, POSTER_SIZE.W342) || noPoster;
 
     if (isFilmLoading) return <div>"Loading skeleton"</div>;
-    if (isFilmError) return <div>"Failed to load configuration"</div>; // Убрать
-    if (!filmData) return null;
+
+
+    if (!filmData) return <Typography variant={'h3'} component={'h3'} sx={moviePageErrorSx}>No film data or invalid response structure...</Typography>;
 
     return (
         <Box component="section" sx={movieDetailsSx.details}>
+
+
             {isFilmLoading ? ( // or isFilmFetching
                 <div>Load skeleton for image</div>
             ) : (
@@ -29,6 +33,7 @@ export const MovieDetails = ({ filmId, getPosterUrlCb }: DetailsProps) => {
                     <img src={posterUrl} alt={filmData.title} />
                 </Paper>
             )}
+
             <Box>
                 <Box sx={movieDetailsSx.filmHeader}>
                     <Typography variant="h1" component="h1" sx={movieDetailsSx.filmTitle}>

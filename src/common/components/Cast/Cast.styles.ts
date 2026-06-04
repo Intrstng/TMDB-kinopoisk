@@ -9,7 +9,8 @@ export const castTitleSx: SxProps = {
 
 export const moviesGridSx = {
     display: 'grid',
-    gridTemplateColumns: 'repeat(6, 1fr)',
+    // gridTemplateColumns: 'repeat(6, 1fr)',
+    gridTemplateColumns: 'repeat(6, minmax(160px, 1fr))',
     gap: '1.5rem',
     paddingBottom: '2.25rem',
 
