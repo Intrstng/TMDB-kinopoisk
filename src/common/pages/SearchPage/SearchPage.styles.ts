@@ -52,9 +52,19 @@ export const moviesGridSx: SxProps = {
     },
 };
 
+const errorSx: SxProps = {
+    margin: '2.5rem 0 1.5rem',
+    fontSize: '1rem',
+    minWidth: '20rem',
+    fontFamily: 'ProtestFont, sans-serif',
+    color: 'text.secondary',
+    letterSpacing: '0.06rem',
+};
+
 export const searchSx = {
     searchTitle: searchTitleSx,
     searchClue: searchClueSx,
     container: containerSx,
     moviesGrid: moviesGridSx,
+    error: errorSx,
 } as const;

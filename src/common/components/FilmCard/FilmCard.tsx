@@ -12,12 +12,12 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import {cardSx} from "@/common/components/FilmCard/FilmCard.styles.ts";
 import {FAVORITES_STORAGE_KEY} from "@/common/constants";
-import {CardMedia} from "@mui/material";
+import {CardMedia, Skeleton} from "@mui/material";
 import {styled} from "@mui/material/styles";
 
 export const FilmCard = ({film, source}: FilmCardProps) => {
     const [isFavorite, setIsFavorite] = useState(false);
-
+                         const [imageLoaded, setImageLoaded] = useState(false);
     // Check if film is in favorites on mount
     useEffect(() => {
         const favorites: FavoriteFilm[] = JSON.parse(localStorage.getItem(FAVORITES_STORAGE_KEY) || '[]');
@@ -56,14 +56,28 @@ export const FilmCard = ({film, source}: FilmCardProps) => {
     return (
         <StyledNavLink to={`${PATH.CATEGORY}/${film.id}`}>
             <Box sx={cardSx.imageCard}>
+                {!imageLoaded && (
+                    <Skeleton
+                        variant="rectangular"
+                        width="100%"
+                        height="100%"
+                        sx={cardSx.image}
+                        animation="wave"
+                    />
+                )}
                 <CardMedia
                     component="img"
                     className="image"
-                    sx={cardSx.image}
+                    sx={{
+                        ...cardSx.image,
+                        display: imageLoaded ? 'block' : 'none'
+                    }}
                     image={source || noPoster}
                     alt={film.title}
+                    onLoad={() => setImageLoaded(true)}
                     onError={e => {
                         e.currentTarget.src = noPoster;
+                        setImageLoaded(true);
                     }}
                 />
                 <Typography variant={'h4'} component={'h4'} sx={cardSx.rating}>{film.vote_average.toFixed(1)}</Typography>
