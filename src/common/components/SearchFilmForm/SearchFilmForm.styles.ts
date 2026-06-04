@@ -1,5 +1,15 @@
 import type { SxProps } from '@mui/material';
 
+export const SearchFormContainerSx: SxProps = {
+    width: '100%',
+};
+
+export const SearchInputSx: SxProps = {
+    '& label.Mui-focused': {
+        color: 'text.secondary',
+    },
+};
+
 export const SubmitBtnSx: SxProps = {
     width: '12rem',
     padding: '0.5rem 1rem',

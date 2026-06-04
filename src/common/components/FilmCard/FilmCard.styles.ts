@@ -2,6 +2,7 @@ import type { SxProps } from '@mui/material';
 
 const imageCardSx: SxProps = {
     minHeight: '17.5rem',
+    // width: '100%',
     filter: 'drop-shadow(0px 1px 2px rgb(231, 229, 177))',
     borderRadius: '1rem',
     overflow: 'hidden',

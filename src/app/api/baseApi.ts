@@ -6,7 +6,7 @@ export const baseApi = createApi({
     tagTypes: ['Films', 'Film', 'Genres', 'Details', 'Search', 'Sort', 'SimilarFilms', 'Credits'],
 
     baseQuery: async (args, api, extraOptions) => {
-        await new Promise(resolve => setTimeout(resolve, 2000));
+        await new Promise(resolve => setTimeout(resolve, 4000));
         const result = await fetchBaseQuery({
             baseUrl: import.meta.env.VITE_BASE_URL,
             // Когда я использовал передачу API-KEY в header запросов указанную через общий baseQuery я сталкивался с ошибкой CORS

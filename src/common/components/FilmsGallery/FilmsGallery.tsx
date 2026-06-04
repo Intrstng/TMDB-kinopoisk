@@ -8,6 +8,7 @@ import Typography from '@mui/material/Typography';
 import {gallerySx} from '@/common/components/FilmsGallery/FilmsGallery.styles.ts';
 import {LoadMoreButton} from "@/common/components/LoadMoreButton/LoadMoreButton.tsx";
 import {useFetchFilmsInfiniteQuery} from "@/features/films/api/filmsApi.ts";
+import {FilmCardSkeletonGrid} from "@/common/components/FilmCard/FilmCardSkeleton/FilmCardSkeleton.tsx";
 
 export const FilmsGallery = ({ path, title }: FilmGalleryProps) => {
     const pathFormatted = path.replace(/-/g, '_');
@@ -15,7 +16,6 @@ export const FilmsGallery = ({ path, title }: FilmGalleryProps) => {
     const {
         config: configData,
         isLoading: isConfigLoading,
-        // isError: isConfigError,
         getPosterUrl,
     } = useMoviesWithConfig();
 
@@ -30,24 +30,25 @@ export const FilmsGallery = ({ path, title }: FilmGalleryProps) => {
         }
     );
 
-    const filmsData = data?.pages.flatMap((page) => page.results) || []
+    const filmsData = data?.pages ? data.pages.flatMap((page) => page.results) : []
+    const films = filmsData.slice(0, GALLERY_LENGTH);
 
     if (isConfigLoading || isMoviesLoading) {
-        return <Box sx={{}}>Загрузка skeleton...</Box>; //add sx styles
+        return (
+          <FilmCardSkeletonGrid count={GALLERY_LENGTH} title={title} />
+        );
     }
 
-    if (filmsData?.length === 0) {
+    if (!isConfigLoading && !isMoviesLoading && filmsData?.length === 0) {
         return <Typography variant={'h3'} component={'h3'} sx={gallerySx.error}>
             No films or invalid response structure...
         </Typography>
     }
 
-    const films = filmsData?.slice(0, GALLERY_LENGTH) || [];
-
     return (
         <Box sx={gallerySx.container}>
             <Box sx={gallerySx.galleryHeader}>
-                <Typography variant={'h1'} component={'h1'} sx={gallerySx.title}>
+                <Typography variant={'h2'} component={'h2'} sx={gallerySx.title}>
                     {title}
                 </Typography>
                 <LoadMoreButton path={path} title={'View more'}/>

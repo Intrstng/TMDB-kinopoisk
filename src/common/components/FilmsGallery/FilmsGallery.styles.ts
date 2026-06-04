@@ -2,6 +2,7 @@ import type { SxProps } from '@mui/material';
 
 export const containerSx: SxProps = {
     margin: '1.25rem auto 2rem',
+    width: '100%',
 };
 
 export const galleryHeaderSx: SxProps = {
@@ -33,19 +34,24 @@ export const galleryTitleSx: SxProps = {
 
 export const moviesGridSx: SxProps = {
     display: 'grid',
-    gridTemplateColumns: 'repeat(6, 1fr)',
+    width: '100%',
     gap: '1.5rem',
     paddingBottom: '2.25rem',
     borderBottom: '0.06rem solid #90cea1',
+    gridTemplateColumns: 'repeat(6, minmax(170px, 1fr))',
+
+    '@media (width <= 1200px)': {
+        gridTemplateColumns: 'repeat(4, minmax(170px, 1fr))',
+    },
 
     '@media (width <= 768px)': {
         gridTemplateColumns: 'repeat(3, minmax(140px, 1fr))',
-        gap: '16px',
+        gap: '1rem',
     },
 
     '@media (width <= 480px)': {
         gridTemplateColumns: 'minmax(150px, 1fr)',
-        gap: '12px',
+        gap: '0.75rem',
     },
 };
 

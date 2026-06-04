@@ -11,8 +11,7 @@ import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
 import ClearIcon from '@mui/icons-material/Clear';
 import TextField from '@mui/material/TextField';
-import { SubmitBtnSx } from "./SearchFilmForm.styles";
-
+import {SearchFormContainerSx, SearchInputSx, SubmitBtnSx} from "./SearchFilmForm.styles";
 
 export const SearchFilmForm = ({
                                    isSearchFetching,
@@ -61,17 +60,17 @@ export const SearchFilmForm = ({
         setSearchParams({});
     };
 
-    // @ts-ignore
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
             <Box className={className}>
-                <Box className={s.inputContainer}>{isClearMode
+                <Box sx={SearchFormContainerSx}>{isClearMode
                         ? <TextField
                             label="Search for a movie"
                             error={!!errors.search}
                             size={size}
                             fullWidth
                             {...register('search')}
+                            sx={SearchInputSx}
                             slotProps={{
                                 input: {
                                     endAdornment: (
@@ -94,6 +93,7 @@ export const SearchFilmForm = ({
                             size={size}
                             fullWidth
                             {...register('search')}
+                            sx={SearchInputSx}
                         />
                     }
                     <Box className={s.errorContainer}>
@@ -102,7 +102,6 @@ export const SearchFilmForm = ({
                 </Box>
                 <Button type="submit"
                         variant="contained"
-                        // color="secondary"
                         disabled={isSearchFetching || isSearchEmpty}
                         sx={SubmitBtnSx}
                 >
