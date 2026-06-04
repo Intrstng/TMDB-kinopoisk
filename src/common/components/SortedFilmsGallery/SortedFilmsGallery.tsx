@@ -1,17 +1,16 @@
 import {useMoviesWithConfig} from '@/common/hooks';
 import {useSortFilmsInfiniteQuery} from '@/features/films/api/filmsApi.ts';
-import {RATING_MAX, RATING_MIN} from '@/common/constants';
+import {PAGE_SIZE, RATING_MAX, RATING_MIN} from '@/common/constants';
 import Box from '@mui/material/Box';
 import {useSearchParams} from 'react-router-dom';
 import {POSTER_SIZE, SEARCH_PARAMS, SORT_BY} from '@/common/enums';
 import {FilmCard} from '@/common/components/FilmCard/FilmCard.tsx';
 import type {SortFilmsArgs} from '@/features/films/api/filmsApi.types.ts';
-import {
-    moviesContainerSx,
-    sortedMoviesGridSx,
-} from '@/common/components/SortedFilmsGallery/SortedFilmsGallery.styles.ts';
+import {sortedFilmsSx,} from '@/common/components/SortedFilmsGallery/SortedFilmsGallery.styles.ts';
 import {useInfiniteScroll} from "@/common/hooks/useInfiniteScroll.ts";
 import {LoadingTrigger} from "@/common/components/LoadingTrigger/LoadingTrigger.tsx";
+import Typography from "@mui/material/Typography";
+import {FilmsGallerySkeletonGrid} from "@/common/components/FilmCard/FilmCardSkeleton/FilmCardSkeleton.tsx";
 
 export const SortedFilmsGallery = () => {
     const [searchParams] = useSearchParams();
@@ -19,7 +18,6 @@ export const SortedFilmsGallery = () => {
     const {
         config: configData,
         isLoading: isConfigLoading,
-        // isError: isConfigError,
         getPosterUrl,
     } = useMoviesWithConfig();
 
@@ -66,28 +64,38 @@ export const SortedFilmsGallery = () => {
         fetchNextPage,
     })
 
-    const sortFilmsData = data?.pages.flatMap((page) => page.results) || []
+    const sortFilmsData = data?.pages ? data?.pages.flatMap((page) => page.results) : [];
 
-    if (isConfigLoading || isSortFilmsLoading) {
-        return <Box sx={moviesContainerSx}>Загрузка skeleton...</Box>;
-    }
-
-    if (sortFilmsData.length === 0) {
-        return <Box sx={moviesContainerSx}>No sorted films or invalid response structure...</Box>; // add styles
+    if (!isConfigLoading && !isSortFilmsLoading && sortFilmsData.length === 0) {
+        return (
+            <Box sx={sortedFilmsSx.container}>
+                <Box sx={sortedFilmsSx.moviesGrid}>
+                    <Typography variant={'h3'} component={'h3'} sx={sortedFilmsSx.error}>No sorted films or invalid response structure...</Typography>
+                </Box>
+            </Box>
+        );
     }
 
     return (
-        <Box sx={moviesContainerSx}>
-            <Box sx={sortedMoviesGridSx}>
-                {sortFilmsData.map(film => (
-                    <FilmCard key={film.id} film={film} source={getPosterUrl(film.poster_path, POSTER_SIZE.W342)} />
-                ))}
-
-                {hasNextPage && (
-                    <LoadingTrigger observerRef={observerRef} isFetchingNextPage={isFetchingNextPage}/>
-                )}
-                {!hasNextPage && sortFilmsData.length > 0 && <p>Nothing more to load</p>}
+        <Box sx={sortedFilmsSx.container}>
+            <Box sx={sortedFilmsSx.moviesGrid}>
+                {isConfigLoading || isSortFilmsLoading
+                    ? <FilmsGallerySkeletonGrid count={PAGE_SIZE}/>
+                    : sortFilmsData.map(film => (
+                        <FilmCard key={film.id} film={film} source={getPosterUrl(film.poster_path, POSTER_SIZE.W342)} />
+                    ))
+                }
             </Box>
+
+            {hasNextPage && (
+                <LoadingTrigger observerRef={observerRef} isFetchingNextPage={isFetchingNextPage}/>
+            )}
+            {!hasNextPage && sortFilmsData.length > 0
+                && <Typography variant={'h3'}
+                               component={'h3'}
+                               sx={sortedFilmsSx.error}>
+                    Nothing more to load
+                </Typography>}
         </Box>
     );
 };

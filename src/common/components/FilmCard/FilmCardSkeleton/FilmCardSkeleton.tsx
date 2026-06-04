@@ -38,9 +38,11 @@ const FilmCardSkeleton = () => {
 };
 
 export const FilmsGallerySkeletonGrid = ({count = GALLERY_LENGTH}: FilmCardSkeletonGridProps) => {
-    return <>
-              {Array.from({length: count}).map((_, index) => (
-                <FilmCardSkeleton key={index}/>
-              ))}
-           </>
+    return (
+        <>
+          {Array.from({length: count}).map((_, index) => (
+            <FilmCardSkeleton key={index}/>
+          ))}
+       </>
+    )
 };

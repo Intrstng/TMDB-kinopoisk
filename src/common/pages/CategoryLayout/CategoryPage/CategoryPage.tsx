@@ -37,7 +37,6 @@ export const CategoryPage = () => {
 
     const filmsData = data?.pages ? data.pages.flatMap((page) => page.results) : []
 
-
     if (!isConfigLoading && !isMoviesLoading && filmsData.length === 0) {
         return (
             <Box sx={categorySx.container}>

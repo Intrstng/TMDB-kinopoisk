@@ -42,8 +42,7 @@ export const Genres = () => {
 
     return (
         <Box sx={genresBlockSx}>
-            {
-                isGenresLoading
+            {isGenresLoading
                     ? <GenresSkeleton count={PAGE_SIZE}/>
                     : genresData?.genres?.map(genre => (
                         <Button
