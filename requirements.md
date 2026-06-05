@@ -1,15 +1,7 @@
 # Task:  TMDB kinopoisk
-1.[Assignment requirements on YouTube Video](https://www.youtube.com/watch?v=kcUO-wzskMc)
-2. Screenshots:
-   <img width="1440" alt="main" src="https://github.com/user-attachments/assets/5f76deff-b5a6-4a35-bfb3-a1622cd26e16">
-   <img width="652" alt="test" src="https://github.com/user-attachments/assets/1b7e8ea0-cc4f-4564-8901-4ea602170cb0">
-3. [Deploy](https://tmdb-cinemascope.vercel.app/)
-4. [Link to repo](https://github.com/Intrstng/TMDB-kinopoisk/tree/develop)
-5. Branch: **develop**
-6. Done 05.06.2026
-7. Task completion percentage: 100% (full complete of all tasks)
 
 ## Technical requirements
+[Assignment requirements on YouTube Video](https://www.youtube.com/watch?v=kcUO-wzskMc)
 
 ### Stack required to complete the technical task:
 * React
