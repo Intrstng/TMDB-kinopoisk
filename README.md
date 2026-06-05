@@ -1,75 +1,176 @@
-# React + TypeScript + Vite
+# TMDB Kinopoisk Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Welcome to TMDB Kinopoisk Application!**
 
-Currently, two official plugins are available:
+This is a Single Page Application built on **TMDB - The Movie Database API**, a free RESTful web service that provides comprehensive movie, TV show, and cast data, including metadata, images, ratings, and streaming information, for use in applications and websites.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+This is the final test assignment for [it-incubator Front-end React JS (TypeScript) course](https://it-incubator.io/education/front-end).
 
-## React Compiler
+### Key Pages:
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+*   Main Page 🏠
+*   Category Movies Page 📋
+    *   Popular movies
+    *   Top-rated movies
+    *   Upcoming movies
+    *   Now playing movies
+*   Detailed Movie Page 🎬
+*   Filtered Movies Page ⬇️⬆️ 
+*   Search Movies Page 🔍
+*   Favorite Movies Page ❤️
 
-Note: This will impact Vite dev & build performances.
 
-## Expanding the ESLint configuration
+## Technology Stack 💻📚
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+*   React
+*   Redux Toolkit
+*   RTK Query
+*   TypeScript
+*   React Router DOM
+*   React Hook Form
+*   Zod validation
+*   Material UI
+*   React Toastify
+*   Emotion / styled-components
+*   Vite
+*   ESLint
+*   Prettier
+*   Commitlint
+*   Stylelint
+*   Husky
+*   lint-staged
+*   SVGR
+*   Lottie
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Assignment requirements and self-assessment ✔️
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+*   [Assignment requirements](./requirements.md)
+*   [Self-assessment](https://github.com/Intrstng/TMDB-kinopoisk/pull/1/)
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## Deploy 🌐
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+❗ If you are located in Belarus or Russia, be sure to use a VPN when opening the link, as this required by the TMDB API.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+*   [Deploy link](https://tmdb-cinemascope.vercel.app/)
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## Getting Started 🚀
+
+Follow these steps to run the application locally:
+
+1.  **Clone the repository:**
+
+    ```bash
+    git clone https://github.com/Intrstng/TMDB-kinopoisk.git
+    ```
+
+2.  **Navigate to the project directory:**
+
+    ```bash
+    cd TMDB-kinopoisk
+    ```
+
+3.  **Switch to the `develop` branch:**
+
+    ```bash
+    git checkout develop
+    ```
+
+4.  **Install dependencies:**
+
+    ```bash
+    pnpm install
+    ```
+
+    If you have problems with running the script, use the following command in the CLI:
+
+    ```bash
+    pnpm install --legacy-peer-deps
+    ```
+
+5.  **Configure environment variables:**
+
+    *   Create a `.env` file in the root directory based on the `.env.local` file.
+    *   Register for an API key [TMDB API](https://developer.themoviedb.org/docs/getting-started) and fill in the required credentials in the `.env` file.
+
+6.  **Start the development server:**
+
+    ❗ If you are located in Belarus or Russia, be sure to use a VPN when opening the link, as this required by the TMDB API.
+
+    ```bash
+    pnpm run dev
+    ```
+
+7.  **Access the application:**
+
+    *   Open your browser and navigate to the link provided in the CLI.
+
+## Available Scripts ⚙️
+
+*   **`build`:** 📦 Builds the application for production.
+
+    ```bash
+    pnpm run build
+    ```
+
+*   **`dev`:** 💻 Starts the Vite development server.
+
+    ```bash
+    pnpm run dev
+    ```
+
+*   **`preview`:** 🚀 Locally serves your production build (dist folder) to test how the app will behave before deploying it to a live server.
+
+    ```bash
+    npm run preview
+    ```
+*   **`lint:check`:** 🔍 Runs ESLint to check for code quality issues.
+
+      ```bash
+      pnpm run lint:check
+      ```
+
+*   **`lint:fix`:** 🐛 Automatically fixes ESLint errors.
+
+    ```bash
+    pnpm run lint:fix
+    ```
+
+*   **`format:check`:** ✅ Checks code formatting with Prettier.
+
+    ```bash
+    npm run format:check
+    ```
+
+*   **`format:fix`:** ✨ Automatically formats code with Prettier.
+
+    ```bash
+    npm run format:fix
+    ```
+
+*   **`stylelint:check`:** 🎨 Checks CSS files for stylelint errors.
+
+    ```bash
+    npm run stylelint:check
+    ```
+
+*   **`stylelint:fix`:** 🔧 Automatically fixes CSS stylelint errors.
+
+    ```bash
+    npm run stylelint:fix
+    ```
+
+*   **`type:check`:** ⌨️ Performs a TypeScript type check without emitting any output files.
+
+    ```bash
+    npm run type:check
+    ```
+
+*   **`prepare`:** ⚙️A lifecycle script that Husky uses to set up Git hooks. This is automatically run after `npm install`.
+
+    ```bash
+    npm run prepare
+    ```
+
+*   **Commit-msg Hooks (Husky):** 📝 Commitlint is triggered by Git after a *user* has entered a *commit message* but before the commit is actually created.
+
+*   **Pre-commit Hooks (Husky):** 🔒 ESLint, Stylelint and Prettier are automatically run during `git commit` operations.
