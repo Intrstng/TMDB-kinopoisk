@@ -4,7 +4,6 @@ import { BACKDROP_SIZE, LOGO_SIZE, POSTER_SIZE, PROFILE_SIZE, SORT_BY, STILL_SIZ
 /**
  * Query the API configuration details.
  */
-
 export const filmsImagesSchema = z.object({
     base_url: z.url(),
     secure_base_url: z.url(),

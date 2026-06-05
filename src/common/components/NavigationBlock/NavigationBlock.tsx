@@ -1,7 +1,6 @@
-import {Stack} from '@mui/material';
+import {BurgerMenu, NavigationLinks} from "@/common/components";
+import Stack from '@mui/material/Stack';
 import {navLinkSx} from '@/common/components/NavigationBlock/navLink.styles.ts';
-import {BurgerMenu} from "@/common/components/BurgerMenu/BurgerMenu.tsx";
-import {NavigationLinks} from "@/common/components/NavigationBlock/NavigationLinks/NavigationLinks.tsx";
 
 export const NavigationBlock = () => {
     return (

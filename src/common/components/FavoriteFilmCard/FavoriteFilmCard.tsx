@@ -1,18 +1,18 @@
-import {PATH} from '@/common/enums';
 import {NavLink} from 'react-router-dom';
+import {useEffect, useState} from "react";
+import type {MouseEvent} from 'react'
 import type {FavoriteFilm, FavoriteFilmCardProps} from "@/common/pages/FavouritesPage/types.ts";
+import {PATH} from '@/common/enums';
 import noPoster from '@/assets/images/no_poster.jpg';
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import type {MouseEvent} from 'react'
-import {useEffect, useState} from "react";
+import CardMedia from "@mui/material/CardMedia";
 import IconButton from "@mui/material/IconButton";
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import {FAVORITES_STORAGE_KEY} from "@/common/constants";
 import {styled} from "@mui/material/styles";
 import {favoriteCardSx} from "@/common/components/FavoriteFilmCard/FavoriteFilmCard.styles.ts";
-import {CardMedia} from "@mui/material";
 
 const StyledNavLink = styled(NavLink)(() => ({
     textDecoration: 'none',

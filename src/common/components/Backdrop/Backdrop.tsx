@@ -1,12 +1,12 @@
-import {useMoviesWithConfig} from '@/common/hooks';
-import {useFetchFilmsInfiniteQuery} from '@/features/films/api/filmsApi.ts';
-import type {BackdropComponentProps} from '@/common/components/Backdrop/types.ts';
-import Container from '@mui/material/Container';
-import {getRandomElementFromArray} from '@/common/utils/getRandomElementFromArray.ts';
-import {BACKDROP_SIZE} from '@/common/enums';
 import {useEffect, useState} from 'react';
+import {useMoviesWithConfig} from '@/common/hooks';
+import type {BackdropComponentProps} from '@/common/components/Backdrop/types.ts';
+import {BACKDROP_SIZE} from '@/common/enums';
+import {useFetchFilmsInfiniteQuery} from '@/features/films/api/filmsApi.ts';
+import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
-import {ImagePreloader} from '@/common/components/ImagePreloader/ImagePreloader.tsx';
+import {getRandomElementFromArray} from '@/common/utils/getRandomElementFromArray.ts';
+import {ImagePreloader} from '@/common/components';
 import {backdropContainerSx} from '@/common/styles/container.styles.ts';
 
 export const Backdrop = ({ category, children }: BackdropComponentProps) => {

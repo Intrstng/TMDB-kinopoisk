@@ -1,18 +1,15 @@
-import {
-    FormControl,
-    InputLabel,
-    ListItemIcon,
-    ListItemText,
-    MenuItem,
-    Select,
-    type SelectChangeEvent,
-    Stack
-} from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { SEARCH_PARAMS, SORT_BY } from '@/common/enums';
 import ArrowUpward from '@mui/icons-material/ArrowUpward';
 import ArrowDownward from '@mui/icons-material/ArrowDownward';
-import { SEARCH_PARAMS, SORT_BY } from '@/common/enums';
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import MenuItem from '@mui/material/MenuItem';
+import Select, {type SelectChangeEvent} from '@mui/material/Select';
+import Stack from '@mui/material/Stack';
 import { sortSx } from '@/common/components/SortBySelect/SortBySelect.styles.ts';
 
 export const SortBySelect = () => {

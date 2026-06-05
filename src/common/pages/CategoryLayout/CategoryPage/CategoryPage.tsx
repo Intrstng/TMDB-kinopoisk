@@ -7,7 +7,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import {PAGE_SIZE} from '@/common/constants';
 import {categorySx} from "@/common/pages/CategoryLayout/CategoryPage/CategoryPage.styles.ts";
-import {useInfiniteScroll} from "@/common/hooks/useInfiniteScroll.ts";
+import {useInfiniteScroll} from "@/common/hooks";
 import {LoadingTrigger} from "@/common/components/LoadingTrigger/LoadingTrigger.tsx";
 import {FilmsGallerySkeletonGrid} from "@/common/components/FilmCard/FilmCardSkeleton/FilmCardSkeleton.tsx";
 import {CategoryPageHeader} from "@/common/pages/CategoryLayout/CategoryPage/CategoryPageHeader/CategoryPageHeader.tsx";

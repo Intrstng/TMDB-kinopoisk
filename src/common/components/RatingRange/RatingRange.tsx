@@ -1,11 +1,12 @@
-import Slider from '@mui/material/Slider';
 import { useEffect, useState } from 'react';
-import { RATING_MAX, RATING_MIN } from '@/common/constants';
-import { ratingRangeSx } from '@/common/components/RatingRange/RatingRange.styles.ts';
-import { useDebounceValue } from '@/common/hooks';
 import { useSearchParams } from 'react-router-dom';
-import { Box, Typography } from '@mui/material';
+import { useDebounceValue } from '@/common/hooks';
+import { RATING_MAX, RATING_MIN } from '@/common/constants';
 import { SEARCH_PARAMS } from '@/common/enums';
+import Box from '@mui/material/Box';
+import Slider from '@mui/material/Slider';
+import Typography from '@mui/material/Typography';
+import { ratingRangeSx } from '@/common/components/RatingRange/RatingRange.styles.ts';
 
 export const RatingRange = () => {
     const [searchParams, setSearchParams] = useSearchParams();

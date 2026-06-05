@@ -1,12 +1,11 @@
-import type {DetailsProps} from '@/common/components/MovieDetails/types.ts';
 import {useGetSimilarFilmsQuery} from '@/features/films/api/filmsApi.ts';
 import {GALLERY_LENGTH} from '@/common/constants';
+import {POSTER_SIZE} from '@/common/enums';
+import type {DetailsProps} from '@/common/components/MovieDetails/types.ts';
+import {FilmCard, FilmsGallerySkeletonGrid} from '@/common/components';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import {FilmCard} from '@/common/components/FilmCard/FilmCard.tsx';
-import {POSTER_SIZE} from '@/common/enums';
 import {moviesGridSx, similarTitleSx} from '@/common/components/SimilarFilms/SimilarFilms.styles.ts';
-import {FilmsGallerySkeletonGrid} from "@/common/components/FilmCard/FilmCardSkeleton/FilmCardSkeleton.tsx";
 
 export const SimilarFilms = ({ filmId, getPosterUrlCb }: DetailsProps) => {
     const {

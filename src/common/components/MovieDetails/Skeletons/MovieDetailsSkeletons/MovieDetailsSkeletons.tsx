@@ -1,10 +1,10 @@
+import {GENRES_QTY} from "@/common/constants";
+import {GenresSkeleton} from "@/common/components";
 import Skeleton from "@mui/material/Skeleton";
-import {movieDetailsSx} from "@/common/components/MovieDetails/MovieDetails.styles.ts";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
-import {movieDetailsSkeletonSx} from "@/common/components/MovieDetails/MovieDetailsSkeletons/MovieDetailsSkeltons.styles.ts";
-import {GENRES_QTY} from "@/common/constants";
-import {GenresSkeleton} from "@/common/components/Genres/GenresSkeleton/GenresSkeleton.tsx";
+import {movieDetailsSx} from "@/common/components/MovieDetails/MovieDetails.styles.ts";
+import {movieDetailsSkeletonSx} from "@/common/components/MovieDetails/Skeletons/MovieDetailsSkeletons/MovieDetailsSkeltons.styles.ts";
 
 export const MovieDetailsPosterSkeleton = () => {
     return (

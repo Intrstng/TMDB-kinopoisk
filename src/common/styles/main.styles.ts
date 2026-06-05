@@ -8,6 +8,5 @@ export const mainSx: SxProps = {
     alignItems: 'center',
     position: 'static',
     margin: '0 auto',
-
-    width: '100%', // Check
+    width: '100%',
 };

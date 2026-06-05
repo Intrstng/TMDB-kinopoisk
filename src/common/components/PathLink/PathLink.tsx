@@ -1,41 +1,7 @@
-// import {Link} from "react-router-dom";
-// import {useLocation} from "react-router";
-// import type {CategoryButtonProps} from "@/common/components/PathLink/types.ts";
-//
-// export const PathLink = ({path, title}: CategoryButtonProps) => {
-//     const location = useLocation();
-//     const basePath = location.pathname.split('/')[1];
-//     const fullPath = `/${basePath}/${path}`;
-//
-//     return (
-//         <Link to={fullPath}>
-//             {title}
-//         </Link>
-//     )
-// };
-
-// import {NavLink} from "react-router-dom";
-// import {useLocation} from "react-router";
-// import type {CategoryButtonProps} from "@/common/components/PathLink/types.ts";
-// import s from './PathLink.module.css'
-//
-// export const PathLink = ({path, title}: CategoryButtonProps) => {
-//     const location = useLocation();
-//     const basePath = location.pathname.split('/')[1];
-//     const fullPath = `/${basePath}/${path}`;
-//
-//     return (
-//         <NavLink to={fullPath}
-//                  className={({ isActive}) => `${s.navLink} ${isActive ? s.active : ''}`}>
-//             {title}
-//         </NavLink>
-//     )
-// };
-
-import { NavLink } from 'react-router-dom';
-import { styled } from '@mui/material/styles';
 import { useLocation } from 'react-router';
+import { NavLink } from 'react-router-dom';
 import type { CategoryButtonProps } from '@/common/components/PathLink/types.ts';
+import { styled } from '@mui/material/styles';
 
 const StyledNavLink = styled(NavLink)(({ theme }) => ({
     padding: '0.5rem 1rem',
@@ -71,3 +37,37 @@ export const PathLink = ({ path, title }: CategoryButtonProps) => {
 
     return <StyledNavLink to={fullPath}>{title}</StyledNavLink>;
 };
+
+// import {Link} from "react-router-dom";
+// import {useLocation} from "react-router";
+// import type {CategoryButtonProps} from "@/common/components/PathLink/types.ts";
+//
+// export const PathLink = ({path, title}: CategoryButtonProps) => {
+//     const location = useLocation();
+//     const basePath = location.pathname.split('/')[1];
+//     const fullPath = `/${basePath}/${path}`;
+//
+//     return (
+//         <Link to={fullPath}>
+//             {title}
+//         </Link>
+//     )
+// };
+
+// import {NavLink} from "react-router-dom";
+// import {useLocation} from "react-router";
+// import type {CategoryButtonProps} from "@/common/components/PathLink/types.ts";
+// import s from './PathLink.module.css'
+//
+// export const PathLink = ({path, title}: CategoryButtonProps) => {
+//     const location = useLocation();
+//     const basePath = location.pathname.split('/')[1];
+//     const fullPath = `/${basePath}/${path}`;
+//
+//     return (
+//         <NavLink to={fullPath}
+//                  className={({ isActive}) => `${s.navLink} ${isActive ? s.active : ''}`}>
+//             {title}
+//         </NavLink>
+//     )
+// };

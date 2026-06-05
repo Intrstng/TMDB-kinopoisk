@@ -1,10 +1,11 @@
-import Paper from "@mui/material/Paper";
-import {movieDetailsSx} from "@/common/components/MovieDetails/MovieDetails.styles.ts";
-import type {MovieDetailsPosterProps} from "@/common/components/MovieDetails/types.ts";
 import {useState} from "react";
-import {CardMedia, Skeleton} from "@mui/material";
-import noPoster from "@/assets/images/no_poster.jpg";
 import type {SyntheticEvent} from 'react';
+import type {MovieDetailsPosterProps} from "@/common/components/MovieDetails/types.ts";
+import noPoster from "@/assets/images/no_poster.jpg";
+import Paper from "@mui/material/Paper";
+import CardMedia from "@mui/material/CardMedia";
+import Skeleton from "@mui/material/Skeleton";
+import {movieDetailsSx} from "@/common/components/MovieDetails/MovieDetails.styles.ts";
 
 export const MovieDetailsPoster = ({sourceUrl, text = 'poster'}: MovieDetailsPosterProps) => {
     const [imageLoaded, setImageLoaded] = useState(false);

@@ -1,11 +1,11 @@
-import { useGetGenresQuery } from '@/features/films/api/filmsApi.ts';
 import { useSearchParams } from 'react-router-dom';
+import { SEARCH_PARAMS } from '@/common/enums';
+import {PAGE_SIZE} from "@/common/constants";
+import { useGetGenresQuery } from '@/features/films/api/filmsApi.ts';
+import {GenresSkeleton} from "@/common/components";
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import { genresBlockSx, genresControlsSx } from '@/common/components/Genres/Genres.styles.ts';
-import { SEARCH_PARAMS } from '@/common/enums';
-import {GenresSkeleton} from "@/common/components/Genres/GenresSkeleton/GenresSkeleton.tsx";
-import {PAGE_SIZE} from "@/common/constants";
 
 export const Genres = () => {
     const [searchParams, setSearchParams] = useSearchParams();

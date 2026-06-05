@@ -9,7 +9,7 @@ import {ScrollRestoration} from 'react-router-dom';
 import {MainWrapper} from '@/common/components/MainWrapper/MainWrapper.tsx';
 import {ErrorToastBar} from '@/common/components/ErrorToastBar/ErrorToastBar.tsx';
 
-function App() {
+export function App() {
     const themeMode = useAppSelector(selectThemeMode);
     const theme = getTheme(themeMode);
 
@@ -23,5 +23,3 @@ function App() {
         </ThemeProvider>
     );
 }
-
-export default App;

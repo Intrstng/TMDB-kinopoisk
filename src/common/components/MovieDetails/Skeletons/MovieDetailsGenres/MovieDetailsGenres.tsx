@@ -1,7 +1,7 @@
-import Box from "@mui/material/Box";
-import {movieDetailsSx} from "@/common/components/MovieDetails/MovieDetails.styles.ts";
-import Typography from "@mui/material/Typography";
 import type {MovieDetailsGenresProps} from "@/common/components/MovieDetails/types.ts";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import {movieDetailsSx} from "@/common/components/MovieDetails/MovieDetails.styles.ts";
 
 export const MovieDetailsGenres = ({data, isLoading}: MovieDetailsGenresProps) => {
     return (

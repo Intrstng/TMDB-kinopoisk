@@ -1,8 +1,8 @@
-import Box from "@mui/material/Box";
-import {movieDetailsSx} from "@/common/components/MovieDetails/MovieDetails.styles.ts";
-import Typography from "@mui/material/Typography";
-import {BackButton} from "@/common/components/BackButton/BackButton.tsx";
 import type {MovieDetailsHeaderProps} from "@/common/components/MovieDetails/types.ts";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import {BackButton} from "@/common/components";
+import {movieDetailsSx} from "@/common/components/MovieDetails/MovieDetails.styles.ts";
 
 export const MovieDetailsHeader = ({data}: MovieDetailsHeaderProps) => {
     return (

@@ -1,15 +1,15 @@
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import { SortBySelect } from '@/common/components/SortBySelect/SortBySelect.tsx';
-import { RatingRange } from '@/common/components/RatingRange/RatingRange.tsx';
-import { Genres } from '@/common/components/Genres/Genres.tsx';
-import { ResetFiltersButton } from '@/common/components/ResetFiltersButton/ResetFiltersButton.tsx';
+import Paper from '@mui/material/Paper';
+import { SortBySelect } from '@/common/components';
+import { RatingRange } from '@/common/components';
+import { Genres } from '@/common/components';
+import { ResetFiltersButton } from '@/common/components';
 import {
     controlsBlockSx,
     controlsPanelSx,
     controlsTitleSx,
 } from '@/common/components/FilterControls/FilterControls.styles.ts';
-import Paper from '@mui/material/Paper';
 
 export const FilterControls = () => {
     return (

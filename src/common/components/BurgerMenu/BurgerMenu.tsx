@@ -1,9 +1,11 @@
 import {useState} from 'react';
-import {Drawer, IconButton, Stack} from '@mui/material';
+import Drawer from '@mui/material/Drawer';
+import IconButton from '@mui/material/IconButton';
+import Stack from '@mui/material/Stack';
 import MenuIcon from '@mui/icons-material/Menu';
 import {mobileNavLinkSx} from "@/common/components/NavigationBlock/navLink.styles.ts";
 import {BurgerMenuSx, ButtonSx} from "@/common/components/BurgerMenu/BurgerManu.styles.ts";
-import {NavigationLinks} from "@/common/components/NavigationBlock/NavigationLinks/NavigationLinks.tsx";
+import {NavigationLinks} from "@/common/components";
 
 export const BurgerMenu = () => {
     const [open, setOpen] = useState(false);

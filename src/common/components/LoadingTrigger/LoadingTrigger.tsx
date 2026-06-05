@@ -1,5 +1,5 @@
+import type {LoadingTriggerProps} from "@/common/components/LoadingTrigger/types.ts";
 import Box from "@mui/material/Box"
-import type { RefObject } from 'react'
 import CircularProgress from '@mui/material/CircularProgress';
 import {
     blankContainerSx,
@@ -7,12 +7,7 @@ import {
     triggerContainerSx
 } from "@/common/components/LoadingTrigger/LoadingTrigger.styles.ts";
 
-type Props = {
-    observerRef: RefObject<HTMLDivElement | null>
-    isFetchingNextPage: boolean
-}
-
-export const LoadingTrigger = ({ observerRef, isFetchingNextPage }: Props) => {
+export const LoadingTrigger = ({ observerRef, isFetchingNextPage }: LoadingTriggerProps) => {
     // Этот элемент отслеживается IntersectionObserver
     return (
         <Box ref={observerRef} sx={triggerContainerSx}>

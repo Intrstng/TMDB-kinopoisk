@@ -21,7 +21,6 @@ export const getTheme = (themeMode: THEME_MODE) => {
         components: {
             MuiInputBase: {
                 styleOverrides: {
-                    // root: { backgroundColor: '#000' },
                     input: {
                         // backgroundColor: '#978F66',
                         backgroundColor: themeMode === THEME_MODE.LIGHT ? '#F1F7D4' : '#294669',

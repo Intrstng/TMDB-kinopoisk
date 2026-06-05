@@ -11,7 +11,7 @@ import {useMoviesWithConfig} from '@/common/hooks';
 import {useSearchParams} from 'react-router-dom';
 import {SearchStatus} from '@/common/components/SearchStatus/SearchStatus.tsx';
 import {searchSx} from '@/common/pages/SearchPage/SearchPage.styles.ts';
-import {useInfiniteScroll} from "@/common/hooks/useInfiniteScroll.ts";
+import {useInfiniteScroll} from "@/common/hooks";
 import {LoadingTrigger} from "@/common/components/LoadingTrigger/LoadingTrigger.tsx";
 import {PAGE_SIZE} from "@/common/constants";
 import {FilmsGallerySkeletonGrid} from "@/common/components/FilmCard/FilmCardSkeleton/FilmCardSkeleton.tsx";

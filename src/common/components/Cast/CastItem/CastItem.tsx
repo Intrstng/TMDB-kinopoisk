@@ -1,10 +1,12 @@
-import {Avatar, Skeleton, Typography} from '@mui/material';
+import {useState} from "react";
+import type {SyntheticEvent} from 'react';
+import Avatar from '@mui/material/Avatar';
+import Skeleton from '@mui/material/Skeleton';
+import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import type {CastItemProps} from '@/common/components/Cast/CastItem/types.ts';
 import {castSx} from '@/common/components/Cast/CastItem/CastItem.styles.ts';
 import noAvatar from '@/assets/images/no-avatar.jpg';
-import {useState} from "react";
-import type {SyntheticEvent} from 'react';
 
 export const CastItem = ({ name, character, avatarUrl }: CastItemProps) => {
     const [avatarLoaded, setAvatarLoaded] = useState(false);

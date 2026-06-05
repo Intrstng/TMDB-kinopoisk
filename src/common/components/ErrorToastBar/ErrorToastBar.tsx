@@ -1,6 +1,6 @@
+import {toast, ToastContainer} from "react-toastify";
 import {useAppDispatch, useAppSelector} from "@/common/hooks"
 import {selectAppError, setAppErrorAC} from "@/app/model/slices/app-slice.ts";
-import {toast, ToastContainer} from "react-toastify";
 
 export const ErrorToastBar = () => {
     const errorMessage = useAppSelector(selectAppError)

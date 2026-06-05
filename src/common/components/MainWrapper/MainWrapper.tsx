@@ -1,6 +1,6 @@
+import { Outlet } from 'react-router';
 import Box from '@mui/material/Box';
 import { mainSx } from '@/common/styles';
-import { Outlet } from 'react-router';
 
 export const MainWrapper = () => {
     return (

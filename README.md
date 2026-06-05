@@ -23,9 +23,9 @@ This is the final test assignment for [it-incubator Front-end React JS (TypeScri
 ## Technology Stack 💻📚
 
 *   React
+*   Redux Toolkit
 *   RTK Query
 *   TypeScript
-*   Redux Toolkit
 *   React Router DOM
 *   React Hook Form
 *   Zod validation
@@ -42,6 +42,9 @@ This is the final test assignment for [it-incubator Front-end React JS (TypeScri
 *   SVGR
 *   Lottie
 
+## Assignment requirements and self-assessment ✔️
+
+*   [Assignment requirements and self-assessment](https://github.com/Intrstng/TMDB-kinopoisk/pull/1/)
 
 ## Deploy 🌐
 
@@ -151,7 +154,7 @@ Follow these steps to run the application locally:
     npm run stylelint:fix
     ```
 
-*   **`type:check`:** ⌨️Performs a TypeScript type check without emitting any output files.
+*   **`type:check`:** ⌨️ Performs a TypeScript type check without emitting any output files.
 
     ```bash
     npm run type:check

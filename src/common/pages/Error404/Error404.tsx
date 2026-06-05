@@ -1,6 +1,6 @@
 import {useNavigate} from 'react-router-dom';
 import {DotLottieReact} from '@lottiefiles/dotlottie-react';
-import errorAnimation from '@/assets/lottie-animation-data/404 Error Lottie animation.lottie?url';
+import errorAnimation from '@/assets/lottie-animation-data/404_Error_Lottie_animation.lottie?url';
 import {PATH} from '@/common/enums';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';

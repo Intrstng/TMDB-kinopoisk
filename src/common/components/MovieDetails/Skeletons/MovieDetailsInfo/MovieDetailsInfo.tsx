@@ -1,9 +1,9 @@
-import Box from "@mui/material/Box";
-import {movieDetailsSx} from "@/common/components/MovieDetails/MovieDetails.styles.ts";
-import Typography from "@mui/material/Typography";
 import type {MovieDetailsInfoProps} from "@/common/components/MovieDetails/types.ts";
 import {getYearFromDate} from "@/common/utils/getYearFromDate.ts";
 import {getFilmRuntime} from "@/common/utils/getFilmRuntime.ts";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import {movieDetailsSx} from "@/common/components/MovieDetails/MovieDetails.styles.ts";
 
 export const MovieDetailsInfo = ({data}: MovieDetailsInfoProps) => {
     return (

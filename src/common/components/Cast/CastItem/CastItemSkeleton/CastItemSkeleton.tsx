@@ -4,7 +4,7 @@ import Skeleton from "@mui/material/Skeleton";
 import {GALLERY_LENGTH} from "@/common/constants";
 import type {FilmCardSkeletonGridProps} from "@/common/components/FilmCard/FilmCardSkeleton/types.ts";
 
-export const CastItemSkeleton = () => {
+const CastItemSkeleton = () => {
     return (
         <Box component="article" sx={castSx.card}>
             <Skeleton

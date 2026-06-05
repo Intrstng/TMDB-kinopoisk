@@ -1,14 +1,14 @@
 import type {FilmGalleryProps} from '@/common/components/FilmsGallery/types.ts';
 import {useMoviesWithConfig} from '@/common/hooks';
-import {FilmCard} from '@/common/components/FilmCard/FilmCard.tsx';
 import {POSTER_SIZE} from '@/common/enums';
 import {GALLERY_LENGTH} from '@/common/constants';
+import {FilmCard} from '@/common/components';
+import {LoadMoreButton} from "@/common/components";
+import {FilmsGallerySkeletonGrid} from "@/common/components";
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import {gallerySx} from '@/common/components/FilmsGallery/FilmsGallery.styles.ts';
-import {LoadMoreButton} from "@/common/components/LoadMoreButton/LoadMoreButton.tsx";
 import {useFetchFilmsInfiniteQuery} from "@/features/films/api/filmsApi.ts";
-import {FilmsGallerySkeletonGrid} from "@/common/components/FilmCard/FilmCardSkeleton/FilmCardSkeleton.tsx";
 
 export const FilmsGallery = ({ path, title }: FilmGalleryProps) => {
     const pathFormatted = path.replace(/-/g, '_');

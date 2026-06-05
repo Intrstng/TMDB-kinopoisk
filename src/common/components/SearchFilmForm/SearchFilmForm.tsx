@@ -1,17 +1,17 @@
+import {useEffect} from 'react';
+import {useNavigate, useSearchParams} from 'react-router-dom';
+import {zodResolver} from '@hookform/resolvers/zod';
 import {type SubmitHandler, useForm} from 'react-hook-form';
 import type {SearchFilmArgs, SearchFilmFormProps} from '@/common/components/SearchFilmForm/types.ts';
-import {zodResolver} from '@hookform/resolvers/zod';
 import {searchFilmFormSchema} from '@/common/components/SearchFilmForm/model/searchFilmForm.schemas.ts';
-import Button from '@mui/material/Button';
-import s from './SearchFilmForm.module.css';
 import Box from '@mui/material/Box';
-import {useNavigate, useSearchParams} from 'react-router-dom';
-import {useEffect} from 'react';
 import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
 import ClearIcon from '@mui/icons-material/Clear';
 import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
 import {SearchFormContainerSx, SearchInputSx, SubmitBtnSx} from "./SearchFilmForm.styles";
+import s from './SearchFilmForm.module.css';
 
 export const SearchFilmForm = ({
                                    isSearchFetching,

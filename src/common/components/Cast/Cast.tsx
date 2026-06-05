@@ -1,12 +1,12 @@
 import {useGetCreditsQuery} from '@/features/films/api/filmsApi.ts';
+import type {DetailsProps} from '@/common/components/MovieDetails/types.ts';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import {POSTER_SIZE} from '@/common/enums';
 import {GALLERY_LENGTH} from '@/common/constants';
-import {CastItem} from '@/common/components/Cast/CastItem/CastItem.tsx';
-import type {DetailsProps} from '@/common/components/MovieDetails/types.ts';
 import {castTitleSx, moviesGridSx} from '@/common/components/Cast/Cast.styles.ts';
-import {CastGallerySkeleton} from "@/common/components/Cast/CastItem/CastItemSkeleton/CastItemSkeleton.tsx";
+import {CastItem} from '@/common/components';
+import {CastGallerySkeleton} from "@/common/components";
 
 export const Cast = ({ filmId, getPosterUrlCb }: DetailsProps) => {
     const {

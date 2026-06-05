@@ -1,16 +1,13 @@
-import {useMoviesWithConfig} from '@/common/hooks';
+import {useMoviesWithConfig, useInfiniteScroll} from '@/common/hooks';
+import {useSearchParams} from 'react-router-dom';
 import {useSortFilmsInfiniteQuery} from '@/features/films/api/filmsApi.ts';
 import {PAGE_SIZE, RATING_MAX, RATING_MIN} from '@/common/constants';
-import Box from '@mui/material/Box';
-import {useSearchParams} from 'react-router-dom';
 import {POSTER_SIZE, SEARCH_PARAMS, SORT_BY} from '@/common/enums';
-import {FilmCard} from '@/common/components/FilmCard/FilmCard.tsx';
 import type {SortFilmsArgs} from '@/features/films/api/filmsApi.types.ts';
-import {sortedFilmsSx,} from '@/common/components/SortedFilmsGallery/SortedFilmsGallery.styles.ts';
-import {useInfiniteScroll} from "@/common/hooks/useInfiniteScroll.ts";
-import {LoadingTrigger} from "@/common/components/LoadingTrigger/LoadingTrigger.tsx";
+import {FilmCard, LoadingTrigger, FilmsGallerySkeletonGrid} from '@/common/components';
+import Box from '@mui/material/Box';
 import Typography from "@mui/material/Typography";
-import {FilmsGallerySkeletonGrid} from "@/common/components/FilmCard/FilmCardSkeleton/FilmCardSkeleton.tsx";
+import {sortedFilmsSx,} from '@/common/components/SortedFilmsGallery/SortedFilmsGallery.styles.ts';
 
 export const SortedFilmsGallery = () => {
     const [searchParams] = useSearchParams();

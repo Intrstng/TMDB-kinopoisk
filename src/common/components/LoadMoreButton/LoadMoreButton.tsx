@@ -1,7 +1,7 @@
 import {NavLink} from 'react-router-dom';
-import {styled} from '@mui/material/styles';
 import {PATH} from "@/common/enums";
 import type {LoadMoreButtonProps} from "@/common/components/LoadMoreButton/types.ts";
+import {styled} from '@mui/material/styles';
 
 const StyledLoadMoreButton = styled(NavLink)(({theme}) => ({
     padding: '0.5rem 1rem',

@@ -2,7 +2,7 @@ import { createBrowserRouter, Navigate, type RouteObject } from 'react-router-do
 import { NESTED_PATH, PATH } from '@/common/enums';
 import { Main } from '@/common/components/Main/Main.tsx';
 import { Error404 } from '@/common/pages/Error404/Error404.tsx';
-import App from '@/App.tsx';
+import { App } from '@/App.tsx';
 import { CategoryLayout } from '@/common/pages/CategoryLayout/CategoryLayout.tsx';
 import { FavouritesPage } from '@/common/pages/FavouritesPage/FavouritesPage.tsx';
 import { SearchPage } from '@/common/pages/SearchPage/SearchPage.tsx';
