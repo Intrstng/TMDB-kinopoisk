@@ -26,11 +26,16 @@ const blockSx: SxProps = {
     margin: '0 auto',
 };
 
-const moviesFridSx: SxProps = {
+const moviesGridSx: SxProps = {
     display: 'grid',
-    gridTemplateColumns: 'repeat(4, minmax(200px, 1fr))',
     gap: '1.5rem',
     padding: '1.25rem 0',
+    gridTemplateColumns: 'repeat(5, 200px)',
+
+    '@media (max-width: 1200px)': {
+        gridTemplateColumns: 'repeat(4, minmax(160px, 1fr))',
+        gap: '1rem',
+    },
 
     '@media (max-width: 940px)': {
         gridTemplateColumns: 'repeat(3, minmax(160px, 1fr))',
@@ -51,6 +56,6 @@ const moviesFridSx: SxProps = {
 export const favouritesPageSx = {
     container: containerSx,
     block: blockSx,
-    moviesGrid: moviesFridSx,
+    moviesGrid: moviesGridSx,
     favoritesTitle: favoritesTitleSx,
 } as const;
