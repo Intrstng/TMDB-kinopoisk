@@ -49,6 +49,8 @@ This is the final test assignment for [it-incubator Front-end React JS (TypeScri
 
 ## Deploy 🌐
 
+❗ If you are located in Belarus or Russia, be sure to use a VPN when opening the link, as this required by the TMDB API.
+
 *   [Deploy link](https://tmdb-cinemascope.vercel.app/)
 
 ## Getting Started 🚀
@@ -91,6 +93,8 @@ Follow these steps to run the application locally:
     *   Register for an API key [TMDB API](https://developer.themoviedb.org/docs/getting-started) and fill in the required credentials in the `.env` file.
 
 6.  **Start the development server:**
+
+    ❗ If you are located in Belarus or Russia, be sure to use a VPN when opening the link, as this required by the TMDB API.
 
     ```bash
     pnpm run dev
