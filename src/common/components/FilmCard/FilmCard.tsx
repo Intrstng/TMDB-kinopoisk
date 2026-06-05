@@ -14,6 +14,7 @@ import {cardSx} from "@/common/components/FilmCard/FilmCard.styles.ts";
 import {FAVORITES_STORAGE_KEY} from "@/common/constants";
 import {CardMedia, Skeleton} from "@mui/material";
 import {styled} from "@mui/material/styles";
+import type {SyntheticEvent} from 'react';
 
 const StyledNavLink = styled(NavLink)(() => ({
     textDecoration: 'none',
@@ -75,7 +76,7 @@ export const FilmCard = ({film, source}: FilmCardProps) => {
                     image={source || noPoster}
                     alt={film.title}
                     onLoad={() => setImageLoaded(true)}
-                    onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
+                    onError={(e: SyntheticEvent<HTMLImageElement>) => {
                         e.currentTarget.src = noPoster;
                         setImageLoaded(true);
                     }}

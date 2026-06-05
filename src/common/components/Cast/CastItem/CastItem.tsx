@@ -4,6 +4,7 @@ import type {CastItemProps} from '@/common/components/Cast/CastItem/types.ts';
 import {castSx} from '@/common/components/Cast/CastItem/CastItem.styles.ts';
 import noAvatar from '@/assets/images/no-avatar.jpg';
 import {useState} from "react";
+import type {SyntheticEvent} from 'react';
 
 export const CastItem = ({ name, character, avatarUrl }: CastItemProps) => {
     const [avatarLoaded, setAvatarLoaded] = useState(false);
@@ -27,7 +28,7 @@ export const CastItem = ({ name, character, avatarUrl }: CastItemProps) => {
                 }}
                 variant="circular"
                 onLoad={() => setAvatarLoaded(true)}
-                onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
+                onError={(e: SyntheticEvent<HTMLImageElement>) => {
                     e.currentTarget.src = noAvatar;
                     setAvatarLoaded(true);
                 }}

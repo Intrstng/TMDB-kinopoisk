@@ -6,6 +6,7 @@ const detailsSx: SxProps = {
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
     gap: '3rem',
+    width: '100%',
 };
 
 const filmHeaderSx: SxProps = {
@@ -26,6 +27,10 @@ const posterSx: SxProps = {
         height: 'auto',
         display: 'block',
     },
+};
+
+const filmInfoBlockSx: SxProps = {
+    width: '100%',
 };
 
 const filmTitleSx: SxProps = {
@@ -121,6 +126,7 @@ export const movieDetailsSx = {
     filmHeader: filmHeaderSx,
     poster: posterSx,
     filmTitle: filmTitleSx,
+    filmInfoBlock: filmInfoBlockSx,
     filmDescription: filmDescriptionSx,
     filmInfo: filmInfoSx,
     filmYear: filmYearSx,
