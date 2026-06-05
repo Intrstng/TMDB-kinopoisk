@@ -1,10 +1,10 @@
-import { useNavigate } from 'react-router-dom';
-import { DotLottieReact } from '@lottiefiles/dotlottie-react';
+import {useNavigate} from 'react-router-dom';
+import {DotLottieReact} from '@lottiefiles/dotlottie-react';
 import errorAnimation from '@/assets/lottie-animation-data/404 Error Lottie animation.lottie?url';
-import s from './Error404.module.css';
-import { PATH } from '@/common/enums';
+import {PATH} from '@/common/enums';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
+import {errorSx} from "@/common/pages/Error404/Error404.styles.ts";
 
 export const Error404 = () => {
     const navigate = useNavigate();
@@ -14,10 +14,10 @@ export const Error404 = () => {
     };
 
     return (
-        <Box className={s.errorContent}>
-            <Box className={s.errorLottie} data-testid="error-lottie">
+        <Box sx={errorSx.container}>
+            <Box sx={errorSx.lottie} data-testid="error-lottie">
                 <DotLottieReact src={errorAnimation} loop autoplay />
-                <Button variant="contained" onClick={handleGoHome} className={s.toHomeLink}>
+                <Button variant="outlined" onClick={handleGoHome} sx={errorSx.homeButton}>
                     Go to home page
                 </Button>
             </Box>

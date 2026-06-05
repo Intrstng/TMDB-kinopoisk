@@ -15,7 +15,6 @@ import {useInfiniteScroll} from "@/common/hooks/useInfiniteScroll.ts";
 import {LoadingTrigger} from "@/common/components/LoadingTrigger/LoadingTrigger.tsx";
 import {PAGE_SIZE} from "@/common/constants";
 import {FilmsGallerySkeletonGrid} from "@/common/components/FilmCard/FilmCardSkeleton/FilmCardSkeleton.tsx";
-import {sortedFilmsSx} from "@/common/components/SortedFilmsGallery/SortedFilmsGallery.styles.ts";
 
 export const SearchPage = () => {
     const [searchParams] = useSearchParams();
