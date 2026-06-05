@@ -44,7 +44,8 @@ This is the final test assignment for [it-incubator Front-end React JS (TypeScri
 
 ## Assignment requirements and self-assessment ✔️
 
-*   [Assignment requirements and self-assessment](https://github.com/Intrstng/TMDB-kinopoisk/pull/1/)
+*   [Assignment requirements](./requirements.md)
+*   [Self-assessment](https://github.com/Intrstng/TMDB-kinopoisk/pull/1/)
 
 ## Deploy 🌐
 
