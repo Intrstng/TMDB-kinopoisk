@@ -11,7 +11,7 @@ import {CastGallerySkeleton} from "@/common/components/Cast/CastItem/CastItemSke
 export const Cast = ({ filmId, getPosterUrlCb }: DetailsProps) => {
     const {
         data: creditsData,
-        isLoading: isCreditsLoading,
+        isFetching: isCreditsFetching,
     } = useGetCreditsQuery(
         { movie_id: Number(filmId), language: 'en-US' },
         {
@@ -19,7 +19,7 @@ export const Cast = ({ filmId, getPosterUrlCb }: DetailsProps) => {
         }
     );
 
-    if (!isCreditsLoading && (!creditsData || creditsData?.cast.length === 0)) return null;
+    if (!isCreditsFetching && (!creditsData || creditsData?.cast.length === 0)) return null;
 
     const actorsCast = creditsData?.cast.slice(0, GALLERY_LENGTH) || [];
 
@@ -29,7 +29,7 @@ export const Cast = ({ filmId, getPosterUrlCb }: DetailsProps) => {
                 Cast
             </Typography>
             <Box sx={moviesGridSx}>
-                {isCreditsLoading
+                {isCreditsFetching
                     ? <CastGallerySkeleton count={GALLERY_LENGTH}/>
                     : actorsCast.map(actor => (
                             <CastItem

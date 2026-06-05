@@ -17,7 +17,7 @@ import {
 import {MovieDetailsPoster} from "@/common/components/MovieDetails/MovieDetailsPoster/MovieDetailsPoster.tsx";
 
 export const MovieDetails = ({ filmId, getPosterUrlCb }: DetailsProps) => {
-    const { data: filmData, isLoading: isFilmLoading } = useGetFilmQuery(filmId);
+    const { data: filmData, isLoading: isFilmLoading, isFetching: isFetching } = useGetFilmQuery(filmId);
 
     const posterPath = filmData?.poster_path || null;
     const posterUrl = getPosterUrlCb(posterPath, POSTER_SIZE.W342) || noPoster;
@@ -26,7 +26,7 @@ export const MovieDetails = ({ filmId, getPosterUrlCb }: DetailsProps) => {
 
     return (
         <Box component="section" sx={movieDetailsSx.details}>
-            {isFilmLoading ? (
+            {isFetching ? (
                 <>
                     <MovieDetailsPosterSkeleton/>
                     <Box sx={movieDetailsSx.filmInfoBlock}>

@@ -15,6 +15,7 @@ const filmInfoSkeletonSx: SxProps = {
 const genreItemSx: SxProps = {
     width: '10%',
     height: '2.5rem',
+    borderRadius: '0.25rem',
 };
 
 export const movieDetailsSkeletonSx = {

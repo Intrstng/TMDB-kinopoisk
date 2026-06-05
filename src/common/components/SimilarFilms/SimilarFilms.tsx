@@ -11,7 +11,7 @@ import {FilmsGallerySkeletonGrid} from "@/common/components/FilmCard/FilmCardSke
 export const SimilarFilms = ({ filmId, getPosterUrlCb }: DetailsProps) => {
     const {
         data: similarFilmsData,
-        isLoading: isSimilarFilmsLoading,
+        isFetching: isSimilarFilmsFetching,
     } = useGetSimilarFilmsQuery(
         { movie_id: Number(filmId), language: 'en-US', page: 1 },
         {
@@ -19,7 +19,7 @@ export const SimilarFilms = ({ filmId, getPosterUrlCb }: DetailsProps) => {
         }
     );
 
-    if (!isSimilarFilmsLoading && (!similarFilmsData || similarFilmsData?.total_results === 0)) return null;
+    if (!isSimilarFilmsFetching && (!similarFilmsData || similarFilmsData?.total_results === 0)) return null;
 
     const similarFilms = similarFilmsData?.results.slice(0, GALLERY_LENGTH) || [];
 
@@ -29,7 +29,7 @@ export const SimilarFilms = ({ filmId, getPosterUrlCb }: DetailsProps) => {
                 Similar movies
             </Typography>
             <Box sx={moviesGridSx}>
-                {isSimilarFilmsLoading
+                {isSimilarFilmsFetching
                     ? <FilmsGallerySkeletonGrid count={GALLERY_LENGTH}/>
                     : similarFilms.map(film => (
                         <FilmCard key={film.id} film={film} source={getPosterUrlCb(film.poster_path, POSTER_SIZE.W342)} />
