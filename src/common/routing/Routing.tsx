@@ -9,6 +9,8 @@ import { SearchPage } from '@/common/pages/SearchPage/SearchPage.tsx';
 import { FilteredPage } from '@/common/pages/FilteredPage/FilteredPage.tsx';
 import { CategoryPage } from '@/common/pages/CategoryLayout/CategoryPage/CategoryPage.tsx';
 import { MoviePage } from '@/common/pages/MoviePage/MoviePage.tsx';
+import {LoginPage} from "@/common/pages/LoginPage/LoginPage.tsx";
+import {SignUpPage} from "@/common/pages/SignUpPage/SignUpPage.tsx";
 
 const categoryRoutes: NESTED_PATH[] = [
     NESTED_PATH.POPULAR,
@@ -55,6 +57,14 @@ const publicRoutes: RouteObject[] = [
     {
         path: PATH.ERROR,
         element: <Error404 />,
+    },
+    {
+        path: PATH.LOGIN,
+        element: <LoginPage />,
+    },
+    {
+        path: PATH.SIGNUP,
+        element: <SignUpPage />,
     },
 ];
 

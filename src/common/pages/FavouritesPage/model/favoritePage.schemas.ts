@@ -7,13 +7,12 @@ export const favoriteFilmSchema = z.object({
     voteAverage: z.number(),
 });
 
+export const favoriteFilmsResponseSchema = z.array(favoriteFilmSchema);
+
 export const favoriteFilmCardPropsSchema = z.object({
     filmId: z.number(),
     title: z.string(),
     source: z.url().nullish(),
     rating: z.number(),
-    onRemove: z.function({
-        input: [z.array(favoriteFilmSchema)],
-        output: z.void(),
-    }),
+    isCardLoading: z.boolean(),
 });

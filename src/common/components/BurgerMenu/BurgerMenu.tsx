@@ -4,8 +4,9 @@ import IconButton from '@mui/material/IconButton';
 import Stack from '@mui/material/Stack';
 import MenuIcon from '@mui/icons-material/Menu';
 import {mobileNavLinkSx} from "@/common/components/NavigationBlock/navLink.styles.ts";
-import {BurgerMenuSx, ButtonSx} from "@/common/components/BurgerMenu/BurgerManu.styles.ts";
+import {AuthBlockSx, BurgerMenuSx, ButtonSx} from "@/common/components/BurgerMenu/BurgerManu.styles.ts";
 import {NavigationLinks} from "@/common/components";
+import {AuthLinks} from "@/common/components/NavigationBlock/AuthLinks/AuthLinks.tsx";
 
 export const BurgerMenu = () => {
     const [open, setOpen] = useState(false);
@@ -39,6 +40,7 @@ export const BurgerMenu = () => {
                     onClick={toggleBurgerMenu(false)}
                 >
                 <NavigationLinks sxStyles={mobileNavLinkSx}/>
+                <AuthLinks sxStyles={AuthBlockSx}/>
                 </Stack>
             </Drawer>
         </>

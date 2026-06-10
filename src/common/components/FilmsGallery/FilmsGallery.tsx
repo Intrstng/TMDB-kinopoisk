@@ -1,3 +1,5 @@
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from "@/app/config/firebase.ts";
 import type {FilmGalleryProps} from '@/common/components/FilmsGallery/types.ts';
 import {useMoviesWithConfig} from '@/common/hooks';
 import {POSTER_SIZE} from '@/common/enums';
@@ -11,8 +13,9 @@ import {gallerySx} from '@/common/components/FilmsGallery/FilmsGallery.styles.ts
 import {useFetchFilmsInfiniteQuery} from "@/features/films/api/filmsApi.ts";
 
 export const FilmsGallery = ({ path, title }: FilmGalleryProps) => {
+    const [user] = useAuthState(auth);
     const pathFormatted = path.replace(/-/g, '_');
-
+console.log('user', !!user)
     const {
         config: configData,
         isLoading: isConfigLoading,
@@ -23,12 +26,12 @@ export const FilmsGallery = ({ path, title }: FilmGalleryProps) => {
         data,
         isLoading: isMoviesLoading,
     } = useFetchFilmsInfiniteQuery(
-        { path: pathFormatted, language: 'en-US' },
+        { path: pathFormatted, language: 'en-US', userUid: user?.uid },
         {
             skip: !configData,
         }
     );
-
+console.log(data)
     const filmsData = data?.pages ? data.pages.flatMap((page) => page.results) : []
     const films = filmsData.slice(0, GALLERY_LENGTH);
 
@@ -51,7 +54,7 @@ export const FilmsGallery = ({ path, title }: FilmGalleryProps) => {
                 {isConfigLoading || isMoviesLoading
                     ? <FilmsGallerySkeletonGrid count={GALLERY_LENGTH} />
                     : films.map(film => (
-                        <FilmCard key={film.id} film={film} source={getPosterUrl(film.poster_path, POSTER_SIZE.W342)} />
+                        <FilmCard key={film.id} film={film} source={getPosterUrl(film.poster_path, POSTER_SIZE.W342)}/>
                     ))}
             </Box>
         </Box>

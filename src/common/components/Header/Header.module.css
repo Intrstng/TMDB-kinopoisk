@@ -2,11 +2,3 @@
     width: 10rem;
     height: auto;
 }
-
-.headerNav {
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: space-between;
-    align-items: center;
-    gap: 0.5rem;
-}

@@ -1,7 +1,7 @@
 import {NavLink} from 'react-router-dom';
-import {useEffect, useState} from "react";
 import type {MouseEvent} from 'react'
-import type {FavoriteFilm, FavoriteFilmCardProps} from "@/common/pages/FavouritesPage/types.ts";
+import {type SyntheticEvent, useState} from "react";
+import type {FavoriteFilmCardProps} from "@/common/pages/FavouritesPage/types.ts";
 import {PATH} from '@/common/enums';
 import noPoster from '@/assets/images/no_poster.jpg';
 import Typography from "@mui/material/Typography";
@@ -10,67 +10,72 @@ import CardMedia from "@mui/material/CardMedia";
 import IconButton from "@mui/material/IconButton";
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import {FAVORITES_STORAGE_KEY} from "@/common/constants";
 import {styled} from "@mui/material/styles";
 import {favoriteCardSx} from "@/common/components/FavoriteFilmCard/FavoriteFilmCard.styles.ts";
+import {useAuthState} from "react-firebase-hooks/auth";
+import {auth} from "@/app/config/firebase.ts";
+import {useRemoveFromFavoritesMutation} from "@/features/films/api/filmsApi.ts";
+import Skeleton from "@mui/material/Skeleton";
 
 const StyledNavLink = styled(NavLink)(() => ({
     textDecoration: 'none',
 }));
 
-export const FavoriteFilmCard = ({filmId, title, source, rating, onRemove}: FavoriteFilmCardProps) => {
-    const [isFavorite, setIsFavorite] = useState(false);
-    // Check if film is in favorites on mount
-    useEffect(() => {
-        const favorites: FavoriteFilm[] = JSON.parse(localStorage.getItem(FAVORITES_STORAGE_KEY) || '[]');
-        const isCurrentFavorite = favorites.some(favFilm => favFilm.id === filmId)
-        setIsFavorite(isCurrentFavorite);
-    }, [filmId]);
+export const FavoriteFilmCard = ({filmId, title, source, rating, isCardLoading}: FavoriteFilmCardProps) => {
+    const [user] = useAuthState(auth);
+    const [imageLoaded, setImageLoaded] = useState(false);
+    const [isFavorite, setIsFavorite] = useState(true);
+    const [removeFromFavorites] = useRemoveFromFavoritesMutation()
+
+    // const { data: isFavorite, isLoading: isFavoriteLoading } = useCheckIsFavoriteQuery(
+    //     { userUid: user?.uid || '', filmId },
+    //     { skip: !user }
+    // );
 
     const handleFavoriteClick = (e: MouseEvent) => {
         e.preventDefault();
         e.stopPropagation();
-
-        const favorites: FavoriteFilm[] = JSON.parse(localStorage.getItem(FAVORITES_STORAGE_KEY) || '[]');
-
-        let newFavorites: FavoriteFilm[];
-        if (isFavorite) {
-            newFavorites = favorites.filter(favFilm => favFilm.id !== filmId);
-            onRemove(newFavorites);
-        } else {
-            const newFavoriteFilm: FavoriteFilm = {
-                id: filmId,
-                title: title,
-                posterUrl: source,
-                voteAverage: rating,
-            }
-            newFavorites = [...favorites, newFavoriteFilm];
+        if (user) {
+            setIsFavorite(false)
+            removeFromFavorites({userUid: user.uid, filmId})
         }
-        localStorage.setItem(FAVORITES_STORAGE_KEY, JSON.stringify(newFavorites));
-        setIsFavorite(!isFavorite);
     };
 
     return (
         <StyledNavLink to={`${PATH.CATEGORY}/${filmId}`}>
             <Box sx={favoriteCardSx.imageCard}>
+                {!imageLoaded && (
+                    <Skeleton
+                        variant="rectangular"
+                        width="100%"
+                        height="100%"
+                        sx={favoriteCardSx.image}
+                        animation="wave"
+                    />
+                )}
                 <CardMedia
                     component="img"
                     className="favoriteImage"
-                    sx={favoriteCardSx.image}
+                    sx={{
+                        ...favoriteCardSx.image,
+                        display: imageLoaded ? 'block' : 'none'
+                    }}
                     image={source || noPoster}
                     alt={title}
-                    onError={e => {
+                    onLoad={() => setImageLoaded(true)}
+                    onError={(e: SyntheticEvent<HTMLImageElement>) => {
                         e.currentTarget.src = noPoster;
+                        setImageLoaded(true);
                     }}
                 />
                 <Typography variant={'h4'} component={'h4'} sx={favoriteCardSx.rating}>{rating.toFixed(1)}</Typography>
-                <IconButton
+                {!isCardLoading && <IconButton
                     onClick={handleFavoriteClick}
                     sx={favoriteCardSx.favoriteIcon}
                     aria-label="add to favorites"
                 >
                     {isFavorite ? <FavoriteIcon sx={favoriteCardSx.iconSelected}/> : <FavoriteBorderIcon />}
-                </IconButton>
+                </IconButton>}
             </Box>
             <Box sx={favoriteCardSx.movieInfo}>
                 <Typography variant={'h3'} component={'h3'} sx={favoriteCardSx.title}>{title}</Typography>

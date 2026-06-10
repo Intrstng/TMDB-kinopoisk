@@ -9,6 +9,8 @@ export enum PATH {
     ERROR = '/error',
     CATCH_ALL = '*',
     GITHUB = 'https://github.com/Intrstng',
+    LOGIN = '/login',
+    SIGNUP = '/signup',
 }
 
 export enum NESTED_PATH {

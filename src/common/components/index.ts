@@ -49,3 +49,4 @@ export { SimilarFilms } from '@/common/components/SimilarFilms/SimilarFilms.tsx'
 export { SortBySelect } from '@/common/components/SortBySelect/SortBySelect.tsx';
 export { SortedFilmsGallery } from '@/common/components/SortedFilmsGallery/SortedFilmsGallery.tsx';
 export { ThemeSwitch } from '@/common/components/ThemeSwitch/ThemeSwitch.tsx';
+export { PasswordStrength } from '@/common/components/PasswordStrength/PasswordStrength.tsx';

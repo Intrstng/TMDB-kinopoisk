@@ -1,10 +1,7 @@
-import {useEffect, useState} from "react";
+import {type MouseEvent, type SyntheticEvent, useState} from 'react'
 import {NavLink} from 'react-router-dom';
 import {PATH} from '@/common/enums';
-import type {MouseEvent} from 'react'
-import type {SyntheticEvent} from 'react';
 import type {FilmCardProps} from '@/common/components/FilmCard/types.ts';
-import type {FavoriteFilm} from "@/common/pages/FavouritesPage/types.ts";
 import noPoster from '@/assets/images/no_poster.jpg';
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
@@ -14,8 +11,10 @@ import IconButton from "@mui/material/IconButton";
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import {cardSx} from "@/common/components/FilmCard/FilmCard.styles.ts";
-import {FAVORITES_STORAGE_KEY} from "@/common/constants";
 import {styled} from "@mui/material/styles";
+import {auth} from "@/app/config/firebase.ts";
+import {useAuthState} from 'react-firebase-hooks/auth';
+import {useAddToFavoritesMutation, useRemoveFromFavoritesMutation} from "@/features/films/api/filmsApi.ts";
 
 const StyledNavLink = styled(NavLink)(() => ({
     textDecoration: 'none',
@@ -23,36 +22,42 @@ const StyledNavLink = styled(NavLink)(() => ({
 }));
 
 export const FilmCard = ({film, source}: FilmCardProps) => {
-    const [isFavorite, setIsFavorite] = useState(false);
+    const [isFavorite, setIsFavorite] = useState(film.isFavorite);
     const [imageLoaded, setImageLoaded] = useState(false);
-    // Check if film is in favorites on mount
-    useEffect(() => {
-        const favorites: FavoriteFilm[] = JSON.parse(localStorage.getItem(FAVORITES_STORAGE_KEY) || '[]');
-        const isCurrentFavorite = favorites.some(favFilm => favFilm.id === film.id)
-        setIsFavorite(isCurrentFavorite);
-    }, [film.id]);
+    const [user] = useAuthState(auth);
+console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!', film.id, film.title, film.isFavorite)
 
-    const handleFavoriteClick = (e: MouseEvent) => {
+    // Mutations
+    const [addToFavorites] = useAddToFavoritesMutation();
+    const [removeFromFavorites] = useRemoveFromFavoritesMutation();
+
+    const handleFavoriteClick = async (e: MouseEvent) => {
         e.preventDefault();
         e.stopPropagation();
 
-        const favorites: FavoriteFilm[] = JSON.parse(localStorage.getItem(FAVORITES_STORAGE_KEY) || '[]');
-        let newFavorites;
-
-        if (isFavorite) {
-            newFavorites = favorites.filter(favFilm => favFilm.id !== film.id);
-        } else {
-            const newFavoriteFilm: FavoriteFilm = {
-                id: film.id,
-                title: film.title,
-                posterUrl: source,
-                voteAverage: film.vote_average,
-            }
-            newFavorites = [...favorites, newFavoriteFilm];
-        }
-
-        localStorage.setItem(FAVORITES_STORAGE_KEY, JSON.stringify(newFavorites));
+        if (!user) return;
         setIsFavorite(!isFavorite);
+        try {
+            if (isFavorite) {
+                await removeFromFavorites({
+                    userUid: user.uid,
+                    filmId: film.id,
+                }).unwrap();
+
+            } else {
+                await addToFavorites({
+                    userUid: user.uid,
+                    film: {
+                        id: film.id,
+                        title: film.title,
+                        posterUrl: source,
+                        voteAverage: film.vote_average,
+                    }
+                }).unwrap();
+            }
+        } catch (error) {
+            console.error('Error toggling favorite:', error);
+        }
     };
 
     return (
@@ -83,13 +88,15 @@ export const FilmCard = ({film, source}: FilmCardProps) => {
                     }}
                 />
                 <Typography variant={'h4'} component={'h4'} sx={cardSx.rating}>{film.vote_average.toFixed(1)}</Typography>
-                <IconButton
-                    onClick={handleFavoriteClick}
-                    sx={cardSx.favoriteIcon}
-                    aria-label="add to favorites"
-                >
-                    {isFavorite ? <FavoriteIcon sx={cardSx.iconSelected}/> : <FavoriteBorderIcon />}
-                </IconButton>
+                {
+                    user && <IconButton
+                        onClick={handleFavoriteClick}
+                        sx={cardSx.favoriteIcon}
+                        aria-label="add to favorites"
+                    >
+                        {isFavorite ? <FavoriteIcon sx={cardSx.iconSelected}/> : <FavoriteBorderIcon />}
+                    </IconButton>
+                }
             </Box>
             <Box sx={cardSx.movieInfo}>
                 <Typography variant={'h3'} component={'h3'} sx={cardSx.title}>{film.title}</Typography>

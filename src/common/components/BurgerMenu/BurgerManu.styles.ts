@@ -12,3 +12,9 @@ export const BurgerMenuSx: SxProps = {
         backgroundColor: 'background.paper',
     },
 };
+
+export const AuthBlockSx: SxProps = {
+    flexDirection: 'column',
+    justifyContent: 'center',
+    maxWidth: 'unset',
+};

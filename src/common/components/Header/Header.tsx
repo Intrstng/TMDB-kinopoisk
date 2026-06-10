@@ -9,6 +9,7 @@ import Box from "@mui/material/Box";
 import Toolbar from '@mui/material/Toolbar';
 import {containerSx, headerSx} from '@/common/styles';
 import s from './Header.module.css';
+import {headerNavSx} from "@/common/components/Header/Header.styles.ts";
 
 export const Header = () => {
     return (
@@ -17,7 +18,7 @@ export const Header = () => {
                 <Container sx={containerSx}>
                     <Logo path={PATH.MAIN} variant={ICON_VARIANT.LOGO} className={s.headerLogo} />
 
-                    <Box className={s.headerNav} >
+                    <Box sx={headerNavSx} >
                         <NavigationBlock />
                         <ThemeSwitch />
                     </Box>
