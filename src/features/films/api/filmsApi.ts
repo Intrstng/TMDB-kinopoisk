@@ -88,6 +88,8 @@ export const filmsApi = baseApi.injectEndpoints({
 
             query: ({ pageParam, queryArg }) => {
                 // see 3 & 4
+                console.log('fetchFilms in');
+
                 const { path, ...restArgs } = queryArg;
                 return {
                     url: `movie/${path}`,
@@ -116,6 +118,7 @@ export const filmsApi = baseApi.injectEndpoints({
                     await queryFulfilled;
                     // Если пользователь не авторизован, обновляем все кэши с isFavorite: false
                     if (!queryArg.userUid) {
+                        console.log('fetchFilms пользователь не авторизован');
                         cachedArgsForQuery.forEach(cachedArgs => {
                             patchResults.push(
                                 dispatch(
@@ -141,7 +144,7 @@ export const filmsApi = baseApi.injectEndpoints({
 
                     // Создаем Set для быстрого поиска
                     const favoriteIds = new Set(favoritesResult.map(fav => fav.id));
-
+                    console.log('fetchFilms пользователь авторизован');
                     // Обновляем ВСЕ закэшированные запросы fetchFilms с полем isFavorite
                     cachedArgsForQuery.forEach(cachedArgs => {
                         patchResults.push(

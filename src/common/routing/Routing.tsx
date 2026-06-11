@@ -1,16 +1,17 @@
-import { createBrowserRouter, Navigate, type RouteObject } from 'react-router-dom';
-import { NESTED_PATH, PATH } from '@/common/enums';
-import { Main } from '@/common/components/Main/Main.tsx';
-import { Error404 } from '@/common/pages/Error404/Error404.tsx';
-import { App } from '@/App.tsx';
-import { CategoryLayout } from '@/common/pages/CategoryLayout/CategoryLayout.tsx';
-import { FavouritesPage } from '@/common/pages/FavouritesPage/FavouritesPage.tsx';
-import { SearchPage } from '@/common/pages/SearchPage/SearchPage.tsx';
-import { FilteredPage } from '@/common/pages/FilteredPage/FilteredPage.tsx';
-import { CategoryPage } from '@/common/pages/CategoryLayout/CategoryPage/CategoryPage.tsx';
-import { MoviePage } from '@/common/pages/MoviePage/MoviePage.tsx';
+import {createBrowserRouter, Navigate, type RouteObject} from 'react-router-dom';
+import {NESTED_PATH, PATH} from '@/common/enums';
+import {Main} from '@/common/components/Main/Main.tsx';
+import {Error404} from '@/common/pages/Error404/Error404.tsx';
+import {App} from '@/App.tsx';
+import {CategoryLayout} from '@/common/pages/CategoryLayout/CategoryLayout.tsx';
+import {FavouritesPage} from '@/common/pages/FavouritesPage/FavouritesPage.tsx';
+import {SearchPage} from '@/common/pages/SearchPage/SearchPage.tsx';
+import {FilteredPage} from '@/common/pages/FilteredPage/FilteredPage.tsx';
+import {CategoryPage} from '@/common/pages/CategoryLayout/CategoryPage/CategoryPage.tsx';
+import {MoviePage} from '@/common/pages/MoviePage/MoviePage.tsx';
 import {LoginPage} from "@/common/pages/LoginPage/LoginPage.tsx";
 import {SignUpPage} from "@/common/pages/SignUpPage/SignUpPage.tsx";
+import {PrivateRoutes} from "@/common/routing/PrivateRoutes/PrivateRoutes.tsx";
 
 const categoryRoutes: NESTED_PATH[] = [
     NESTED_PATH.POPULAR,
@@ -51,10 +52,6 @@ const publicRoutes: RouteObject[] = [
         element: <SearchPage />,
     },
     {
-        path: PATH.FAVOURITES,
-        element: <FavouritesPage />,
-    },
-    {
         path: PATH.ERROR,
         element: <Error404 />,
     },
@@ -68,6 +65,13 @@ const publicRoutes: RouteObject[] = [
     },
 ];
 
+const privateRoutes: RouteObject[] = [
+    {
+        path: PATH.FAVOURITES,
+        element: <FavouritesPage />,
+    },
+]
+
 export const router = createBrowserRouter([
     {
         path: PATH.ROOT,
@@ -77,6 +81,10 @@ export const router = createBrowserRouter([
             {
                 index: true, // to pass to the main page automatically when root url '/' is entered
                 element: <Navigate to={PATH.MAIN} />,
+            },
+            {
+                element: <PrivateRoutes/>,
+                children: privateRoutes,
             },
             ...publicRoutes,
             // {

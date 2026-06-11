@@ -15,14 +15,11 @@ export const Backdrop = ({ category, children }: BackdropComponentProps) => {
 
     const {
         config: configData,
-        // isLoading: isConfigLoading,
         getBackdropUrl,
     } = useMoviesWithConfig();
 
     const {
         data,
-        // isLoading: isMoviesLoading,
-        // isFetching
     } = useFetchFilmsForBackDropQuery(
         { path: category, language: 'en-US' },
         {

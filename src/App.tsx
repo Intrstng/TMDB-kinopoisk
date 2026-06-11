@@ -8,10 +8,12 @@ import {ThemeProvider} from '@mui/material/styles';
 import {ScrollRestoration} from 'react-router-dom';
 import {MainWrapper} from '@/common/components/MainWrapper/MainWrapper.tsx';
 import {ErrorToastBar} from '@/common/components/ErrorToastBar/ErrorToastBar.tsx';
+import {useAuthInit} from "@/common/hooks/useAuthInit.ts";
 
 export function App() {
     const themeMode = useAppSelector(selectThemeMode);
     const theme = getTheme(themeMode);
+    useAuthInit();
 
     return (
         <ThemeProvider theme={theme}>

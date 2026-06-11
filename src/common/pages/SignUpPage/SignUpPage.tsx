@@ -4,8 +4,6 @@ import {zodResolver} from "@hookform/resolvers/zod";
 import {signUpPageFormSchema} from "@/common/pages/SignUpPage/model/SignUpPage.schemas.ts";
 import {PATH} from "@/common/enums";
 import type {SignUpPageFormArgs} from "@/common/pages/SignUpPage/types.ts";
-import {useAppDispatch} from "@/common/hooks";
-import {setIsLoggedInAC} from "@/app/model/slices/app-slice.ts";
 import {signUpUser} from "@/app/config/auth.ts";
 import {PasswordStrength} from "@/common/components";
 import {errorNotifyMessage} from "@/common/utils/notifyMessage.ts";
@@ -35,7 +33,6 @@ export const SignUpPage = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const passwordInputRef = useRef<HTMLInputElement | null>(null);
-    const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -66,7 +63,7 @@ export const SignUpPage = () => {
     const onSubmit: SubmitHandler<SignUpPageFormArgs> = async (data) => {
         try {
             await signUpUser(data.name, data.email, data.password);
-            dispatch(setIsLoggedInAC({isLoggedIn: true}));
+            // dispatch(setIsLoggedInAC({isLoggedIn: true}));
             reset();
             navigate(PATH.MAIN);
         } catch (err) {

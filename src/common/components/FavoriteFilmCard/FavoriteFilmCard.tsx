@@ -12,25 +12,20 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import {styled} from "@mui/material/styles";
 import {favoriteCardSx} from "@/common/components/FavoriteFilmCard/FavoriteFilmCard.styles.ts";
-import {useAuthState} from "react-firebase-hooks/auth";
-import {auth} from "@/app/config/firebase.ts";
 import {useRemoveFromFavoritesMutation} from "@/features/films/api/filmsApi.ts";
 import Skeleton from "@mui/material/Skeleton";
+import {useAppSelector} from "@/common/hooks";
+import {selectUser} from "@/app/model/slices/app-slice.ts";
 
 const StyledNavLink = styled(NavLink)(() => ({
     textDecoration: 'none',
 }));
 
 export const FavoriteFilmCard = ({filmId, title, source, rating, isCardLoading}: FavoriteFilmCardProps) => {
-    const [user] = useAuthState(auth);
+    const user = useAppSelector(selectUser);
     const [imageLoaded, setImageLoaded] = useState(false);
     const [isFavorite, setIsFavorite] = useState(true);
     const [removeFromFavorites] = useRemoveFromFavoritesMutation()
-
-    // const { data: isFavorite, isLoading: isFavoriteLoading } = useCheckIsFavoriteQuery(
-    //     { userUid: user?.uid || '', filmId },
-    //     { skip: !user }
-    // );
 
     const handleFavoriteClick = (e: MouseEvent) => {
         e.preventDefault();

@@ -1,5 +1,4 @@
 import {NavLink, useNavigate} from "react-router-dom";
-import {selectIsLoggedIn, setIsLoggedInAC} from "@/app/model/slices/app-slice.ts";
 import {useAppDispatch, useAppSelector} from "@/common/hooks";
 import {signOutUser} from "@/app/config/auth.ts";
 import {errorNotifyMessage} from "@/common/utils/notifyMessage.ts";
@@ -8,21 +7,31 @@ import Box from "@mui/material/Box";
 import {Link as MuiLink, type SxProps} from "@mui/material";
 import {authLinksBlockSx, navLinkSx} from "@/common/components/NavigationBlock/navLink.styles.ts";
 import {NavButton} from "@/common/components/NavButton/NavButton.ts";
+import {selectUser} from "@/app/model/slices/app-slice.ts";
+import {baseApi} from "@/app/api/baseApi.ts";
 
 export const AuthLinks = ({sxStyles}: { sxStyles?: SxProps }) => {
-    const isLoggedIn = useAppSelector(selectIsLoggedIn)
-    const dispatch = useAppDispatch();
+    const user = useAppSelector(selectUser)
     const navigate = useNavigate();
+    const dispatch = useAppDispatch();
 
     const mergedSx = sxStyles ? {...authLinksBlockSx, ...sxStyles} : authLinksBlockSx
 
     const logOutHandler = async () => {
         try {
             await signOutUser();
-            dispatch(setIsLoggedInAC({isLoggedIn: false}));
+
+            // First clear the user-specific data
+            dispatch(baseApi.util.invalidateTags(['Favorites']));
+
+            // Small delay to ensure favorites are cleared
+            setTimeout(() => {
+                // Then invalidate films to refetch without favorites
+                dispatch(baseApi.util.invalidateTags(['Films']));
+            }, 100);
+
             navigate(PATH.LOGIN);
-            // dispatch(baseApi.util.invalidateTags(['Films']))
-            // Or reset full RTK cash state
+            // Or reset full RTK cash state (will be an error)
             // dispatch(baseApi.util.resetApiState());
         } catch (err) {
             if (err instanceof Error) {
@@ -33,7 +42,7 @@ export const AuthLinks = ({sxStyles}: { sxStyles?: SxProps }) => {
 
     return (
         <Box sx={mergedSx as SxProps}>
-            {!isLoggedIn
+            {!user
                 ? <>
                     <MuiLink component={NavLink} to={PATH.SIGNUP} sx={navLinkSx}>
                         SignUp

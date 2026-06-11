@@ -4,8 +4,6 @@ import {zodResolver} from "@hookform/resolvers/zod";
 import {loginPageFormSchema} from "@/common/pages/LoginPage/model/LoginPage.schemas.ts";
 import {PATH} from "@/common/enums";
 import type {LoginPageFormArgs} from "@/common/pages/LoginPage/types.ts";
-import {setIsLoggedInAC} from "@/app/model/slices/app-slice.ts";
-import {useAppDispatch} from "@/common/hooks";
 import {signInUser} from "@/app/config/auth.ts";
 import {errorNotifyMessage} from "@/common/utils/notifyMessage.ts";
 import Box from "@mui/material/Box";
@@ -32,7 +30,6 @@ import {SignInWithGoogle} from "@/common/components/SignInWithGoogle/SignInWithG
 export const LoginPage = () => {
     const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
-    const dispatch = useAppDispatch();
     const onClickShowPassword = () => setShowPassword((show) => !show);
     const onMouseDownPassword = (event: MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
@@ -52,7 +49,6 @@ export const LoginPage = () => {
     const onSubmit: SubmitHandler<LoginPageFormArgs> = async (data) => {
         try {
             await signInUser(data.email, data.password);
-            dispatch(setIsLoggedInAC({isLoggedIn: true}));
             reset();
             navigate(PATH.MAIN);
         } catch (err) {

@@ -1,21 +1,18 @@
-import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth } from "@/app/config/firebase.ts";
 import type {FilmGalleryProps} from '@/common/components/FilmsGallery/types.ts';
-import {useMoviesWithConfig} from '@/common/hooks';
+import {useAppSelector, useMoviesWithConfig} from '@/common/hooks';
 import {POSTER_SIZE} from '@/common/enums';
 import {GALLERY_LENGTH} from '@/common/constants';
-import {FilmCard} from '@/common/components';
-import {LoadMoreButton} from "@/common/components";
-import {FilmsGallerySkeletonGrid} from "@/common/components";
+import {FilmCard, FilmsGallerySkeletonGrid, LoadMoreButton} from '@/common/components';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import {gallerySx} from '@/common/components/FilmsGallery/FilmsGallery.styles.ts';
 import {useFetchFilmsInfiniteQuery} from "@/features/films/api/filmsApi.ts";
+import {selectUser} from "@/app/model/slices/app-slice.ts";
 
 export const FilmsGallery = ({ path, title }: FilmGalleryProps) => {
-    const [user] = useAuthState(auth);
+    const user = useAppSelector(selectUser);
     const pathFormatted = path.replace(/-/g, '_');
-console.log('user', !!user)
+console.log('user', user?.uid, !!user)
     const {
         config: configData,
         isLoading: isConfigLoading,
@@ -31,7 +28,7 @@ console.log('user', !!user)
             skip: !configData,
         }
     );
-console.log(data)
+
     const filmsData = data?.pages ? data.pages.flatMap((page) => page.results) : []
     const films = filmsData.slice(0, GALLERY_LENGTH);
 

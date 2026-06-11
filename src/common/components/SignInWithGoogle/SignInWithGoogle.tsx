@@ -9,19 +9,16 @@ import {
 import {GoogleSignInButton} from "@/common/components/GoogleSignInButton/GoogleSignInButton.tsx";
 import {signInWithGoogle} from "@/app/config/auth.ts";
 import {errorNotifyMessage} from "@/common/utils/notifyMessage.ts";
-import {setIsLoggedInAC} from "@/app/model/slices/app-slice.ts";
 import {PATH} from "@/common/enums";
-import {useAppDispatch} from "@/common/hooks";
 import {useNavigate} from "react-router-dom";
 
 export const SignInWithGoogle: React.FC = () => {
-    const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
     const signInGoogle = async () => {
         try {
             await signInWithGoogle();
-            dispatch(setIsLoggedInAC({isLoggedIn: true}));
+            // dispatch(setIsLoggedInAC({isLoggedIn: true}));
             navigate(PATH.MAIN);
         } catch (err) {
             if (err instanceof Error) {
