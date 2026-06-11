@@ -600,6 +600,7 @@ export const filmsApi = baseApi.injectEndpoints({
 
             // Optimistic update для мгновенного отображения иконки сердечко на карточке фильма при добавлении фильма в Favorites
             // (также надо в FilmCard убрать useState(film.isFavorite) и сипользовать вместо isFavorite -> film.isFavorite)
+            //  Не добавляю, т.к. необходим во нескольких queries и код станет слишком громоздким
             //
             // async onQueryStarted({userUid, film}: AddToFavoritesArgs, { dispatch, queryFulfilled, getState }) {
             //     const cachedArgsForQuery = filmsApi.util.selectCachedArgsForQuery(getState(), "fetchFilms")
