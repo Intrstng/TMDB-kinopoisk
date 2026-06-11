@@ -4,6 +4,7 @@ export type HeaderNavLink = {
     id: string;
     title: string;
     path: PATH;
+    isProtected?: boolean;
 };
 
 export type CategoryLink = {
