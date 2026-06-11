@@ -7,7 +7,7 @@ import Container from '@mui/material/Container';
 import {containerSx} from '@/common/styles';
 import {POSTER_SIZE, SEARCH_SIZES} from '@/common/enums';
 import {FilmCard} from '@/common/components/FilmCard/FilmCard.tsx';
-import {useMoviesWithConfig} from '@/common/hooks';
+import {useAppSelector, useMoviesWithConfig} from '@/common/hooks';
 import {useSearchParams} from 'react-router-dom';
 import {SearchStatus} from '@/common/components/SearchStatus/SearchStatus.tsx';
 import {searchSx} from '@/common/pages/SearchPage/SearchPage.styles.ts';
@@ -15,8 +15,10 @@ import {useInfiniteScroll} from "@/common/hooks";
 import {LoadingTrigger} from "@/common/components/LoadingTrigger/LoadingTrigger.tsx";
 import {PAGE_SIZE} from "@/common/constants";
 import {FilmsGallerySkeletonGrid} from "@/common/components/FilmCard/FilmCardSkeleton/FilmCardSkeleton.tsx";
+import {selectUser} from "@/app/model/slices/app-slice.ts";
 
 export const SearchPage = () => {
+    const user = useAppSelector(selectUser);
     const [searchParams] = useSearchParams();
     const query = searchParams.get('query') || '';
 
@@ -33,7 +35,7 @@ export const SearchPage = () => {
         hasNextPage
     }
         = useSearchFilmInfiniteQuery(
-        { query, language: 'en-US' },{ skip: !query || !configData }
+        { query, language: 'en-US', userUid: user?.uid },{ skip: !query || !configData }
     );
 
     const {observerRef} = useInfiniteScroll({

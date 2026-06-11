@@ -106,7 +106,6 @@ export const filmsApi = baseApi.injectEndpoints({
             providesTags: (_result, _error, { path }) => [{ type: 'Films', id: path }],
 
             async onQueryStarted(queryArg: FetchFilmsArgs, { dispatch, queryFulfilled, getState }) {
-                console.log('fetchFilms', queryArg.path);
                 // Получаем все закэшированные запросы fetchFilms
                 const cachedArgsForQuery = filmsApi.util.selectCachedArgsForQuery(getState(), 'fetchFilms');
 
@@ -118,7 +117,6 @@ export const filmsApi = baseApi.injectEndpoints({
                     await queryFulfilled;
                     // Если пользователь не авторизован, обновляем все кэши с isFavorite: false
                     if (!queryArg.userUid) {
-                        console.log('fetchFilms пользователь не авторизован');
                         cachedArgsForQuery.forEach(cachedArgs => {
                             patchResults.push(
                                 dispatch(
@@ -144,7 +142,6 @@ export const filmsApi = baseApi.injectEndpoints({
 
                     // Создаем Set для быстрого поиска
                     const favoriteIds = new Set(favoritesResult.map(fav => fav.id));
-                    console.log('fetchFilms пользователь авторизован');
                     // Обновляем ВСЕ закэшированные запросы fetchFilms с полем isFavorite
                     cachedArgsForQuery.forEach(cachedArgs => {
                         patchResults.push(
@@ -228,6 +225,86 @@ export const filmsApi = baseApi.injectEndpoints({
             },
             ...withZodCatch(filmsResponseSchema),
             providesTags: (result, _error, { query }) => (result ? [{ type: 'Search', id: query }] : ['Search']),
+
+            async onQueryStarted(queryArg: SearchFilmArgs, { dispatch, queryFulfilled, getState }) {
+                // Получаем все закэшированные запросы searchFilm
+                const cachedArgsForQuery = filmsApi.util.selectCachedArgsForQuery(getState(), 'searchFilm');
+
+                // Массив для хранения патчей для отката в случае ошибки
+                const patchResults: PatchCollection[] = [];
+
+                try {
+                    // Ждем завершения текущего запроса фильмов для searchFilm
+                    await queryFulfilled;
+                    // Если пользователь не авторизован, обновляем все кэши с isFavorite: false
+                    if (!queryArg.userUid) {
+                        cachedArgsForQuery.forEach(cachedArgs => {
+                            patchResults.push(
+                                dispatch(
+                                    filmsApi.util.updateQueryData('searchFilm', cachedArgs, draft => {
+                                        draft.pages = draft.pages.map(page => ({
+                                            ...page,
+                                            results: page.results.map(film => ({
+                                                ...film,
+                                                isFavorite: false,
+                                            })),
+                                        }));
+                                    })
+                                )
+                            );
+                        });
+                        return;
+                    }
+
+                    // Получаем searchFilm results пользователя
+                    const favoritesResult = await dispatch(
+                        filmsApi.endpoints.getFavorites.initiate({ userUid: queryArg.userUid })
+                    ).unwrap();
+
+                    // Создаем Set для быстрого поиска
+                    const favoriteIds = new Set(favoritesResult.map(fav => fav.id));
+                    // Обновляем ВСЕ закэшированные запросы searchFilm с полем isFavorite
+                    cachedArgsForQuery.forEach(cachedArgs => {
+                        patchResults.push(
+                            dispatch(
+                                filmsApi.util.updateQueryData('searchFilm', cachedArgs, draft => {
+                                    draft.pages = draft.pages.map(page => ({
+                                        ...page,
+                                        results: page.results.map(film => ({
+                                            ...film,
+                                            isFavorite: favoriteIds.has(film.id),
+                                        })),
+                                    }));
+                                })
+                            )
+                        );
+                    });
+                } catch (error) {
+                    console.error('Error merging favorites with films:', error);
+
+                    // В случае ошибки откатываем все изменения
+                    patchResults.forEach(patchResult => {
+                        patchResult.undo();
+                    });
+
+                    // Опционально: обновляем кэши с isFavorite: false как fallback
+                    if (!queryArg.userUid) {
+                        cachedArgsForQuery.forEach(cachedArgs => {
+                            dispatch(
+                                filmsApi.util.updateQueryData('searchFilm', cachedArgs, draft => {
+                                    draft.pages = draft.pages.map(page => ({
+                                        ...page,
+                                        results: page.results.map(film => ({
+                                            ...film,
+                                            isFavorite: false,
+                                        })),
+                                    }));
+                                })
+                            );
+                        });
+                    }
+                }
+            },
         }),
 
         getFilm: builder.query<FilmResponse, GetFilmArgs>({

@@ -12,7 +12,7 @@ import {selectUser} from "@/app/model/slices/app-slice.ts";
 export const FilmsGallery = ({ path, title }: FilmGalleryProps) => {
     const user = useAppSelector(selectUser);
     const pathFormatted = path.replace(/-/g, '_');
-console.log('user', user?.uid, !!user)
+
     const {
         config: configData,
         isLoading: isConfigLoading,

@@ -75,6 +75,7 @@ export const searchFilmArgsSchema = z.object({
     page: z.number().positive().default(1).optional(),
     region: z.string().optional(),
     year: z.string().optional(),
+    userUid: z.string().nullish(),
 });
 
 /**
@@ -160,6 +161,7 @@ export const sortFilmsArgsSchema = z.object({
     sort_by: SortBySchema,
     vote_average_gte: z.number().nonnegative(),
     vote_average_lte: z.number().nonnegative(),
+    userUid: z.string().nullish(),
 });
 
 /**
