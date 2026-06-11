@@ -182,6 +182,7 @@ export const getSimilarFilmsArgsSchema = z.object({
     movie_id: z.number().int().nonnegative(),
     language: z.string().default('en-US'),
     page: z.number().int().positive().default(1),
+    userUid: z.string().nullish(),
 });
 
 /**
@@ -226,6 +227,7 @@ export const getFavoritesArgsSchema = z.object({
 export const addToFavoritesArgsSchema = z.object({
     film: favoriteFilmSchema,
     userUid: z.string(),
+    filmId: z.number().int().nonnegative().optional(),
 });
 
 /** removeFromFavorites mutation

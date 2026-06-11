@@ -23,6 +23,7 @@ const StyledNavLink = styled(NavLink)(() => ({
 
 export const FavoriteFilmCard = ({filmId, title, source, rating, isCardLoading}: FavoriteFilmCardProps) => {
     const user = useAppSelector(selectUser);
+
     const [imageLoaded, setImageLoaded] = useState(false);
     const [isFavorite, setIsFavorite] = useState(true);
     const [removeFromFavorites] = useRemoveFromFavoritesMutation()

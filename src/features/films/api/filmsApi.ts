@@ -88,8 +88,6 @@ export const filmsApi = baseApi.injectEndpoints({
 
             query: ({ pageParam, queryArg }) => {
                 // see 3 & 4
-                console.log('fetchFilms in');
-
                 const { path, ...restArgs } = queryArg;
                 return {
                     url: `movie/${path}`,
@@ -159,7 +157,7 @@ export const filmsApi = baseApi.injectEndpoints({
                         );
                     });
                 } catch (error) {
-                    console.error('Error merging favorites with films:', error);
+                    console.error('Error merging favorites with fetchFilms:', error);
 
                     // В случае ошибки откатываем все изменения
                     patchResults.forEach(patchResult => {
@@ -256,7 +254,7 @@ export const filmsApi = baseApi.injectEndpoints({
                         return;
                     }
 
-                    // Получаем searchFilm results пользователя
+                    // Получаем избранные фильмы пользователя
                     const favoritesResult = await dispatch(
                         filmsApi.endpoints.getFavorites.initiate({ userUid: queryArg.userUid })
                     ).unwrap();
@@ -280,7 +278,7 @@ export const filmsApi = baseApi.injectEndpoints({
                         );
                     });
                 } catch (error) {
-                    console.error('Error merging favorites with films:', error);
+                    console.error('Error merging favorites with searchFilms:', error);
 
                     // В случае ошибки откатываем все изменения
                     patchResults.forEach(patchResult => {
@@ -328,6 +326,77 @@ export const filmsApi = baseApi.injectEndpoints({
             ...withZodCatch(filmsResponseSchema),
             providesTags: (result, _error, { movie_id }) =>
                 result ? [{ type: 'SimilarFilms', id: movie_id }] : ['SimilarFilms'],
+
+            async onQueryStarted(queryArg: GetSimilarFilmsArgs, { dispatch, queryFulfilled, getState }) {
+                // Получаем все закэшированные запросы searchFilm
+                const cachedArgsForQuery = filmsApi.util.selectCachedArgsForQuery(getState(), 'getSimilarFilms');
+
+                // Массив для хранения патчей для отката в случае ошибки
+                const patchResults: PatchCollection[] = [];
+
+                try {
+                    // Ждем завершения текущего запроса фильмов для searchFilm
+                    await queryFulfilled;
+                    // Если пользователь не авторизован, обновляем все кэши с isFavorite: false
+                    if (!queryArg.userUid) {
+                        cachedArgsForQuery.forEach(cachedArgs => {
+                            patchResults.push(
+                                dispatch(
+                                    filmsApi.util.updateQueryData('getSimilarFilms', cachedArgs, draft => {
+                                        draft.results = draft.results.map(result => ({
+                                            ...result,
+                                            isFavorite: false,
+                                        }));
+                                    })
+                                )
+                            );
+                        });
+                        return;
+                    }
+
+                    // Получаем searchFilm results пользователя
+                    const favoritesResult = await dispatch(
+                        filmsApi.endpoints.getFavorites.initiate({ userUid: queryArg.userUid })
+                    ).unwrap();
+
+                    // Создаем Set для быстрого поиска
+                    const favoriteIds = new Set(favoritesResult.map(fav => fav.id));
+                    // Обновляем ВСЕ закэшированные запросы searchFilm с полем isFavorite
+                    cachedArgsForQuery.forEach(cachedArgs => {
+                        patchResults.push(
+                            dispatch(
+                                filmsApi.util.updateQueryData('getSimilarFilms', cachedArgs, draft => {
+                                    draft.results = draft.results.map(result => ({
+                                        ...result,
+                                        isFavorite: favoriteIds.has(result.id),
+                                    }));
+                                })
+                            )
+                        );
+                    });
+                } catch (error) {
+                    console.error('Error merging favorites with getSimilarFilms:', error);
+
+                    // В случае ошибки откатываем все изменения
+                    patchResults.forEach(patchResult => {
+                        patchResult.undo();
+                    });
+
+                    // Опционально: обновляем кэши с isFavorite: false как fallback
+                    if (!queryArg.userUid) {
+                        cachedArgsForQuery.forEach(cachedArgs => {
+                            dispatch(
+                                filmsApi.util.updateQueryData('getSimilarFilms', cachedArgs, draft => {
+                                    draft.results = draft.results.map(result => ({
+                                        ...result,
+                                        isFavorite: false,
+                                    }));
+                                })
+                            );
+                        });
+                    }
+                }
+            },
         }),
 
         getCredits: builder.query<CreditsResponse, GetCreditsArgs>({
@@ -367,6 +436,86 @@ export const filmsApi = baseApi.injectEndpoints({
             }),
             ...withZodCatch(filmsResponseSchema),
             providesTags: ['Sort'],
+
+            async onQueryStarted(queryArg: SortFilmsArgs, { dispatch, queryFulfilled, getState }) {
+                // Получаем все закэшированные запросы fetchFilms
+                const cachedArgsForQuery = filmsApi.util.selectCachedArgsForQuery(getState(), 'sortFilms');
+
+                // Массив для хранения патчей для отката в случае ошибки
+                const patchResults: PatchCollection[] = [];
+
+                try {
+                    // Ждем завершения текущего запроса фильмов
+                    await queryFulfilled;
+                    // Если пользователь не авторизован, обновляем все кэши с isFavorite: false
+                    if (!queryArg.userUid) {
+                        cachedArgsForQuery.forEach(cachedArgs => {
+                            patchResults.push(
+                                dispatch(
+                                    filmsApi.util.updateQueryData('sortFilms', cachedArgs, draft => {
+                                        draft.pages = draft.pages.map(page => ({
+                                            ...page,
+                                            results: page.results.map(film => ({
+                                                ...film,
+                                                isFavorite: false,
+                                            })),
+                                        }));
+                                    })
+                                )
+                            );
+                        });
+                        return;
+                    }
+
+                    // Получаем избранные фильмы пользователя
+                    const favoritesResult = await dispatch(
+                        filmsApi.endpoints.getFavorites.initiate({ userUid: queryArg.userUid })
+                    ).unwrap();
+
+                    // Создаем Set для быстрого поиска
+                    const favoriteIds = new Set(favoritesResult.map(fav => fav.id));
+                    // Обновляем ВСЕ закэшированные запросы fetchFilms с полем isFavorite
+                    cachedArgsForQuery.forEach(cachedArgs => {
+                        patchResults.push(
+                            dispatch(
+                                filmsApi.util.updateQueryData('sortFilms', cachedArgs, draft => {
+                                    draft.pages = draft.pages.map(page => ({
+                                        ...page,
+                                        results: page.results.map(film => ({
+                                            ...film,
+                                            isFavorite: favoriteIds.has(film.id),
+                                        })),
+                                    }));
+                                })
+                            )
+                        );
+                    });
+                } catch (error) {
+                    console.error('Error merging favorites with sortFilms:', error);
+
+                    // В случае ошибки откатываем все изменения
+                    patchResults.forEach(patchResult => {
+                        patchResult.undo();
+                    });
+
+                    // Опционально: обновляем кэши с isFavorite: false как fallback
+                    if (!queryArg.userUid) {
+                        cachedArgsForQuery.forEach(cachedArgs => {
+                            dispatch(
+                                filmsApi.util.updateQueryData('sortFilms', cachedArgs, draft => {
+                                    draft.pages = draft.pages.map(page => ({
+                                        ...page,
+                                        results: page.results.map(film => ({
+                                            ...film,
+                                            isFavorite: false,
+                                        })),
+                                    }));
+                                })
+                            );
+                        });
+                    }
+                }
+            },
         }),
 
         /** Favorite films
@@ -374,7 +523,6 @@ export const filmsApi = baseApi.injectEndpoints({
          */
         getFavorites: builder.query<FavoriteFilm[], GetFavoritesArgs>({
             async queryFn({ userUid }) {
-                console.log('getFavorites');
                 try {
                     const favoritesCollection = collection(db, 'requestFavorites');
                     const q = query(favoritesCollection, where('userUid', '==', userUid));
@@ -436,13 +584,19 @@ export const filmsApi = baseApi.injectEndpoints({
                         error: {
                             status: 'CUSTOM_ERROR',
                             error: 'Error adding to favorites Firestore database',
-                            data: error,
+                            data: JSON.stringify(error),
                         },
                     };
                 }
             },
 
-            invalidatesTags: (_result, _error, { userUid }) => [{ type: 'Favorites', id: userUid }, { type: 'Films' }],
+            invalidatesTags: (_result, _error, { userUid, filmId }) => [
+                { type: 'Favorites', id: userUid },
+                { type: 'Films' },
+                { type: 'Sort' },
+                { type: 'Search' },
+                { type: 'SimilarFilms', id: filmId },
+            ],
 
             // Optimistic update для мгновенного отображения иконки сердечко на карточке фильма при добавлении фильма в Favorites
             // (также надо в FilmCard убрать useState(film.isFavorite) и сипользовать вместо isFavorite -> film.isFavorite)
@@ -517,13 +671,19 @@ export const filmsApi = baseApi.injectEndpoints({
                         error: {
                             status: 'CUSTOM_ERROR',
                             error: 'Error removing from favorites',
-                            data: error,
+                            data: JSON.stringify(error),
                         },
                     };
                 }
             },
 
-            invalidatesTags: (_result, _error, { userUid }) => [{ type: 'Favorites', id: userUid }, { type: 'Films' }],
+            invalidatesTags: (_result, _error, { userUid, filmId }) => [
+                { type: 'Favorites', id: userUid },
+                { type: 'Films' },
+                { type: 'Sort' },
+                { type: 'Search' },
+                { type: 'SimilarFilms', id: filmId },
+            ],
         }),
 
         checkIsFavorite: builder.query<boolean, RemoveFromFavoritesArgs>({
