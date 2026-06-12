@@ -1,10 +1,7 @@
-import {useEffect, useState} from "react";
+import {type MouseEvent, type SyntheticEvent, useEffect, useState} from 'react'
 import {NavLink} from 'react-router-dom';
 import {PATH} from '@/common/enums';
-import type {MouseEvent} from 'react'
-import type {SyntheticEvent} from 'react';
 import type {FilmCardProps} from '@/common/components/FilmCard/types.ts';
-import type {FavoriteFilm} from "@/common/pages/FavouritesPage/types.ts";
 import noPoster from '@/assets/images/no_poster.jpg';
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
@@ -14,8 +11,11 @@ import IconButton from "@mui/material/IconButton";
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import {cardSx} from "@/common/components/FilmCard/FilmCard.styles.ts";
-import {FAVORITES_STORAGE_KEY} from "@/common/constants";
 import {styled} from "@mui/material/styles";
+import {useAddToFavoritesMutation, useRemoveFromFavoritesMutation} from "@/features/films/api/filmsApi.ts";
+import {selectAppStatus, selectUser} from "@/app/model/slices/app-slice.ts";
+import {useAppSelector} from "@/common/hooks";
+import {favoriteCardSx} from "@/common/components/FavoriteFilmCard/FavoriteFilmCard.styles.ts";
 
 const StyledNavLink = styled(NavLink)(() => ({
     textDecoration: 'none',
@@ -23,36 +23,50 @@ const StyledNavLink = styled(NavLink)(() => ({
 }));
 
 export const FilmCard = ({film, source}: FilmCardProps) => {
-    const [isFavorite, setIsFavorite] = useState(false);
+    const user = useAppSelector(selectUser);
+    const [isFavorite, setIsFavorite] = useState(film.isFavorite);
     const [imageLoaded, setImageLoaded] = useState(false);
-    // Check if film is in favorites on mount
-    useEffect(() => {
-        const favorites: FavoriteFilm[] = JSON.parse(localStorage.getItem(FAVORITES_STORAGE_KEY) || '[]');
-        const isCurrentFavorite = favorites.some(favFilm => favFilm.id === film.id)
-        setIsFavorite(isCurrentFavorite);
-    }, [film.id]);
+    const status = useAppSelector(selectAppStatus)
 
-    const handleFavoriteClick = (e: MouseEvent) => {
+    // Mutations
+    const [addToFavorites] = useAddToFavoritesMutation();
+    const [removeFromFavorites] = useRemoveFromFavoritesMutation();
+
+    useEffect(() => {
+        setIsFavorite(film.isFavorite);
+    }, [film.isFavorite]);
+
+    const handleFavoriteClick = async (e: MouseEvent) => {
         e.preventDefault();
         e.stopPropagation();
 
-        const favorites: FavoriteFilm[] = JSON.parse(localStorage.getItem(FAVORITES_STORAGE_KEY) || '[]');
-        let newFavorites;
+        if (!user) return;
 
-        if (isFavorite) {
-            newFavorites = favorites.filter(favFilm => favFilm.id !== film.id);
-        } else {
-            const newFavoriteFilm: FavoriteFilm = {
-                id: film.id,
-                title: film.title,
-                posterUrl: source,
-                voteAverage: film.vote_average,
+        const previousState = isFavorite;
+        setIsFavorite(!previousState);
+
+        try {
+            if (previousState) {
+                await removeFromFavorites({
+                    userUid: user.uid,
+                    filmId: film.id,
+                }).unwrap();
+            } else {
+                await addToFavorites({
+                    userUid: user.uid,
+                    filmId: film.id,
+                    film: {
+                        id: film.id,
+                        title: film.title,
+                        posterUrl: source || noPoster,
+                        voteAverage: film.vote_average,
+                    }
+                }).unwrap();
             }
-            newFavorites = [...favorites, newFavoriteFilm];
+        } catch (error) {
+            setIsFavorite(previousState);
+            console.error('Error toggling favorite:', JSON.stringify(error));
         }
-
-        localStorage.setItem(FAVORITES_STORAGE_KEY, JSON.stringify(newFavorites));
-        setIsFavorite(!isFavorite);
     };
 
     return (
@@ -83,13 +97,19 @@ export const FilmCard = ({film, source}: FilmCardProps) => {
                     }}
                 />
                 <Typography variant={'h4'} component={'h4'} sx={cardSx.rating}>{film.vote_average.toFixed(1)}</Typography>
-                <IconButton
-                    onClick={handleFavoriteClick}
-                    sx={cardSx.favoriteIcon}
-                    aria-label="add to favorites"
-                >
-                    {isFavorite ? <FavoriteIcon sx={cardSx.iconSelected}/> : <FavoriteBorderIcon />}
-                </IconButton>
+                {
+                    user && <IconButton
+                        onClick={handleFavoriteClick}
+                        sx={cardSx.favoriteIcon}
+                        aria-label="add to favorites"
+                        disabled={status === 'loading'}
+                    >
+                        {isFavorite ?
+                                <FavoriteIcon sx={favoriteCardSx.iconSelected} /> :
+                                <FavoriteBorderIcon />
+                        }
+                    </IconButton>
+                }
             </Box>
             <Box sx={cardSx.movieInfo}>
                 <Typography variant={'h3'} component={'h3'} sx={cardSx.title}>{film.title}</Typography>

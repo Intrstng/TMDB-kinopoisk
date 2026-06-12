@@ -3,7 +3,18 @@ import { handleError } from '@/common/utils/handleError.ts';
 
 export const baseApi = createApi({
     reducerPath: 'baseApi',
-    tagTypes: ['Films', 'Film', 'Genres', 'Details', 'Search', 'Sort', 'SimilarFilms', 'Credits'],
+    tagTypes: [
+        'Films',
+        'Film',
+        'Genres',
+        'Details',
+        'Search',
+        'Sort',
+        'SimilarFilms',
+        'Credits',
+        'Favorites',
+        'BackDrop',
+    ],
 
     baseQuery: async (args, api, extraOptions) => {
         const result = await fetchBaseQuery({

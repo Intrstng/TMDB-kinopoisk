@@ -1,5 +1,6 @@
 import { z } from 'zod/v4';
 import { BACKDROP_SIZE, LOGO_SIZE, POSTER_SIZE, PROFILE_SIZE, SORT_BY, STILL_SIZE } from '@/common/enums';
+import { favoriteFilmSchema } from '@/common/pages/FavouritesPage/model/favoritePage.schemas.ts';
 
 /**
  * Query the API configuration details.
@@ -40,6 +41,7 @@ export const filmResultSchema = z.object({
     video: z.boolean(),
     vote_average: z.number().nonnegative(),
     vote_count: z.number().nonnegative(),
+    isFavorite: z.boolean().nullish(),
 });
 
 export const filmDatesSchema = z.object({
@@ -59,6 +61,7 @@ export const fetchFilmsArgsSchema = z.object({
     path: z.url(),
     language: z.string().default('en-US').optional(),
     region: z.string().optional(),
+    userUid: z.string().nullish(),
 });
 
 /**
@@ -72,6 +75,7 @@ export const searchFilmArgsSchema = z.object({
     page: z.number().positive().default(1).optional(),
     region: z.string().optional(),
     year: z.string().optional(),
+    userUid: z.string().nullish(),
 });
 
 /**
@@ -157,6 +161,7 @@ export const sortFilmsArgsSchema = z.object({
     sort_by: SortBySchema,
     vote_average_gte: z.number().nonnegative(),
     vote_average_lte: z.number().nonnegative(),
+    userUid: z.string().nullish(),
 });
 
 /**
@@ -177,6 +182,7 @@ export const getSimilarFilmsArgsSchema = z.object({
     movie_id: z.number().int().nonnegative(),
     language: z.string().default('en-US'),
     page: z.number().int().positive().default(1),
+    userUid: z.string().nullish(),
 });
 
 /**
@@ -205,4 +211,54 @@ export const creditsResponseSchema = z.object({
 export const getCreditsArgsSchema = z.object({
     movie_id: z.number().int().nonnegative(),
     language: z.string().default('en-US'),
+});
+
+/** Favorite films
+ *  Firestore database queries
+ *
+ *  getFavorites query
+ */
+export const getFavoritesArgsSchema = z.object({
+    userUid: z.string(),
+});
+
+/** addToFavorites mutation
+ */
+export const addToFavoritesArgsSchema = z.object({
+    film: favoriteFilmSchema,
+    userUid: z.string(),
+    filmId: z.number().int().nonnegative().optional(),
+});
+
+/** removeFromFavorites mutation
+ */
+export const removeFromFavoritesArgsSchema = z.object({
+    filmId: z.number().int().nonnegative(),
+    userUid: z.string(),
+});
+
+export const favoritesDocumentSchema = z.object({
+    favorites: z.array(favoriteFilmSchema),
+    userUid: z.string(),
+    timestamp: z.number().int().nonnegative(),
+});
+
+/** PatchCollection & Patch
+ *  are from RTK Query docs
+ */
+const PatchOpSchema = z.enum(['replace', 'remove', 'add']);
+
+export const patchSchema = z.object({
+    op: PatchOpSchema,
+    path: z.array(z.union([z.string(), z.number()])),
+    value: z.any().optional(),
+});
+
+export const patchCollectionSchema = z.object({
+    patches: z.array(patchSchema),
+    inversePatches: z.array(patchSchema),
+    undo: z.function({
+        input: [],
+        output: z.void(),
+    }),
 });

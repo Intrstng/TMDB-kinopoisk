@@ -2,12 +2,15 @@ import type { SxProps } from '@mui/material';
 
 export const navLinkSx: SxProps = {
     padding: '0.6rem 1rem',
+    textAlign: 'center',
     textDecoration: 'none',
     color: 'text.primary',
     fontFamily: 'ProtestFont, sans-serif',
-    fontSize: '1rem',
+    fontSize: '0.9rem',
     letterSpacing: '0.04rem',
     transition: 'color 0.3s ease',
+    width: '100%',
+    textWrap: 'nowrap',
 
     '&.active': {
         borderRadius: '0.25rem',
@@ -45,4 +48,13 @@ export const mobileNavLinkSx: SxProps = {
         padding: '0.8rem 1rem',
         fontSize: '1rem',
     },
+};
+
+export const authLinksBlockSx: SxProps = {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: '0rem',
+    width: '100%',
+    maxWidth: '8rem',
 };

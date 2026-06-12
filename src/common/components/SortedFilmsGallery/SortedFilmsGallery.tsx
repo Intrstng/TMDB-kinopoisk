@@ -1,15 +1,17 @@
-import {useMoviesWithConfig, useInfiniteScroll} from '@/common/hooks';
+import {useAppSelector, useInfiniteScroll, useMoviesWithConfig} from '@/common/hooks';
 import {useSearchParams} from 'react-router-dom';
 import {useSortFilmsInfiniteQuery} from '@/features/films/api/filmsApi.ts';
 import {PAGE_SIZE, RATING_MAX, RATING_MIN} from '@/common/constants';
 import {POSTER_SIZE, SEARCH_PARAMS, SORT_BY} from '@/common/enums';
 import type {SortFilmsArgs} from '@/features/films/api/filmsApi.types.ts';
-import {FilmCard, LoadingTrigger, FilmsGallerySkeletonGrid} from '@/common/components';
+import {FilmCard, FilmsGallerySkeletonGrid, LoadingTrigger} from '@/common/components';
 import Box from '@mui/material/Box';
 import Typography from "@mui/material/Typography";
 import {sortedFilmsSx,} from '@/common/components/SortedFilmsGallery/SortedFilmsGallery.styles.ts';
+import {selectUser} from "@/app/model/slices/app-slice.ts";
 
 export const SortedFilmsGallery = () => {
+    const user = useAppSelector(selectUser);
     const [searchParams] = useSearchParams();
 
     const {
@@ -52,7 +54,7 @@ export const SortedFilmsGallery = () => {
 
     const { data, isLoading: isSortFilmsLoading, isFetching, isFetchingNextPage, fetchNextPage, hasNextPage }
         = useSortFilmsInfiniteQuery(
-        queryParams,{ skip: !configData }
+        {...queryParams, userUid: user?.uid},{ skip: !configData }
     );
 
     const {observerRef} = useInfiniteScroll({

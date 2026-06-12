@@ -48,6 +48,7 @@ export const HEADER_NAV_LINKS: HeaderNavLink[] = [
         id: '5',
         title: 'Favourites',
         path: PATH.FAVOURITES,
+        isProtected: true,
     },
 ];
 

@@ -20,6 +20,7 @@ export const handleError = (
 
         switch (result.error.status) {
             case 'FETCH_ERROR':
+            case 'CUSTOM_ERROR':
                 errorMessage = result.error.error;
                 break;
             case STATUS_CODES.NOT_FOUND:

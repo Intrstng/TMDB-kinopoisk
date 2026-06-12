@@ -1,6 +1,6 @@
 import {useLocation} from 'react-router';
 import {useFetchFilmsInfiniteQuery} from '@/features/films/api/filmsApi.ts';
-import {useMoviesWithConfig} from '@/common/hooks';
+import {useAppSelector, useMoviesWithConfig} from '@/common/hooks';
 import {POSTER_SIZE} from '@/common/enums';
 import {FilmCard} from '@/common/components/FilmCard/FilmCard.tsx';
 import Box from '@mui/material/Box';
@@ -11,8 +11,10 @@ import {useInfiniteScroll} from "@/common/hooks";
 import {LoadingTrigger} from "@/common/components/LoadingTrigger/LoadingTrigger.tsx";
 import {FilmsGallerySkeletonGrid} from "@/common/components/FilmCard/FilmCardSkeleton/FilmCardSkeleton.tsx";
 import {CategoryPageHeader} from "@/common/pages/CategoryLayout/CategoryPage/CategoryPageHeader/CategoryPageHeader.tsx";
+import {selectUser} from "@/app/model/slices/app-slice.ts";
 
 export const CategoryPage = () => {
+    const user = useAppSelector(selectUser);
     const location = useLocation();
     const segments = location.pathname.split('/').filter(Boolean);
     const currentCategory = segments[segments.length - 1];
@@ -26,7 +28,7 @@ export const CategoryPage = () => {
 
     const {data, isLoading: isMoviesLoading, isFetching, isFetchingNextPage, fetchNextPage, hasNextPage}
         = useFetchFilmsInfiniteQuery(
-        {path: currentCategoryFormatted, language: 'en-US'}, {skip: !configData}
+        {path: currentCategoryFormatted, language: 'en-US', userUid: user?.uid }, {skip: !configData}
     );
 
     const {observerRef} = useInfiniteScroll({

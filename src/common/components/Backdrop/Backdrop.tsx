@@ -2,7 +2,7 @@ import {useEffect, useState} from 'react';
 import {useMoviesWithConfig} from '@/common/hooks';
 import type {BackdropComponentProps} from '@/common/components/Backdrop/types.ts';
 import {BACKDROP_SIZE} from '@/common/enums';
-import {useFetchFilmsInfiniteQuery} from '@/features/films/api/filmsApi.ts';
+import {useFetchFilmsForBackDropQuery} from '@/features/films/api/filmsApi.ts';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import {getRandomElementFromArray} from '@/common/utils/getRandomElementFromArray.ts';
@@ -15,22 +15,19 @@ export const Backdrop = ({ category, children }: BackdropComponentProps) => {
 
     const {
         config: configData,
-        // isLoading: isConfigLoading,
         getBackdropUrl,
     } = useMoviesWithConfig();
 
     const {
         data,
-        // isLoading: isMoviesLoading,
-        // isFetching
-    } = useFetchFilmsInfiniteQuery(
+    } = useFetchFilmsForBackDropQuery(
         { path: category, language: 'en-US' },
         {
             skip: !configData,
         }
     );
 
-    const filmsData = data?.pages.flatMap((page) => page.results) || []
+    const filmsData = data?.results || []
 
     useEffect(() => {
         if (filmsData.length > 0 && configData) {

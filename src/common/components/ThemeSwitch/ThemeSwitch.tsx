@@ -8,14 +8,13 @@ import Brightness7Icon from '@mui/icons-material/Brightness7';
 export const ThemeSwitch = () => {
     const themeMode = useAppSelector(selectThemeMode);
     const dispatch = useAppDispatch();
-    // const theme = getTheme(themeMode)
 
     const changeMode = () => {
         dispatch(changeThemeModeAC({ themeMode: themeMode === THEME_MODE.LIGHT ? THEME_MODE.DARK : THEME_MODE.LIGHT }));
     };
 
     return (
-        <IconButton onClick={changeMode} color="default">
+        <IconButton onClick={changeMode} color="default" sx={{marginLeft: '1rem'}}>
             {themeMode === THEME_MODE.DARK ? <Brightness7Icon /> : <Brightness4Icon />}
         </IconButton>
     );

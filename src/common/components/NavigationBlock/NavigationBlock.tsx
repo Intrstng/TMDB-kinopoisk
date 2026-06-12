@@ -1,6 +1,7 @@
 import {BurgerMenu, NavigationLinks} from "@/common/components";
 import Stack from '@mui/material/Stack';
 import {navLinkSx} from '@/common/components/NavigationBlock/navLink.styles.ts';
+import {AuthLinks} from "@/common/components/NavigationBlock/AuthLinks/AuthLinks.tsx";
 
 export const NavigationBlock = () => {
     return (
@@ -16,6 +17,7 @@ export const NavigationBlock = () => {
                 component="nav"
             >
                 <NavigationLinks sxStyles={navLinkSx}/>
+                <AuthLinks/>
             </Stack>
 
             {/* Mobile burger menu */}

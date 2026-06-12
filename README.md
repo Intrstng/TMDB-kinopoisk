@@ -17,7 +17,7 @@ This is the final test assignment for [it-incubator Front-end React JS (TypeScri
 *   Detailed Movie Page 🎬
 *   Filtered Movies Page ⬇️⬆️ 
 *   Search Movies Page 🔍
-*   Favorite Movies Page ❤️
+*   Favorite Movies Page ❤️ (Protected page 🔒)
 
 
 ## Technology Stack 💻📚
@@ -31,6 +31,8 @@ This is the final test assignment for [it-incubator Front-end React JS (TypeScri
 *   Zod validation
 *   Material UI
 *   React Toastify
+*   Firebase Authentication
+*   Firestore (Database & Storage)
 *   Emotion / styled-components
 *   Vite
 *   ESLint
