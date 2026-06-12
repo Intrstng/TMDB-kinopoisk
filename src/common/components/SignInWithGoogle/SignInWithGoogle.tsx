@@ -18,7 +18,6 @@ export const SignInWithGoogle: React.FC = () => {
     const signInGoogle = async () => {
         try {
             await signInWithGoogle();
-            // dispatch(setIsLoggedInAC({isLoggedIn: true}));
             navigate(PATH.MAIN);
         } catch (err) {
             if (err instanceof Error) {

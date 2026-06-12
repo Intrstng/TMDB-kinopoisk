@@ -26,8 +26,13 @@ export const AuthLinks = ({sxStyles}: { sxStyles?: SxProps }) => {
 
             // Small delay to ensure favorites are cleared
             setTimeout(() => {
-                // Then invalidate films to refetch without favorites
-                dispatch(baseApi.util.invalidateTags(['Films']));
+                // Then invalidate cashed films data to refetch without favorites
+                dispatch(baseApi.util.invalidateTags([
+                    { type: 'Films' },
+                    { type: 'Sort' },
+                    { type: 'Search' },
+                    { type: 'SimilarFilms' }
+                ]));
             }, 100);
 
             navigate(PATH.LOGIN);

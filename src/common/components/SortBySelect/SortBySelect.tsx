@@ -23,7 +23,7 @@ export const SortBySelect = () => {
             const newParams = new URLSearchParams(searchParams);
             newParams.set(SEARCH_PARAMS.SORT, SORT_BY.POPULARITY_DESC);
             setSearchParams(newParams, { replace: true })
-                                // setSearchParams(searchParams);
+             // setSearchParams(searchParams);
             //  Может вернуть
             // setSortBy(SORT_BY.POPULARITY_DESC);
         }

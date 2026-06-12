@@ -2,7 +2,6 @@ import type { SxProps } from '@mui/material';
 
 const imageCardSx: SxProps = {
     minHeight: '17.5rem',
-    // width: '100%',
     filter: 'drop-shadow(0px 1px 2px rgb(231, 229, 177))',
     borderRadius: '1rem',
     overflow: 'hidden',
@@ -15,11 +14,6 @@ const imageCardSx: SxProps = {
 
 const movieInfoSx: SxProps = {
     padding: '0.5rem',
-    // display: 'flex',
-    // flexDirection: 'column',
-    // alignItems: 'flex-start',
-    // justifyContent: 'space-between',
-    // height: '4.5rem',
     '@media (max-width: 768px)': {
         padding: '0.25rem',
     },
