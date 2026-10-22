@@ -8,6 +8,13 @@ export const PAGE_SIZE = 20;
 export const RATING_MIN = 0;
 export const RATING_MAX = 10;
 export const FAVORITES_STORAGE_KEY = 'favorites';
+export const NUMBER_UNSUCCESSFUL_REQUESTS = 1;
+export const UNSUCCESSFUL_REQUESTS_DELAY = 1000;
+export const API_UNAVAILABLE_MODAL_TITLE = 'TMDB API is unavailable';
+export const API_UNAVAILABLE_MODAL_MESSAGE = `This application retrieves data from the TMDB API. \n
+The TMDB service is currently inaccessible from your network. \n
+This service may be unavailable in certain countries or on specific networks due to regional or network-level restrictions.`;
+export const API_UNAVAILABLE_MODAL_INSTRUCTION = 'To proceed, try enabling a VPN or switching to a different network';
 
 export const STATUS_CODES = {
     OK: 200,

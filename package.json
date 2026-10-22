@@ -16,6 +16,7 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "@candy.thieves/ui-kit-lumos": "^0.0.73",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
     "@hookform/resolvers": "^5.9.2",
