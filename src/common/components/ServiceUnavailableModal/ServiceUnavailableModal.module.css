@@ -1,0 +1,15 @@
+.serviceModal {
+    z-index: 5;
+}
+
+.modalContent {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.modalControls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

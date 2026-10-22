@@ -4,6 +4,7 @@ import { RouterProvider } from 'react-router/dom';
 import { router } from '@/common/routing';
 import { Provider } from 'react-redux';
 import { store } from '@/app/store.ts';
+import '@candy.thieves/ui-kit-lumos/dist/index.css';
 
 createRoot(document.getElementById('root')!).render(
     <Provider store={store}>

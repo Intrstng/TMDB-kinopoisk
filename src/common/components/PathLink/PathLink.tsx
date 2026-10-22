@@ -38,6 +38,7 @@ export const PathLink = ({ path, title }: CategoryButtonProps) => {
     return <StyledNavLink to={fullPath}>{title}</StyledNavLink>;
 };
 
+// Также рабочий вариант без использования styled-components
 // import {Link} from "react-router-dom";
 // import {useLocation} from "react-router";
 // import type {CategoryButtonProps} from "@/common/components/PathLink/types.ts";

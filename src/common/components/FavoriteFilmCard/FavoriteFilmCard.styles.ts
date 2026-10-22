@@ -14,11 +14,6 @@ const imageCardSx: SxProps = {
 
 const movieInfoSx: SxProps = {
     padding: '0.5rem',
-    // display: 'flex',
-    // flexDirection: 'column',
-    // alignItems: 'flex-start',
-    // justifyContent: 'space-between',
-    // height: '4.5rem',
     '@media (max-width: 768px)': {
         padding: '0.25rem',
     },

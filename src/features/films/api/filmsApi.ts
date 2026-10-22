@@ -103,6 +103,10 @@ export const filmsApi = baseApi.injectEndpoints({
 
             providesTags: (_result, _error, { path }) => [{ type: 'Films', id: path }],
 
+            /** Merge полученных данных из getFavorites в fetchFilms
+             *  Добавляем в объект каждого фильма полученного с помощью fetchFilms
+             *  дополнительное свойство isFavored полученное из запроса getFavorites
+             */
             async onQueryStarted(queryArg: FetchFilmsArgs, { dispatch, queryFulfilled, getState }) {
                 // Получаем все закэшированные запросы fetchFilms
                 const cachedArgsForQuery = filmsApi.util.selectCachedArgsForQuery(getState(), 'fetchFilms');
@@ -328,14 +332,14 @@ export const filmsApi = baseApi.injectEndpoints({
                 result ? [{ type: 'SimilarFilms', id: movie_id }] : ['SimilarFilms'],
 
             async onQueryStarted(queryArg: GetSimilarFilmsArgs, { dispatch, queryFulfilled, getState }) {
-                // Получаем все закэшированные запросы searchFilm
+                // Получаем все закэшированные запросы getSimilarFilms
                 const cachedArgsForQuery = filmsApi.util.selectCachedArgsForQuery(getState(), 'getSimilarFilms');
 
                 // Массив для хранения патчей для отката в случае ошибки
                 const patchResults: PatchCollection[] = [];
 
                 try {
-                    // Ждем завершения текущего запроса фильмов для searchFilm
+                    // Ждем завершения текущего запроса фильмов для getSimilarFilms
                     await queryFulfilled;
                     // Если пользователь не авторизован, обновляем все кэши с isFavorite: false
                     if (!queryArg.userUid) {
@@ -354,14 +358,14 @@ export const filmsApi = baseApi.injectEndpoints({
                         return;
                     }
 
-                    // Получаем searchFilm results пользователя
+                    // Получаем избранные фильмы пользователя
                     const favoritesResult = await dispatch(
                         filmsApi.endpoints.getFavorites.initiate({ userUid: queryArg.userUid })
                     ).unwrap();
 
                     // Создаем Set для быстрого поиска
                     const favoriteIds = new Set(favoritesResult.map(fav => fav.id));
-                    // Обновляем ВСЕ закэшированные запросы searchFilm с полем isFavorite
+                    // Обновляем ВСЕ закэшированные запросы getSimilarFilms с полем isFavorite
                     cachedArgsForQuery.forEach(cachedArgs => {
                         patchResults.push(
                             dispatch(
@@ -438,14 +442,14 @@ export const filmsApi = baseApi.injectEndpoints({
             providesTags: ['Sort'],
 
             async onQueryStarted(queryArg: SortFilmsArgs, { dispatch, queryFulfilled, getState }) {
-                // Получаем все закэшированные запросы fetchFilms
+                // Получаем все закэшированные запросы sortFilms
                 const cachedArgsForQuery = filmsApi.util.selectCachedArgsForQuery(getState(), 'sortFilms');
 
                 // Массив для хранения патчей для отката в случае ошибки
                 const patchResults: PatchCollection[] = [];
 
                 try {
-                    // Ждем завершения текущего запроса фильмов
+                    // Ждем завершения текущего запроса фильмов для sortFilms
                     await queryFulfilled;
                     // Если пользователь не авторизован, обновляем все кэши с isFavorite: false
                     if (!queryArg.userUid) {
@@ -474,7 +478,7 @@ export const filmsApi = baseApi.injectEndpoints({
 
                     // Создаем Set для быстрого поиска
                     const favoriteIds = new Set(favoritesResult.map(fav => fav.id));
-                    // Обновляем ВСЕ закэшированные запросы fetchFilms с полем isFavorite
+                    // Обновляем ВСЕ закэшированные запросы sortFilms с полем isFavorite
                     cachedArgsForQuery.forEach(cachedArgs => {
                         patchResults.push(
                             dispatch(
@@ -598,8 +602,9 @@ export const filmsApi = baseApi.injectEndpoints({
                 { type: 'SimilarFilms', id: filmId },
             ],
 
-            // Optimistic update для мгновенного отображения иконки сердечко на карточке фильма при добавлении фильма в Favorites
-            // (также надо в FilmCard убрать useState(film.isFavorite) и сипользовать вместо isFavorite -> film.isFavorite)
+            // Optimistic update для мгновенного отображения иконки сердечка на карточке фильма при добавлении фильма в Favorites
+            // (также надо в FilmCard убрать useState(film.isFavorite) и использовать вместо isFavorite -> film.isFavorite)
+            //  Не добавляю, т.к. необходим в нескольких queries и код станет слишком громоздким
             //
             // async onQueryStarted({userUid, film}: AddToFavoritesArgs, { dispatch, queryFulfilled, getState }) {
             //     const cachedArgsForQuery = filmsApi.util.selectCachedArgsForQuery(getState(), "fetchFilms")

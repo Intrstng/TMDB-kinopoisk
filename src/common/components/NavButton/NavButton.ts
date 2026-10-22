@@ -5,7 +5,6 @@ export const NavButton = styled(Button)(() => ({
     padding: '0.6rem 1rem',
     textAlign: 'center',
     textDecoration: 'none',
-    // color: 'text.primary',
     fontFamily: 'ProtestFont, sans-serif',
     fontSize: '0.9rem',
     letterSpacing: '0.04rem',

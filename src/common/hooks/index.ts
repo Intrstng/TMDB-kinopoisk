@@ -3,3 +3,4 @@ export { useAppSelector } from './useAppSelector';
 export { useMoviesWithConfig } from './useMoviesWithConfig';
 export { useDebounceValue } from './useDebounceValue';
 export { useInfiniteScroll } from './useInfiniteScroll';
+export { useTmdbAvailability } from './useTmdbAvailability';

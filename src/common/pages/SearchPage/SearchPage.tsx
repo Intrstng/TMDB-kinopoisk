@@ -46,9 +46,6 @@ export const SearchPage = () => {
 
     const searchFilmsData = data?.pages.flatMap((page) => page.results) || []
 
-    // if (isConfigLoading) return <AlertText text={'Loading configuration (not only config is loading)'}/>
-        // change to skeleton or loader
-
     return (
             <Container sx={containerSx}>
                 <Box>

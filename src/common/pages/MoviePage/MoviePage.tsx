@@ -17,10 +17,10 @@ export const MoviePage = () => {
     } = useMoviesWithConfig();
 
     if (!isConfigLoading && !configData) return <Typography variant={'h3'} component={'h3'} sx={moviePageErrorSx}>No configuration data or invalid response structure...</Typography>
+
     /**
      * Далее config уже точно есть, поэтому передавать configData для skip в MovieDetailsSkeletons, Cast, SimilarFilms не надо
      */
-
     return (
         <>
             <MovieDetails filmId={filmId} getPosterUrlCb={getPosterUrl} />
